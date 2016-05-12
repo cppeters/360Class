@@ -1,0 +1,3 @@
+CardNumber,Name,Age,Pin,isAdmin
+1111,Bob Bob,34,test,TRUE
+1112,Cal Cal,33,test1,FALSE
