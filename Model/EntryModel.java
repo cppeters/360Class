@@ -2,8 +2,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by lizmiller on 5/12/16.
@@ -19,16 +18,18 @@ public class EntryModel {
     private static final int HEADER_SIZE = 4;
     private static final String FILE_HEADER = "CardNumber,FilePath,Contest,Entry";
     private String fileName;
-    private List<Entry> entries;
+    private int entryCounter;
+    Map<Integer,Entry> entryMap;
 
 
     public EntryModel(String filename)  {
+        entryCounter = 1;
         this.fileName = filename;
-        entries = new ArrayList<>();
+        entryMap = new HashMap<>();
     }
 
-    public List<Entry> getAllEntries() {
-        return entries;
+    public Map<Integer,Entry> getEntryMap() {
+        return entryMap;
     }
 
     public void readCsvFile() {
@@ -41,9 +42,13 @@ public class EntryModel {
             while((line = fileReader.readLine()) != null ) {
                 String[] entryInfo = line.split(COMMA_DELIMITER);
                 if (entryInfo.length > 0) {
-                    Entry entryData = new Entry(Integer.parseInt(entryInfo[USER_CARD_NUMBER_IDX]),(entryInfo[USER_FILEPATH_IDX]),
+                    Entry entryData = new Entry(entryCounter,(entryInfo[USER_FILEPATH_IDX]),
                             Integer.parseInt(entryInfo[USER_CONTEST_IDX]), (entryInfo[USER_ENTRY_IDX]));
-                    entries.add(entryData);
+
+                    entryMap.put(entryCounter,entryData);
+                    //Increments the entries because we do not know how many have been added in the db
+                    entryCounter++;
+
                 }
             }
         } catch (Exception e) {
@@ -51,9 +56,10 @@ public class EntryModel {
         }
     }
 
-    public void addEntry(int userCardNumber, String filePath, int contestNumber, String entryName) {
-        Entry entry = new Entry(userCardNumber,filePath,contestNumber,entryName);
-        entries.add(entry);
+    public void addEntry( String filePath, int contestNumber, String entryName) {
+        Entry entry = new Entry(entryCounter,filePath,contestNumber,entryName);
+        entryMap.put(entryCounter,entry);
+        entryCounter++;
     }
 
 
@@ -63,8 +69,11 @@ public class EntryModel {
             fileWriter = new FileWriter(fileName);
             fileWriter.append(FILE_HEADER);
             fileWriter.append(NEW_LINE_SEPARATOR);
-            for (Entry entry : entries) {
-                fileWriter.append(String.valueOf(entry.getCardNumber()));
+            Iterator it = entryMap.entrySet().iterator();
+            while(it.hasNext()) {
+                Map.Entry pair = (Map.Entry)it.next();
+                Entry entry = (Entry)pair.getValue();
+                fileWriter.append(String.valueOf((entry.getCardNumber())));
                 fileWriter.append(COMMA_DELIMITER);
                 fileWriter.append(String.valueOf(entry.getFilePath()));
                 fileWriter.append(COMMA_DELIMITER);
@@ -74,7 +83,7 @@ public class EntryModel {
                 fileWriter.append(NEW_LINE_SEPARATOR);
             }
         }catch (Exception e) {
-            System.out.println("Error in the writing to csv");
+            System.out.println(e.getMessage());
         } finally {
             try {
                 fileWriter.flush();

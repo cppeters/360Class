@@ -1,10 +1,10 @@
+import javax.print.attribute.IntegerSyntax;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
-
-
-
+import java.util.Map;
 
 
 /**
@@ -21,17 +21,19 @@ public class UserModel {
     private static final int HEADER_SIZE = 5;
     private static final String FILE_HEADER = "CardNumber,Name,Age,Pin,isAdmin";
     private String fileName;
-    private List<User> users;
+    private Map<Integer,User> userMap;
 
 
     public UserModel(String filename)  {
         this.fileName = filename;
-        users = new ArrayList<>();
+        userMap = new HashMap();
+
     }
 
-    public List<User> getAllUsers() {
-        return users;
+    public Map<Integer,User> getUserMap() {
+        return userMap;
     }
+
 
     public void readCsvFile() {
         BufferedReader fileReader = null;
@@ -43,10 +45,12 @@ public class UserModel {
             while((line = fileReader.readLine()) != null ) {
                 String[] userInfo = line.split(COMMA_DELIMITER);
                 if (userInfo.length > 0) {
-                    User gymnastData = new User(Integer.parseInt(userInfo[USER_CARD_NUMBER_IDX]),(userInfo[USER_NAME_IDX]),
+                    User userData = new User(Integer.parseInt(userInfo[USER_CARD_NUMBER_IDX]),(userInfo[USER_NAME_IDX]),
                             Integer.parseInt(userInfo[USER_AGE_IDX]), (userInfo[USER_LOGIN_CREDENTIAL_IDX]),
                             Boolean.parseBoolean(userInfo[USER_IS_ADMIN_IDX]));
-                    users.add(gymnastData);
+
+
+                    userMap.put(Integer.parseInt(userInfo[USER_CARD_NUMBER_IDX]), userData);
                 }
             }
         } catch (Exception e) {
