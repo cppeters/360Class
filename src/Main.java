@@ -28,6 +28,7 @@ public class Main {
         System.out.println("Users");
         Map<Integer, User> userMap = userModel.getUserMap();
         System.out.println(userMap);
+        System.out.println(userModel.getJudgeMap());
 
         System.out.println("Get the user that belongs to cardnumber 3 " + userMap.get(3));
 
@@ -39,12 +40,22 @@ public class Main {
         System.out.println(contestModel.getContestMap());
 
 
-        
+        /*
+        * TODO
+        * Change array list to map
+        * */
         String entryFile = "Entries.csv";
         EntryModel entryModel = new EntryModel(entryFile);
         entryModel.readCsvFile();
         System.out.println("Entries");
+
+        //EXAMPLE ON HOW TO ADD NOW CONTEST
+//        entryModel.addEntry("PATH",1,"EntryName!!");
         System.out.println(entryModel.getEntryMap());
+
+
+        //WRITING TO FILE WILL REWRITE MAP TO THE FILE
+        //TO DISPLAY CONTESTS CAN USE THE MAP
         entryModel.writeCsvFile();
 
 
