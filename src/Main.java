@@ -27,11 +27,11 @@ public class Main {
         userModel.readCsvFile();
         System.out.println("Users");
         Map<Integer, User> userMap = userModel.getUserMap();
-        System.out.println(userMap);
-        System.out.println(userModel.getJudgeMap());
-
+        System.out.println("Contestant or Admin " + userMap);
+        System.out.println("Judges that are a user " + userModel.getJudgeMap());
         System.out.println("Get the user that belongs to cardnumber 3 " + userMap.get(3));
 
+        System.out.println("\n\n");
 
         String contestFile = "Contests.csv";
         ContestModel contestModel = new ContestModel(contestFile);
@@ -39,11 +39,8 @@ public class Main {
         System.out.println("Contests");
         System.out.println(contestModel.getContestMap());
 
+        System.out.println("\n\n");
 
-        /*
-        * TODO
-        * Change array list to map
-        * */
         String entryFile = "Entries.csv";
         EntryModel entryModel = new EntryModel(entryFile);
         entryModel.readCsvFile();
