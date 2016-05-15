@@ -1,0 +1,7 @@
+CardNumber,Name,Age,Pin,isAdmin,isJudge
+1,Bob Bob,34,test,TRUE,FALSE
+2,Cal Cal,33,test1,FALSE,FALSE
+3,Tim Kal,45,testing,TRUE,FALSE
+4,Kylie Smith,10,ieie,FALSE,FALSE
+5,Timmy Tim,20,kdkd,FALSE,TRUE
+1,Timmy Tim,20,kdkd,FALSE,TRUE
