@@ -44,6 +44,21 @@ public class Main {
         EntryDatabaseManager entryModel = new EntryDatabaseManager(entryFile);
         entryModel.readCsvFile();
         System.out.println("Entries");
+
+
+
+
+
+        //checking if user exists
+        //card number: 5
+        //pin: pin123
+        User findUser = userDatabaseManager.checkCredientals(5,"pin123");
+        System.out.println("The user found " + findUser.getName());
+
+
+
+
+
 //
 //        //EXAMPLE ON HOW TO ADD NOW CONTEST
 ////        entryModel.addEntry("PATH",1,"EntryName!!");

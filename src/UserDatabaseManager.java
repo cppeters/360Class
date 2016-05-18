@@ -34,6 +34,24 @@ public class UserDatabaseManager {
 
     }
 
+    public User checkCredientals(int cardNumber, String pin) {
+        //check user map first then judge map
+        User user = null;
+        if(userMap.containsKey(cardNumber)) {
+            User foundUser = userMap.get(cardNumber);
+            if(foundUser.getLoginCredential().equals(pin)) {
+                user = foundUser;
+            }
+        } else if (judgeMap.containsKey(cardNumber)) {
+            User foundUser = judgeMap.get(cardNumber);
+            if(foundUser.getLoginCredential().equals(pin)) {
+                user = foundUser;
+            }
+        }
+        return user;
+    }
+
+
     public Map<Integer,User> getUserMap() {
         return userMap;
     }
