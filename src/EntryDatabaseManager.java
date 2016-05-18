@@ -7,7 +7,7 @@ import java.util.*;
 /**
  * Created by lizmiller on 5/12/16.
  */
-public class EntryModel {
+public class EntryDatabaseManager {
 
     private static final String COMMA_DELIMITER = ",";
     private static final String NEW_LINE_SEPARATOR = "\n";
@@ -22,7 +22,7 @@ public class EntryModel {
     Map<Integer,Entry> entryMap;
 
 
-    public EntryModel(String filename)  {
+    public EntryDatabaseManager(String filename)  {
         entryCounter = 1;
         this.fileName = filename;
         entryMap = new HashMap<>();

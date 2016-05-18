@@ -41,13 +41,13 @@ public class Main {
         System.out.println("\n\n");
 
         String entryFile = "Entries.csv";
-        EntryModel entryModel = new EntryModel(entryFile);
+        EntryDatabaseManager entryModel = new EntryDatabaseManager(entryFile);
         entryModel.readCsvFile();
         System.out.println("Entries");
-
-        //EXAMPLE ON HOW TO ADD NOW CONTEST
-//        entryModel.addEntry("PATH",1,"EntryName!!");
-        System.out.println(entryModel.getEntryMap());
+//
+//        //EXAMPLE ON HOW TO ADD NOW CONTEST
+////        entryModel.addEntry("PATH",1,"EntryName!!");
+//        System.out.println(entryModel.getEntryMap());
 
 
         //WRITING TO FILE WILL REWRITE MAP TO THE FILE
