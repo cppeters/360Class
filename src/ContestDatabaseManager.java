@@ -9,7 +9,7 @@ import java.util.Map;
 /**
  * Created by lizmiller on 5/12/16.
  */
-public class ContestModel {
+public class ContestDatabaseManager {
 
     private static final String COMMA_DELIMITER = ",";
     private static final String NEW_LINE_SEPARATOR = "\n";
@@ -25,7 +25,7 @@ public class ContestModel {
     private Map<Integer,Contest> contestMap;
 
 
-    public ContestModel(String filename)  {
+    public ContestDatabaseManager(String filename)  {
         this.fileName = filename;
         contests = new ArrayList<>();
         contestMap = new HashMap<>();
