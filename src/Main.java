@@ -1,4 +1,3 @@
-import java.util.Date;
 import java.util.Map;
 
 /**
@@ -23,21 +22,21 @@ public class Main {
 
         //Creating the User
         String userFile = "User.csv";
-        UserModel userModel = new UserModel(userFile);
-        userModel.readCsvFile();
+        UserDatabaseManager userDatabaseManager = new UserDatabaseManager(userFile);
+        userDatabaseManager.readCsvFile();
         System.out.println("Users");
-        Map<Integer, User> userMap = userModel.getUserMap();
+        Map<Integer, User> userMap = userDatabaseManager.getUserMap();
         System.out.println("Contestant or Admin " + userMap);
-        System.out.println("Judges that are a user " + userModel.getJudgeMap());
+        System.out.println("Judges that are a user " + userDatabaseManager.getJudgeMap());
         System.out.println("Get the user that belongs to cardnumber 3 " + userMap.get(3));
 
         System.out.println("\n\n");
 
         String contestFile = "Contests.csv";
-        ContestModel contestModel = new ContestModel(contestFile);
-        contestModel.readCsvFile();
+        ContestDatabaseManager contestDatabaseManager = new ContestDatabaseManager(contestFile);
+        contestDatabaseManager.readCsvFile();
         System.out.println("Contests");
-        System.out.println(contestModel.getContestMap());
+        System.out.println(contestDatabaseManager.getContestMap());
 
         System.out.println("\n\n");
 

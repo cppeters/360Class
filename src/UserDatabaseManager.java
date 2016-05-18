@@ -10,7 +10,7 @@ import java.util.Map;
 /**
  * Created by lizmiller on 5/12/16.
  */
-public class UserModel {
+public class UserDatabaseManager {
     private static final String COMMA_DELIMITER = ",";
     private static final String NEW_LINE_SEPARATOR = "\n";
     private static final int USER_CARD_NUMBER_IDX = 0;
@@ -26,7 +26,7 @@ public class UserModel {
     private Map<Integer,User> judgeMap;
 
 
-    public UserModel(String filename)  {
+    public UserDatabaseManager(String filename)  {
         this.fileName = filename;
         userMap = new HashMap<>();
         judgeMap = new HashMap<>();
