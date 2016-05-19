@@ -1,4 +1,11 @@
+package controller;
+import java.awt.EventQueue;
 import java.util.Map;
+
+import model.ContestDatabaseManager;
+import model.EntryDatabaseManager;
+import model.User;
+import model.UserDatabaseManager;
 
 /**
  * Created by lizmiller on 4/29/16.
@@ -8,9 +15,48 @@ import java.util.Map;
 
 
 public class Main {
+	
+	/*		File Names  	*/
+	private static final String USER_FILE = "User.csv";
+	private static final String CONTEST_FILE = "Contests.csv";
+	private static final String ENTRY_FILE = "Entries.csv";
+	
     public static void main(String args[]) {
 
+    	modelTests(); 
+    	System.out.println("\nStarting controller....");
+    	startController();
 
+    }
+    
+    /**
+     * Start up the Controller which starts the GUI.
+     */
+    private static void startController() {
+    	
+        UserDatabaseManager userDatabaseManager = new UserDatabaseManager(USER_FILE);
+        userDatabaseManager.readCsvFile(); // should this happen automatically in userDatabaseManager constructor?
+
+        ContestDatabaseManager contestDatabaseManager = new ContestDatabaseManager(CONTEST_FILE);
+        contestDatabaseManager.readCsvFile();
+        
+        EntryDatabaseManager entryDatabaseManager = new EntryDatabaseManager(ENTRY_FILE);
+        entryDatabaseManager.readCsvFile();
+        
+    	EventQueue.invokeLater(new Runnable() {
+
+			@Override
+			public void run() {
+				new MainController(userDatabaseManager, contestDatabaseManager, entryDatabaseManager);
+			}
+    		
+    	});
+
+    }
+    
+    /** all of Liz's tests, moved to a separate function
+     */
+    private static void modelTests() {
         /*
         * every time a new entry is added update the map and increment the counter for the id of the entry
         * when we need to display the entries to the screen us the updated map
@@ -68,7 +114,6 @@ public class Main {
         //WRITING TO FILE WILL REWRITE MAP TO THE FILE
         //TO DISPLAY CONTESTS CAN USE THE MAP
         entryModel.writeCsvFile();
-
-
     }
+    
 }

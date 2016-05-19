@@ -1,3 +1,4 @@
+package model;
 /**
  * Created by lizmiller on 5/12/16.
  */
