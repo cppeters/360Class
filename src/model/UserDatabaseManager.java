@@ -19,19 +19,16 @@ public class UserDatabaseManager {
     private static final int USER_NAME_IDX = 1;
     private static final int USER_AGE_IDX = 2;
     private static final int USER_LOGIN_CREDENTIAL_IDX = 3;
-    private static final int USER_IS_ADMIN_IDX = 4;
-    private static final int USER_IS_JUDGE_IDX = 5;
-    private static final int HEADER_SIZE = 6;
-    private static final String FILE_HEADER = "CardNumber,Name,Age,Pin,isAdmin,isJudge";
+    private static final int USER_IS_TYPE_IDX = 4;
+    private static final int HEADER_SIZE = 5;
+    private static final String FILE_HEADER = "CardNumber,Name,Age,Pin,Type";
     private String fileName;
     private Map<Integer,User> userMap;
-    private Map<Integer,User> judgeMap;
 
 
     public UserDatabaseManager(String filename)  {
         this.fileName = filename;
         userMap = new HashMap<>();
-        judgeMap = new HashMap<>();
 
 
     }
@@ -44,11 +41,6 @@ public class UserDatabaseManager {
             if(foundUser.getLoginCredential().equals(pin)) {
                 user = foundUser;
             }
-        } else if (judgeMap.containsKey(cardNumber)) {
-            User foundUser = judgeMap.get(cardNumber);
-            if(foundUser.getLoginCredential().equals(pin)) {
-                user = foundUser;
-            }
         }
         return user;
     }
@@ -56,10 +48,6 @@ public class UserDatabaseManager {
 
     public Map<Integer,User> getUserMap() {
         return userMap;
-    }
-
-    public Map<Integer,User> getJudgeMap() {
-        return judgeMap;
     }
 
     public void readCsvFile() {
@@ -74,13 +62,8 @@ public class UserDatabaseManager {
                 if (userInfo.length > 0) {
                     User userData = new User(Integer.parseInt(userInfo[USER_CARD_NUMBER_IDX]),(userInfo[USER_NAME_IDX]),
                             Integer.parseInt(userInfo[USER_AGE_IDX]), (userInfo[USER_LOGIN_CREDENTIAL_IDX]),
-                            Boolean.parseBoolean(userInfo[USER_IS_ADMIN_IDX]), Boolean.parseBoolean(userInfo[USER_IS_JUDGE_IDX]));
-                    if (Boolean.parseBoolean(userInfo[USER_IS_JUDGE_IDX])) {
-                        judgeMap.put(Integer.parseInt(userInfo[USER_CARD_NUMBER_IDX]), userData);
-                    } else {
-                        userMap.put(Integer.parseInt(userInfo[USER_CARD_NUMBER_IDX]), userData);
-                    }
-
+                            (userInfo[USER_IS_TYPE_IDX]));
+                    userMap.put(Integer.parseInt(userInfo[USER_CARD_NUMBER_IDX]), userData);
                 }
             }
         } catch (Exception e) {

@@ -8,19 +8,17 @@ public class User {
     private int cardNumber;
     private int age;
     private String loginCredential;
-    private boolean isAdmin;
-    private boolean isJudge;
+    private String type;
 
-    public User(int cardNumber, String name,int age, String loginCredential, boolean isAdmin, boolean isJudge) {
+    public User(int cardNumber, String name,int age, String loginCredential, String type) {
         this.age = age;
         this.cardNumber = cardNumber;
         this.name = name;
         this.loginCredential = loginCredential;
-        this.isAdmin = isAdmin;
-        this.isJudge = isJudge;
+        this.type = type;
     }
-    public boolean getIsJudge()  {
-        return isJudge;
+    public String getType() {
+        return type;
     }
 
     public int getCardNumber() {
@@ -39,12 +37,7 @@ public class User {
         return loginCredential;
     }
 
-    public boolean getIsAdmin() {
-        return isAdmin;
-    }
-
-
     public String toString() {
-        return  "["+name + ", " + cardNumber + ", " + age + ", " + loginCredential + ", " + isAdmin+ ", " +isJudge+"]" ;
+        return  "["+name + ", " + cardNumber + ", " + age + ", " + loginCredential + ", " + type+"]" ;
     }
 }

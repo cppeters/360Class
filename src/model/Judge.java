@@ -4,8 +4,8 @@ package model;
  */
 public class Judge extends User{
 
-    public Judge(int cardNumber, String name,int age, String loginCredential, boolean isAdmin, boolean isJudge) {
-        super(cardNumber,name,age,loginCredential,isAdmin,isJudge);
+    public Judge(int cardNumber, String name,int age, String loginCredential, String type) {
+        super(cardNumber,name,age,loginCredential,type);
     }
     /*
 

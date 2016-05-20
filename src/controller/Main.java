@@ -73,7 +73,6 @@ public class Main {
         System.out.println("Users");
         Map<Integer, User> userMap = userDatabaseManager.getUserMap();
         System.out.println("Contestant or Admin " + userMap);
-        System.out.println("Judges that are a user " + userDatabaseManager.getJudgeMap());
         System.out.println("Get the user that belongs to cardnumber 3 " + userMap.get(3));
 
         System.out.println("\n\n");
