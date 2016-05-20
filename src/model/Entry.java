@@ -8,12 +8,15 @@ public class Entry {
     private String filePath;
     private int contest;
     private String entry;
+    private int entryNumber;
 
-    public Entry(int cardNumber, String filePath, int contest, String entry) {
+    public Entry(int entry,int cardNumber, String filePath, int contest, String entryName) {
         this.cardNumber = cardNumber;
         this.filePath = filePath;
         this.contest = contest;
-        this.entry = entry;
+        this.entry = entryName;
+        this.entryNumber = entry;
+
     }
 
     public int getContest() {
@@ -30,6 +33,9 @@ public class Entry {
 
     public String getFilePath() {
         return filePath;
+    }
+    public int getEntryNumber() {
+        return entryNumber;
     }
 
     @Override
