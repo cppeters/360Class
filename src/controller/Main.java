@@ -2,10 +2,7 @@ package controller;
 import java.awt.EventQueue;
 import java.util.Map;
 
-import model.ContestDatabaseManager;
-import model.EntryDatabaseManager;
-import model.User;
-import model.UserDatabaseManager;
+import model.*;
 
 /**
  * Created by lizmiller on 4/29/16.
@@ -33,15 +30,16 @@ public class Main {
      * Start up the Controller which starts the GUI.
      */
     private static void startController() {
-    	
-        UserDatabaseManager userDatabaseManager = new UserDatabaseManager(USER_FILE);
-        userDatabaseManager.readCsvFile(); // should this happen automatically in userDatabaseManager constructor?
 
         ContestDatabaseManager contestDatabaseManager = new ContestDatabaseManager(CONTEST_FILE);
         contestDatabaseManager.readCsvFile();
-        
+
+
         EntryDatabaseManager entryDatabaseManager = new EntryDatabaseManager(ENTRY_FILE);
         entryDatabaseManager.readCsvFile();
+
+        UserDatabaseManager userDatabaseManager = new UserDatabaseManager(USER_FILE, entryDatabaseManager);
+        userDatabaseManager.readCsvFile(); // should this happen automatically in userDatabaseManager constructor?
         
     	EventQueue.invokeLater(new Runnable() {
 
@@ -49,7 +47,7 @@ public class Main {
 			public void run() {
 				new MainController(userDatabaseManager, contestDatabaseManager, entryDatabaseManager);
 			}
-    		
+
     	});
 
     }
@@ -67,8 +65,13 @@ public class Main {
 
 
         //Creating the User
+        String entryFile = "Entries.csv";
+        EntryDatabaseManager entryModel = new EntryDatabaseManager(entryFile);
+        entryModel.readCsvFile();
+        System.out.println("Entries");
+
         String userFile = "User.csv";
-        UserDatabaseManager userDatabaseManager = new UserDatabaseManager(userFile);
+        UserDatabaseManager userDatabaseManager = new UserDatabaseManager(userFile,entryModel);
         userDatabaseManager.readCsvFile();
         System.out.println("Users");
         Map<Integer, User> userMap = userDatabaseManager.getUserMap();
@@ -85,10 +88,7 @@ public class Main {
 
         System.out.println("\n\n");
 
-        String entryFile = "Entries.csv";
-        EntryDatabaseManager entryModel = new EntryDatabaseManager(entryFile);
-        entryModel.readCsvFile();
-        System.out.println("Entries");
+
 
 
 
@@ -98,7 +98,23 @@ public class Main {
         //card number: 5
         //pin: pin123
         User findUser = userDatabaseManager.checkCredientals(5,"pin123");
-        System.out.println("The user found " + findUser.getName());
+
+
+        //ADDING A NEW ENTRY!!!!!!!!!!!!!!!!!!!!
+        //how to add a new entry
+        //USE ADD ENTRY FOR THE USER ONLY
+        int totalEntries = entryModel.getTotalEntries();
+        Entry entry = new Entry(totalEntries + 1, findUser.getCardNumber(),"Path",2,"Name");
+        System.out.println(findUser.getName());
+        System.out.println(findUser.getEntries());
+
+        findUser.addEntry(entry,entryModel);
+        System.out.println(findUser.getName());
+        System.out.println(findUser.getEntries());
+
+
+
+
 
 
 

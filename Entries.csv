@@ -1,7 +1,5 @@
-CardNumber,FilePath,Contest,Entry
-1,1,1,1
-2,2,2,2
-3,3,3,3
-4,PATH,1,EntryName!!
-5,PATH,1,EntryName!!
-6,PATH,1,EntryName!!
+EntryNumber,UserCardNumber,FilePath,EntryName,Contest
+1,5,path,name,1
+2,5,path,name,1
+3,5,path,name,1
+4,5,Path,Name,2
