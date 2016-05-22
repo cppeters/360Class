@@ -30,6 +30,12 @@ public interface ContestantContestListView extends Viewable {
 	/**Returns the contest that the User has selected from submitted to list, 
 	 * or null if none are selected.*/
 	public Contest getSubmissionMadeSelectedEntry();
+	
+	/**Clears the list selection in the no submissions made list.*/
+	public void clearNoSubmissionMadeSelection();
+	
+	/**Clears the list selection in the submissions made list.*/
+	public void clearSubmissionMadeSelection();
 
 
 }
