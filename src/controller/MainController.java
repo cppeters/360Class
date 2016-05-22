@@ -8,6 +8,7 @@ import model.ContestDatabaseManager;
 import model.EntryDatabaseManager;
 import model.User;
 import model.UserDatabaseManager;
+import model.UserType;
 import view.LoginView;
 import view.View;
 
@@ -76,18 +77,20 @@ public class MainController {
 	 * to the Contestant controller, but once we have different types of users
 	 * we want to send them to their appropriate controller.*/
 	private void onLogin(User theUser) {
-		System.out.println("Success! Hello, " + theUser.getName() + "!");
-		ContestantController aContestantController = new ContestantController(theUser, myContestDBManager, myEntryDBManager, myView);
-		// Bad style, would be nice if we could use polymorphism. Ideas?
-		/*if (theUser instanceof Contestant) {
-			
-		} else if (theUser instanceof Judge) {
+		System.out.println("Success! Hello, " + theUser.getName() + "!");	
 		
-		} else if (theUser.isAdmin()) {
-		
-		} else {
-			// ????
-		}*/
+		switch (UserType.checkType(theUser.getType())) {
+		case ADMIN:
+			break;
+		case CONTESTANT:
+			new ContestantController(theUser, myContestDBManager, myEntryDBManager, myView);
+			break;
+		case JUDGE:
+			// TODO Create Judge Controller
+			break;
+		default:
+			break;		
+		}
 	}
 	
 	/**Returns true if tryToParse can be parsed into an integer.*/

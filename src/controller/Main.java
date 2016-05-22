@@ -1,5 +1,7 @@
 package controller;
 import java.awt.EventQueue;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import model.*;
@@ -20,20 +22,74 @@ public class Main {
 	
     public static void main(String args[]) {
 
-    	modelTests(); 
+    	//modelTests(); 
+    	modelContestListTests();
     	System.out.println("\nStarting controller....");
     	startController();
 
     }
     
     /**
+     * Lists the contests a User has made submissions to, and has not, to
+     * test how complex it is and whether there should be helpers in the model.
+     * @author Tabi
+     */
+    private static void modelContestListTests() {
+    	/* ======get user for test======= */  
+    	
+        ContestDatabaseManager contestDatabaseManager = new ContestDatabaseManager(CONTEST_FILE);
+        contestDatabaseManager.readCsvFile();
+
+        EntryDatabaseManager entryDatabaseManager = new EntryDatabaseManager(ENTRY_FILE);
+        entryDatabaseManager.readCsvFile();
+
+        UserDatabaseManager userDatabaseManager = new UserDatabaseManager(USER_FILE, entryDatabaseManager);
+        userDatabaseManager.readCsvFile();
+        
+    	User testUser = userDatabaseManager.checkCredientals(5,"pin123");
+    	
+    	/* =======determine lists========= */    	
+    	
+    	// store ref to all contests
+    	Map<Integer,Contest> allContests = contestDatabaseManager.getContestMap();
+    	
+    	// Put all contests into contestsNotSubmtitedTo
+    	List<Contest> contestsNotSubmittedTo = new ArrayList<Contest>();
+    	contestsNotSubmittedTo.addAll(contestDatabaseManager.getContestMap().values());    	
+
+		// get all of User's entries
+    	List<Entry> testUsersEntries = testUser.getEntries();
+    	
+    	// add all contests whose key matches that in the User's entries to a new list, removing
+    	// from not submitted to list.
+    	List<Contest> contestsSubmittedTo = new ArrayList<Contest>();
+    	for (Entry e : testUsersEntries) {
+    		Contest submittedTo = allContests.get(e.getContest());
+    		if (submittedTo != null) {
+    			contestsSubmittedTo.add(submittedTo);
+    			contestsNotSubmittedTo.remove(submittedTo);
+    		}
+    	}
+    	
+    	/* ========Print to check=========*/
+    	System.out.println("Not submitted to:");
+    	for (Contest c : contestsNotSubmittedTo) {
+    		System.out.println("\t" + c);
+    	}
+    	System.out.println("Submitted to:");
+    	for (Contest c : contestsSubmittedTo) {
+    		System.out.println("\t" + c);
+    	}
+	}
+
+	/**
      * Start up the Controller which starts the GUI.
+     * @author Tabi
      */
     private static void startController() {
 
         ContestDatabaseManager contestDatabaseManager = new ContestDatabaseManager(CONTEST_FILE);
         contestDatabaseManager.readCsvFile();
-
 
         EntryDatabaseManager entryDatabaseManager = new EntryDatabaseManager(ENTRY_FILE);
         entryDatabaseManager.readCsvFile();
@@ -53,6 +109,7 @@ public class Main {
     }
     
     /** all of Liz's tests, moved to a separate function
+     * @author Liz
      */
     private static void modelTests() {
         /*
