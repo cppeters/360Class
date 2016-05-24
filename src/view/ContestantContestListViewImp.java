@@ -6,6 +6,7 @@ import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
+import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionListener;
 
 import model.Contest;
@@ -30,7 +31,9 @@ public class ContestantContestListViewImp implements ContestantContestListView {
 		listPanel.setLayout(new BoxLayout(listPanel, BoxLayout.Y_AXIS));
 		mySubMadeList = new JList<>(); 
 		myNoSubMadeList = new JList<>(); 
-
+		mySubMadeList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		myNoSubMadeList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		
 		listPanel.add(new JLabel("Contests You Have Not Submitted to:"));
 		listPanel.add(myNoSubMadeList);
 		listPanel.add(new JLabel("Contests You Have Already Submitted to:"));
@@ -82,6 +85,21 @@ public class ContestantContestListViewImp implements ContestantContestListView {
 	@Override
 	public Contest getSubmissionMadeSelectedEntry() {
 		return mySubMadeList.getSelectedValue();
+	}
+
+
+	/*		Clearing selections	*/
+
+	@Override
+	public void clearNoSubmissionMadeSelection() {
+		myNoSubMadeList.clearSelection();
+	}
+
+
+
+	@Override
+	public void clearSubmissionMadeSelection() {
+		mySubMadeList.clearSelection();
 	}
 	
 

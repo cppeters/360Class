@@ -1,19 +1,27 @@
 package controller;
 
+import java.awt.event.ActionEvent;
+import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
+import javax.swing.AbstractAction;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import model.Contest;
 import model.ContestDatabaseManager;
+import model.Entry;
 import model.EntryDatabaseManager;
 import model.User;
 import view.ContestantContestListView;
 import view.ContestantContestView;
 import view.View;
+import view.Viewable;
 
-/** Controls a session where a Contestant is logged in. */
+/** Controls a session where a Contestant is logged in. 
+ * @author Tabi*/
 public class ContestantController {
 	
 	private final User myUser;
@@ -21,10 +29,18 @@ public class ContestantController {
 	private final EntryDatabaseManager myEntryDBManager;
 	private final View myView;
 	
+	/**List of all views that have been displayed to this user since this controller
+	 * was created.*/
+	private final LinkedList<Viewable> viewHistory;
+	
 
 	/**
-	 * 
-	 * @param theUser				// TODO change this to a Contestant once we create that class.
+	 * Calling this constructor triggers all the appropriate listeners to be added to the view,
+	 * so it is not necessary to save a reference to it in the calling class. By swapping out
+	 * to a different view that this controller does not control and removing all listeners to
+	 * the view's back button, all references to this class will be gone and it will be garbage
+	 * collected as desired.
+	 * @param theUser
 	 * @param theContestDBManager	
 	 * @param theEntryDBManager		
 	 * @param theView				
@@ -34,34 +50,133 @@ public class ContestantController {
 		myContestDBManager = theContestDBManager;
 		myEntryDBManager = theEntryDBManager;
 		myView = theView;
+		viewHistory = new LinkedList<>();
+		setupBackFunctionality();
 		setupListView();		
+	}
+	
+	private void setupBackFunctionality() {
+		myView.addBackButtonListener(new AbstractAction() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				System.out.println("Clicked back.");
+				if (!viewHistory.isEmpty() && viewHistory.getLast() != null) {
+					myView.showPage(viewHistory.pop());	
+					System.out.println("Swapped page.");
+				}
+				
+				if (viewHistory.isEmpty()) {
+					myView.setBackButtonEnabled(false);
+				}
+			}			
+		});
+		
+		if (viewHistory.isEmpty()) {
+			myView.setBackButtonEnabled(false);
+		}
+	}
+	
+	private void addToHistory(Viewable theViewable) {
+		viewHistory.add(theViewable);
+		myView.setBackButtonEnabled(true);
 	}
 	
 	private void setupListView() {
 		ContestantContestListView cclv = myView.getContestantContestListView();
 		
-		List<Contest> allContests = myContestDBManager.getAllContests();
-		
-		// TODO determine which contests myUser has made submissions to, and which they have not. Then add to correct list in view.
-		cclv.setNoSubmissionMadeList(allContests.toArray(new Contest[allContests.size()]));
+		List<Contest> allSubmittedTo = new ArrayList<>();
+		List<Contest> allNotSubmittedTo = new ArrayList<>();
+		distributeContests(allSubmittedTo, allNotSubmittedTo);		
+
+		cclv.setNoSubmissionMadeList(allNotSubmittedTo.toArray(new Contest[allNotSubmittedTo.size()]));
 		cclv.addNoSubmissionMadeListener(new ListSelectionListener() {
 
 			@Override
 			public void valueChanged(ListSelectionEvent e) {
 				if (!e.getValueIsAdjusting()) { // http://stackoverflow.com/questions/12975460/listselectionlistener-invoked-twice
-					setupEntryView(cclv.getNoSubmissionMadeSelectedEntry());
+					Contest selected = cclv.getNoSubmissionMadeSelectedEntry();
+					if (selected != null) {
+						setupEntryViewNoSubMade(selected);
+						addToHistory(cclv);
+					}
+					cclv.clearNoSubmissionMadeSelection(); // so the user can re-select if desired
+				}
+				
+			}
+			
+		});
+		
+		cclv.setSubmissionMadeList(allSubmittedTo.toArray(new Contest[allSubmittedTo.size()]));
+		cclv.addSubmissionMadeListener(new ListSelectionListener() {
+
+			@Override
+			public void valueChanged(ListSelectionEvent e) {
+				if (!e.getValueIsAdjusting()) {
+					Contest selected = cclv.getSubmissionMadeSelectedEntry();
+					if (selected != null) {
+						setupEntryViewSubMade(selected);
+						// TODO uncomment following line once view is created & added : 
+						// addToHistory(cclv);
+					}
+					cclv.clearSubmissionMadeSelection(); // so the user can re-select if desired
 				}
 			}
 			
 		});
 		
+		
 		myView.showPage(cclv);
 	}
 	
-	private void setupEntryView(Contest theContest) {
+	/**
+	 * Distributes the contests that the user has submitted to to the submittedTo
+	 * list, and those he hasn't to the notSubmittedTo list.
+	 * @param allSubmittedTo
+	 * @param allNotSubmittedTo
+	 */
+	private void distributeContests(List<Contest> allSubmittedTo, List<Contest> allNotSubmittedTo) {
+    	allSubmittedTo.clear();
+		allNotSubmittedTo.clear();
+    	
+    	// store ref to all contests
+    	Map<Integer,Contest> allContests = myContestDBManager.getContestMap();    	
+
+		// get all of User's entries
+    	List<Entry> testUsersEntries = myUser.getEntries();
+    	
+    	// Put all contests into contestsNotSubmtitedTo
+    	allNotSubmittedTo.addAll(myContestDBManager.getContestMap().values());   
+    	
+    	// add all contests whose key matches that in the User's entries to list, removing
+    	// from not submitted to list.
+    	for (Entry e : testUsersEntries) {
+    		Contest submittedTo = allContests.get(e.getContest());
+    		if (submittedTo != null) {
+    			allSubmittedTo.add(submittedTo);
+    			allNotSubmittedTo.remove(submittedTo);
+    		}
+    	}
+	}
+	
+	private void setupEntryViewSubMade(Contest theContest) {
+		System.out.println("Contest selected that User submitted to already. Contest name: " + theContest.getName());
+		// TODO add view showing that contest has already been submitted to, but let them change it from there.
+	}
+	
+	private void setupEntryViewNoSubMade(Contest theContest) {
 		System.out.println("You selected: " + theContest);
 		ContestantContestView ccv = myView.getContestantContestView();
 		ccv.setContestName(theContest.getName());
+		ccv.addBrowseButtonListener(new AbstractAction() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Put actual code here ;)
+				System.out.println("Clicked browse.");
+			}
+			
+		});
 		myView.showPage(ccv);
 	}
 	

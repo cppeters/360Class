@@ -8,6 +8,7 @@ import model.ContestDatabaseManager;
 import model.EntryDatabaseManager;
 import model.User;
 import model.UserDatabaseManager;
+import model.UserType;
 import view.LoginView;
 import view.View;
 
@@ -41,7 +42,7 @@ public class MainController {
 	}
 	
 	/**
-	 * Controlls user input and output from login screen. Upon succesful login, calls
+	 * Controls user input and output from login screen. Upon successful login, calls
 	 * the {@link #onLogin(User)} method.
 	 */
 	private void onLoginScreen() {		
@@ -72,23 +73,6 @@ public class MainController {
 		myView.showPage(aLoginView);
 	}
 	
-	/**Call this when a user successfully logs in. Right now it redirects all Users
-	 * to the Contestant controller, but once we have different types of users
-	 * we want to send them to their appropriate controller.*/
-	private void onLogin(User theUser) {
-		System.out.println("Success! Hello, " + theUser.getName() + "!");
-		ContestantController aContestantController = new ContestantController(theUser, myContestDBManager, myEntryDBManager, myView);
-		// Bad style, would be nice if we could use polymorphism. Ideas?
-		/*if (theUser instanceof Contestant) {
-			
-		} else if (theUser instanceof Judge) {
-		
-		} else if (theUser.isAdmin()) {
-		
-		} else {
-			// ????
-		}*/
-	}
 	
 	/**Returns true if tryToParse can be parsed into an integer.*/
 	private boolean tryParseInt(String tryToParse) {
@@ -99,5 +83,49 @@ public class MainController {
 			return false;
 		}
 	}
+	
+	
+	/**Call this when a user successfully logs in. Right now it redirects all Users
+	 * to the Contestant controller, but once we have different types of users
+	 * we want to send them to their appropriate controller.
+	 * If somehow theUser doesn't have a type or the controller was not implemented for
+	 * that type, the user is automatically logged out.*/
+	private void onLogin(User theUser) {
+		System.out.println("Success! Hello, " + theUser.getName() + "!");	
+		
+		myView.addLogoutButtonListener(new AbstractAction() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				onLogout();
+			}			
+		});
+		
+		switch (UserType.checkType(theUser.getType())) {
+		case ADMIN:
+			// TODO Create Admin Controller
+			onLogout(); // immediately logout until we have a controller to start
+			break;
+		case CONTESTANT:
+			new ContestantController(theUser, myContestDBManager, myEntryDBManager, myView);
+			break;
+		case JUDGE:
+			// TODO Create Judge Controller
+			onLogout(); // immediately logout until we have a controller to start
+			break;
+		default:
+			onLogout(); // immediately logout because something went wrong if User didn't have one of those types.
+			break;		
+		}
+	}
+	
+	/**Logs the user out by removing listeners to the back and logout buttons and swapping the view,
+	 * because if the current view is listening to listeners from one of the user controllers, this 
+	 * is how we garbage collect those listeners.*/
+	private void onLogout() {
+		myView.removeBackButtonListeners();
+		myView.removeLogoutButtonListeners();
+		onLoginScreen();
+	}
+
 	
 }
