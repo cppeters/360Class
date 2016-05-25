@@ -3,10 +3,12 @@ package view;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Image;
 import java.awt.event.ActionListener;
 
 import javax.swing.Action;
 import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -127,15 +129,24 @@ public class View {
 		JLabel appBanner = new JLabel("Clark County Libraries Contest App");
 		appBanner.setHorizontalAlignment(SwingConstants.CENTER);
 		headRegion.add(appBanner, BorderLayout.CENTER);
+		
 		JPanel westPanel = new JPanel();
 		westPanel.setLayout(new BoxLayout(westPanel, BoxLayout.Y_AXIS));
-		JLabel logoLabel = new JLabel("<INSERT LOGO>");
+		
+		JPanel eastPanel = new JPanel();
+		eastPanel.setLayout(new BorderLayout());
+		
+		JLabel logoLabel = new JLabel();
+		// Create and resize the logo
+		ImageIcon imageIcon = new ImageIcon(new ImageIcon("ex_logo.jpg").getImage().getScaledInstance(65, 65, Image.SCALE_DEFAULT));
+		logoLabel.setIcon(imageIcon);
 		westPanel.add(logoLabel);
 		backButton.setEnabled(false);
 		westPanel.add(backButton);
 		logoutButton.setEnabled(false);
-		westPanel.add(logoutButton);
+		eastPanel.add(logoutButton);
 		headRegion.add(westPanel, BorderLayout.WEST);
+		headRegion.add(eastPanel, BorderLayout.EAST);
 	}
 	
 }
