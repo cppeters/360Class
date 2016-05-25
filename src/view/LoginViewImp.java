@@ -2,6 +2,7 @@ package view;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 
@@ -20,7 +21,7 @@ public class LoginViewImp implements LoginView {
 	private final JPanel myPanel;
 	private final JTextField myCardNoField;
 	private final JTextField myPassField;
-	private final JButton mySubmitButton;
+	private final JButton myLoginButton;
 	private final JLabel myLoginFailMessage;
 
 	
@@ -29,15 +30,18 @@ public class LoginViewImp implements LoginView {
 
 		myCardNoField = new JTextField();
 		myPassField = new JPasswordField();
-		mySubmitButton = new JButton("Login");
+		myLoginButton = new JButton("Login");
 		myLoginFailMessage = new JLabel();
 		myLoginFailMessage.setForeground(Color.red);
 		
 		JPanel fields = new JPanel();
 		fields.setLayout(new BoxLayout(fields, BoxLayout.Y_AXIS));
-		fields.add(myCardNoField);
-		fields.add(myPassField);
-		fields.add(mySubmitButton);
+	
+		
+		fields.add(createLoginComPanel());
+		myLoginButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+		myLoginFailMessage.setAlignmentX(Component.CENTER_ALIGNMENT);
+		fields.add(myLoginButton);
 		fields.add(myLoginFailMessage);
 		fields.setBorder(BorderFactory.createTitledBorder("Login"));
 		
@@ -54,6 +58,22 @@ public class LoginViewImp implements LoginView {
 		myPanel.add(new JPanel(new BorderLayout()), c);
 	}
 	
+	private JPanel createLoginComPanel() {
+		JPanel loginPanel = new JPanel();
+		JPanel loginTextPanel = new JPanel();
+		JPanel loginFieldPanel = new JPanel();
+		loginPanel.setLayout(new BorderLayout());
+		loginTextPanel.setLayout(new BoxLayout(loginTextPanel, BoxLayout.Y_AXIS));
+		loginFieldPanel.setLayout(new BoxLayout(loginFieldPanel, BoxLayout.Y_AXIS));
+		loginTextPanel.add(new JLabel("Card#:"));
+		loginTextPanel.add(new JLabel("PIN:"));
+		loginFieldPanel.add(myCardNoField);
+		loginFieldPanel.add(myPassField);
+		loginPanel.add(loginTextPanel, BorderLayout.WEST);
+		loginPanel.add(loginFieldPanel, BorderLayout.CENTER);
+		return loginPanel;
+	}
+
 	@Override
 	public JPanel getView() {
 		return myPanel;
@@ -61,7 +81,7 @@ public class LoginViewImp implements LoginView {
 
 	@Override
 	public void addLoginButtonListener(AbstractAction theAction) {
-		mySubmitButton.addActionListener(theAction);
+		myLoginButton.addActionListener(theAction);
 	}
 
 	@Override
