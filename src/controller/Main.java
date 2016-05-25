@@ -170,22 +170,11 @@ public class Main {
         System.out.println(findUser.getEntries());
 
 
-
-
-
-
-
-
-
-//
-//        //EXAMPLE ON HOW TO ADD NOW CONTEST
+//TODO  CASEY:
+//        //EXAMPLE ON HOW TO ADD NEW Entry
 ////        entryModel.addEntry("PATH",1,"EntryName!!");
 //        System.out.println(entryModel.getEntryMap());
 
-
-        //WRITING TO FILE WILL REWRITE MAP TO THE FILE
-        //TO DISPLAY CONTESTS CAN USE THE MAP
-        entryModel.writeCsvFile();
     }
     
 }

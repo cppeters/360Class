@@ -104,9 +104,14 @@ public class MainController {
 		case ADMIN:
 			// TODO Create Admin Controller
 			onLogout(); // immediately logout until we have a controller to start
+			//need to write to the file to make sure information is updated
+			myContestDBManager.writeCsvFile();
 			break;
+
 		case CONTESTANT:
 			new ContestantController(theUser, myContestDBManager, myEntryDBManager, myView);
+			//need to write to the file to make sure information is updated
+			myEntryDBManager.writeCsvFile();
 			break;
 		case JUDGE:
 			// TODO Create Judge Controller
