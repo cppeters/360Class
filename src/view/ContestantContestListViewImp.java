@@ -1,12 +1,15 @@
 package view;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
+import javax.swing.border.EmptyBorder;
 import javax.swing.event.ListSelectionListener;
 
 import model.Contest;
@@ -14,7 +17,7 @@ import model.Contest;
 /**
  * A view displaying a list of all contests.
  * @author Tabi
- *
+ * @author Abdulkadir S Fiqi
  */
 public class ContestantContestListViewImp implements ContestantContestListView {
 	/** Top level container for this class. */
@@ -30,15 +33,30 @@ public class ContestantContestListViewImp implements ContestantContestListView {
 		JPanel listPanel = new JPanel();
 		listPanel.setLayout(new BoxLayout(listPanel, BoxLayout.Y_AXIS));
 		mySubMadeList = new JList<>(); 
-		myNoSubMadeList = new JList<>(); 
+		myNoSubMadeList = new JList<>();
+		
+		
+		
+		
+		//mySubMadeList.setVisibleRowCount(5);
 		mySubMadeList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		myNoSubMadeList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		mySubMadeList.setBorder(new EmptyBorder(20,20,20,20));
+		myNoSubMadeList.setBorder(new EmptyBorder(20,20,20,20));
 		
-		listPanel.add(new JLabel("Contests You Have Not Submitted to:"));
-		listPanel.add(myNoSubMadeList);
+		listPanel.setBackground(Color.lightGray);
+		
+		
+		JLabel description = new JLabel("Contests You Have Not Submitted to:");
+		description.setForeground(Color.MAGENTA);
+		listPanel.add(description);
+		listPanel.add(new JScrollPane(myNoSubMadeList));
+		
+		
+		//listPanel.add(myNoSubMadeList);
 		listPanel.add(new JLabel("Contests You Have Already Submitted to:"));
-		listPanel.add(mySubMadeList);
 		
+		listPanel.add(new JScrollPane(mySubMadeList));
 		myPanel.add(listPanel);
 	}
 	
