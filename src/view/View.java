@@ -3,6 +3,7 @@ package view;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.ActionListener;
 
@@ -128,6 +129,8 @@ public class View {
 	private void setupHeader() {
 		JLabel appBanner = new JLabel("Clark County Libraries Contest App");
 		appBanner.setHorizontalAlignment(SwingConstants.CENTER);
+		// Set font size
+		appBanner.setFont(appBanner.getFont().deriveFont (20.0f));
 		headRegion.add(appBanner, BorderLayout.CENTER);
 		
 		JPanel westPanel = new JPanel();
@@ -138,7 +141,7 @@ public class View {
 		
 		JLabel logoLabel = new JLabel();
 		// Create and resize the logo
-		ImageIcon imageIcon = new ImageIcon(new ImageIcon("ex_logo.jpg").getImage().getScaledInstance(65, 65, Image.SCALE_DEFAULT));
+		ImageIcon imageIcon = new ImageIcon(new ImageIcon("ex_logo.jpg").getImage().getScaledInstance(62, 62, Image.SCALE_DEFAULT));
 		logoLabel.setIcon(imageIcon);
 		westPanel.add(logoLabel);
 		backButton.setEnabled(false);
