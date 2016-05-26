@@ -16,7 +16,7 @@ import model.*;
 public class Main {
 	
 	/*		File Names  	*/
-	private static final String USER_FILE = "360Class/User.csv";
+	private static final String USER_FILE = "User.csv";
 	private static final String CONTEST_FILE = "Contests.csv";
 	private static final String ENTRY_FILE = "Entries.csv";
 	
