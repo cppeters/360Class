@@ -169,11 +169,18 @@ public class ContestantController {
 		ContestantContestView ccv = myView.getContestantContestView();
 		ccv.setContestName(theContest.getName());
 		ccv.addBrowseButtonListener(new AbstractAction() {
+		
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				ccv.getEntryFileName();
+			}
+			
+		});
+		ccv.addSubmitButtonListener(new AbstractAction() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Put actual code here ;)
-				System.out.println("Clicked browse.");
+				ccv.submitNewEntry(myUser, myEntryDBManager, theContest);				
 			}
 			
 		});
