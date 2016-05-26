@@ -41,6 +41,7 @@ public class Contest {
 
 
     public String toString() {
-        return  "["+contestNumber +" "+name + ", " + startDate + ", " + endDate + "]" ;
+        return  "   "+contestNumber +"    "+name + "    " + startDate + "     " + endDate + "    " ;
+        //return  "["+contestNumber +" "+name + ", " + startDate + ", " + endDate + "]" ;
     }
 }
