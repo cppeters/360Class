@@ -60,17 +60,17 @@ public class LoginViewImp implements LoginView {
 	
 	private JPanel createLoginComPanel() {
 		JPanel loginPanel = new JPanel();
-		JPanel loginTextPanel = new JPanel();
-		JPanel loginFieldPanel = new JPanel();
-		loginPanel.setLayout(new BorderLayout());
-		loginTextPanel.setLayout(new BoxLayout(loginTextPanel, BoxLayout.Y_AXIS));
-		loginFieldPanel.setLayout(new BoxLayout(loginFieldPanel, BoxLayout.Y_AXIS));
-		loginTextPanel.add(new JLabel("Card#:"));
-		loginTextPanel.add(new JLabel("PIN:"));
-		loginFieldPanel.add(myCardNoField);
-		loginFieldPanel.add(myPassField);
-		loginPanel.add(loginTextPanel, BorderLayout.WEST);
-		loginPanel.add(loginFieldPanel, BorderLayout.CENTER);
+		JPanel cardLogin = new JPanel();
+		JPanel pinLogin = new JPanel();
+		loginPanel.setLayout(new BoxLayout(loginPanel, BoxLayout.Y_AXIS));
+		cardLogin.setLayout(new BorderLayout());
+		pinLogin.setLayout(new BorderLayout());
+		cardLogin.add(new JLabel("Card#: "), BorderLayout.WEST);
+		pinLogin.add(new JLabel("PIN:      "),BorderLayout.WEST);
+		cardLogin.add(myCardNoField);
+		pinLogin.add(myPassField);
+		loginPanel.add(cardLogin, BorderLayout.WEST);
+		loginPanel.add(pinLogin, BorderLayout.WEST);
 		return loginPanel;
 	}
 
