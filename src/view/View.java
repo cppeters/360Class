@@ -2,8 +2,6 @@ package view;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.ActionListener;
 
@@ -31,7 +29,7 @@ public class View {
 	private final JPanel headRegion;
 	/**A button for page navigation that goes in the headRegion.*/
 	private final JButton backButton;
-	/**A button for loging out that goes in the headregion.*/
+	/**A button for logging out that goes in the headregion.*/
 	private final JButton logoutButton;
 	/**The panel where the current page is displayed.*/
 	private final JPanel pageRegion;
@@ -60,6 +58,7 @@ public class View {
 		myFrame.setContentPane(contentPanel);		
 		myFrame.setPreferredSize(new Dimension(500,300));
 		myFrame.setResizable(false);
+		myFrame.setTitle("Library Contest App");
 		myFrame.setVisible(true);
 	}
 	
@@ -125,10 +124,6 @@ public class View {
 		return new ContestantContestViewImp();
 	}
 	
-	/** Returns a ContestantContestViewSubMade object so the controller may interact with it. */
-	public ContestantContestViewSubMade getContestantContestViewSubMade() {
-		return new ContestantContestViewSubMadeImp();
-	}
 
 	
 	/**Sets up a panel that persists at the top of the view with a back button

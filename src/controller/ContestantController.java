@@ -18,7 +18,6 @@ import model.EntryDatabaseManager;
 import model.User;
 import view.ContestantContestListView;
 import view.ContestantContestView;
-import view.ContestantContestViewSubMade;
 import view.View;
 import view.Viewable;
 
@@ -99,7 +98,7 @@ public class ContestantController {
 				if (!e.getValueIsAdjusting()) { // http://stackoverflow.com/questions/12975460/listselectionlistener-invoked-twice
 					Contest selected = cclv.getNoSubmissionMadeSelectedEntry();
 					if (selected != null) {
-						setupEntryViewNoSubMade(selected);
+						setupEntryView(selected, false);
 						addToHistory(cclv);
 					}
 					cclv.clearNoSubmissionMadeSelection(); // so the user can re-select if desired
@@ -117,7 +116,7 @@ public class ContestantController {
 				if (!e.getValueIsAdjusting()) {
 					Contest selected = cclv.getSubmissionMadeSelectedEntry();
 					if (selected != null) {
-						setupEntryViewSubMade(selected);
+						setupEntryView(selected, true);
 						addToHistory(cclv);
 					}
 					cclv.clearSubmissionMadeSelection(); // so the user can re-select if desired
@@ -160,32 +159,8 @@ public class ContestantController {
     	}
 	}
 	
-	private void setupEntryViewSubMade(Contest theContest) {
-		System.out.println("Contest selected that User submitted to already. Contest name: " + theContest.getName());
-		System.out.println("You selected: " + theContest);
-		ContestantContestViewSubMade ccv = myView.getContestantContestViewSubMade();
-		ccv.setContestName(theContest.getName());
-		ccv.addBrowseButtonListener(new AbstractAction() {
-		
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				ccv.setEntryFileName();
-			}
-			
-		});
-		ccv.addSubmitButtonListener(new AbstractAction() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				ccv.submitNewEntry(myUser, myEntryDBManager, theContest);				
-			}
-			
-		});
-		myView.showPage(ccv);
-	}
 	
-	private void setupEntryViewNoSubMade(Contest theContest) {
-		System.out.println("You selected: " + theContest);
+	private void setupEntryView(Contest theContest, Boolean theSubMade) {
 		ContestantContestView ccv = myView.getContestantContestView();
 		ccv.setContestName(theContest.getName());
 		ccv.addBrowseButtonListener(new AbstractAction() {
