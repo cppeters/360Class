@@ -1,6 +1,7 @@
 package controller;
 
 import java.awt.event.ActionEvent;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -168,7 +169,7 @@ public class ContestantController {
 		
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				ccv.getEntryFileName();
+				ccv.setEntryFileName();
 			}
 			
 		});
@@ -191,7 +192,12 @@ public class ContestantController {
 		
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				ccv.getEntryFileName();
+				try {
+					ccv.setEntryFileName();
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
 			
 		});
@@ -199,7 +205,10 @@ public class ContestantController {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				ccv.submitNewEntry(myUser, myEntryDBManager, theContest);				
+				Boolean submitSuccess = ccv.submitNewEntry(myUser, myEntryDBManager, theContest);
+				if (submitSuccess == true){
+					setupListView();
+				}
 			}
 			
 		});

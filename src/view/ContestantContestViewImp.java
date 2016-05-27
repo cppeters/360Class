@@ -1,11 +1,18 @@
 package view;
 
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.LayoutManager;
 import java.io.File;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
 import javax.swing.AbstractAction;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
@@ -21,10 +28,12 @@ public class ContestantContestViewImp implements ContestantContestView {
 	private final JButton myBrowseButton;
 	private final JButton mySubmitButton;
 	private final JLabel myContestName;
-	private final JLabel myEntrylbl;
-	private final JLabel myFilelbl;
-	private final JLabel myEntrySubmitted;
-	private final JTextField myEntryFileName;
+	private final JLabel myEntryNamelbl;
+	private final JLabel myImagelbl;
+	private final JLabel mySpacer1;
+	private final JLabel mySpacer2;
+	private final JLabel mySpacer3;
+	private final JTextField myEntryFilePath;
 	private final JTextField myEntryText;
 	private File myEntryFile;
 	
@@ -33,25 +42,37 @@ public class ContestantContestViewImp implements ContestantContestView {
 		myEntryFile = null;
 		myBrowseButton = new JButton("Browse...");
 		mySubmitButton = new JButton("Submit Entry");
-		myEntrylbl = new JLabel("Entry Name");
-		myFilelbl = new JLabel("File Name");
+		myEntryNamelbl = new JLabel("Entry Name");
 		myContestName = new JLabel();
-		myEntrySubmitted = new JLabel();
-		myEntrySubmitted.setVisible(false);
-		myEntryFileName = new JTextField(25);
-		myEntryFileName.setEditable(false);
+		myImagelbl = new JLabel();
+		mySpacer1 = new JLabel("                                                                                     ");
+		mySpacer2 = new JLabel("                 ");		
+		mySpacer3 = new JLabel("                      ");
+		myEntryFilePath = new JTextField(25);		
 		myEntryText = new JTextField(25);
-		//myPanel.add(myContestName);
-		myPanel.add(myEntrylbl);
-		myPanel.add(myEntryText);
-		myPanel.add(myBrowseButton);
-		myPanel.add(myFilelbl);
-		myPanel.add(myEntryFileName);
-		myPanel.add(mySubmitButton);
-		myPanel.add(myEntrySubmitted);
+		
+		
+		GUI();
 	}
 	
-	
+	public void GUI(){
+		myEntryFilePath.setEditable(false);
+		myImagelbl.setVisible(false);
+		
+		myContestName.setFont(new Font(myContestName.getName(), Font.PLAIN, 20));
+		
+		myPanel.add(myContestName);
+		myPanel.add(mySpacer1);
+		myPanel.add(myEntryNamelbl);
+		myPanel.add(myEntryText);
+		myPanel.add(mySpacer2);
+		myPanel.add(myBrowseButton);
+		myPanel.add(myEntryFilePath);
+		myPanel.add(myImagelbl);
+		myPanel.add(mySpacer3);
+		myPanel.add(mySubmitButton);
+		
+	}
 
 	@Override
 	public JPanel getView() {
@@ -75,32 +96,45 @@ public class ContestantContestViewImp implements ContestantContestView {
 
 	@Override
 	public void setContestName(String theContestName) {
-		myContestName.setText(theContestName);
+		myContestName.setText(theContestName + " Contest");
 		
 	}
 	
 	
 	@Override
-	public String getEntryFileName() {
+	public void setEntryFileName() throws IOException {
 		JFileChooser jfc = new JFileChooser();
 		if (jfc.showOpenDialog(null) == JFileChooser.APPROVE_OPTION)
 		{
 			myEntryFile = jfc.getSelectedFile();
-			myEntryFileName.setText(myEntryFile.getAbsolutePath());
+			myEntryFilePath.setText(myEntryFile.getAbsolutePath());
 		}
-		return myEntryFileName.getText();
+		myImagelbl.setIcon(new ImageIcon(ImageIO.read(new File(myEntryFilePath.getText()))));
+		myImagelbl.setVisible(true);
 	}
 
 	@Override
-	public void submitNewEntry(User theUser, EntryDatabaseManager theEntryDataBaseManager,
+	public Boolean submitNewEntry(User theUser, EntryDatabaseManager theEntryDataBaseManager,
 			Contest theContest) {
-		Entry e = new Entry(theEntryDataBaseManager.getTotalEntries() + 1, 
-				theUser.getCardNumber(), myEntryFileName.getText(), 
+		Boolean success = false;
+		if (myEntryText.getText().isEmpty() || myEntryFilePath.getText().isEmpty())
+		{
+			JOptionPane.showMessageDialog(myPanel,
+				    "Entry Fields Required",
+				    "Error",
+				    JOptionPane.ERROR_MESSAGE);
+		}
+		else
+		{
+			Entry e = new Entry(theEntryDataBaseManager.getTotalEntries() + 1, 
+				theUser.getCardNumber(), myEntryFilePath.getText(), 
 				theContest.getContestNumber(), myEntryText.getText());
 		
-		theUser.addEntry(e, theEntryDataBaseManager);
-		myEntrySubmitted.setText("Entry Submitted!");
-		myEntrySubmitted.setVisible(true);
-		System.out.println(theUser.getEntries());
+			theUser.addEntry(e, theEntryDataBaseManager);
+			JOptionPane.showMessageDialog(myPanel,
+				    "Entry Submitted!");
+			success = true;
+		}
+		return success;
 	}
 }

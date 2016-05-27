@@ -75,14 +75,13 @@ public class ContestantContestViewSubMadeImp implements ContestantContestViewSub
 	}
 
 	@Override
-	public String getEntryFileName() {
+	public void setEntryFileName() {
 		JFileChooser jfc = new JFileChooser();
 		if (jfc.showOpenDialog(null) == JFileChooser.APPROVE_OPTION)
 		{
 			myEntryFile = jfc.getSelectedFile();
 			myEntryFileName.setText(myEntryFile.getAbsolutePath());
 		}
-		return myEntryFileName.getText();
 	}
 
 	@Override

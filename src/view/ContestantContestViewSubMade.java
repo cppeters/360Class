@@ -18,7 +18,7 @@ public interface ContestantContestViewSubMade extends Viewable
 	public void setContestName(String theContestName);	
 	
 	/** Opening and getting input from file chooser for entry submission */
-	public String getEntryFileName();
+	public void setEntryFileName();
 	
 	/** Submit Entry to Contest */
 	public void submitNewEntry(User theUser, EntryDatabaseManager theEntryDataBaseManager,
