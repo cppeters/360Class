@@ -36,6 +36,7 @@ public class ContestDatabaseManager {
     public void addContest(Contest contest) {
         contestMap.put(contestCounter, contest);
         contestCounter++;
+        writeCsvFile();
     }
 
 
