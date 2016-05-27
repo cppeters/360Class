@@ -81,8 +81,7 @@ public class ContestantContestViewImp implements ContestantContestView {
 	
 	
 	@Override
-	public String getEntryFileName() 
-	{
+	public String getEntryFileName() {
 		JFileChooser jfc = new JFileChooser();
 		if (jfc.showOpenDialog(null) == JFileChooser.APPROVE_OPTION)
 		{
@@ -94,8 +93,7 @@ public class ContestantContestViewImp implements ContestantContestView {
 
 	@Override
 	public void submitNewEntry(User theUser, EntryDatabaseManager theEntryDataBaseManager,
-			Contest theContest) 
-	{
+			Contest theContest) {
 		Entry e = new Entry(theEntryDataBaseManager.getTotalEntries() + 1, 
 				theUser.getCardNumber(), myEntryFileName.getText(), 
 				theContest.getContestNumber(), myEntryText.getText());
@@ -104,6 +102,5 @@ public class ContestantContestViewImp implements ContestantContestView {
 		myEntrySubmitted.setText("Entry Submitted!");
 		myEntrySubmitted.setVisible(true);
 		System.out.println(theUser.getEntries());
-		theEntryDataBaseManager.writeCsvFile();
 	}
 }

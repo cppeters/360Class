@@ -17,6 +17,7 @@ import model.EntryDatabaseManager;
 import model.User;
 import view.ContestantContestListView;
 import view.ContestantContestView;
+import view.ContestantContestViewSubMade;
 import view.View;
 import view.Viewable;
 
@@ -116,8 +117,7 @@ public class ContestantController {
 					Contest selected = cclv.getSubmissionMadeSelectedEntry();
 					if (selected != null) {
 						setupEntryViewSubMade(selected);
-						// TODO uncomment following line once view is created & added : 
-						// addToHistory(cclv);
+						addToHistory(cclv);
 					}
 					cclv.clearSubmissionMadeSelection(); // so the user can re-select if desired
 				}
@@ -161,7 +161,26 @@ public class ContestantController {
 	
 	private void setupEntryViewSubMade(Contest theContest) {
 		System.out.println("Contest selected that User submitted to already. Contest name: " + theContest.getName());
-		// TODO add view showing that contest has already been submitted to, but let them change it from there.
+		System.out.println("You selected: " + theContest);
+		ContestantContestViewSubMade ccv = myView.getContestantContestViewSubMade();
+		ccv.setContestName(theContest.getName());
+		ccv.addBrowseButtonListener(new AbstractAction() {
+		
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				ccv.getEntryFileName();
+			}
+			
+		});
+		ccv.addSubmitButtonListener(new AbstractAction() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				ccv.submitNewEntry(myUser, myEntryDBManager, theContest);				
+			}
+			
+		});
+		myView.showPage(ccv);
 	}
 	
 	private void setupEntryViewNoSubMade(Contest theContest) {

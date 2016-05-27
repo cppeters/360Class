@@ -115,12 +115,19 @@ public class View {
 		return new LoginViewImp();
 	}
 	
+	/** Returns a ContestantContestListView object so the controller may interact with it. */
 	public ContestantContestListView getContestantContestListView() {
 		return new ContestantContestListViewImp();
 	}
 	
+	/** Returns a ContestantContestView object so the controller may interact with it. */
 	public ContestantContestView getContestantContestView() {
 		return new ContestantContestViewImp();
+	}
+	
+	/** Returns a ContestantContestViewSubMade object so the controller may interact with it. */
+	public ContestantContestViewSubMade getContestantContestViewSubMade() {
+		return new ContestantContestViewSubMadeImp();
 	}
 
 	
