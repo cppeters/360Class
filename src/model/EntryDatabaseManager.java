@@ -61,6 +61,7 @@ public class EntryDatabaseManager {
     public void addEntry( Entry entry) {
         entryCounter++;
         entryMap.put(entryCounter,entry);
+        writeCsvFile();
 
     }
 

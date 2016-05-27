@@ -107,10 +107,8 @@ public class MainController {
 			break;
 		case CONTESTANT:
 			new ContestantController(theUser, myContestDBManager, myEntryDBManager, myView);
-			//need to write to the file to make sure information is updated			
 			break;
 		case JUDGE:
-			// TODO Create Judge Controller
 			new JudgeController(theUser, myContestDBManager, myEntryDBManager, myView);
 			break;
 		default:
