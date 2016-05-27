@@ -27,5 +27,9 @@ public interface ContestantContestView extends Viewable {
 	 * @return */
 	public Boolean submitNewEntry(User theUser, EntryDatabaseManager theEntryDataBaseManager,
 			Contest theContest);
+
+	/** If submission has been made for contest update CCV with pertinent info. 
+	 * @throws IOException */
+	public void subMade(User theUser, Contest theContest) throws IOException;
 	
 }

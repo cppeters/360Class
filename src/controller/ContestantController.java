@@ -98,7 +98,12 @@ public class ContestantController {
 				if (!e.getValueIsAdjusting()) { // http://stackoverflow.com/questions/12975460/listselectionlistener-invoked-twice
 					Contest selected = cclv.getNoSubmissionMadeSelectedEntry();
 					if (selected != null) {
-						setupEntryView(selected, false);
+						try {
+							setupEntryView(selected, false);
+						} catch (IOException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
 						addToHistory(cclv);
 					}
 					cclv.clearNoSubmissionMadeSelection(); // so the user can re-select if desired
@@ -116,7 +121,12 @@ public class ContestantController {
 				if (!e.getValueIsAdjusting()) {
 					Contest selected = cclv.getSubmissionMadeSelectedEntry();
 					if (selected != null) {
-						setupEntryView(selected, true);
+						try {
+							setupEntryView(selected, true);
+						} catch (IOException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
 						addToHistory(cclv);
 					}
 					cclv.clearSubmissionMadeSelection(); // so the user can re-select if desired
@@ -160,7 +170,7 @@ public class ContestantController {
 	}
 	
 	
-	private void setupEntryView(Contest theContest, Boolean theSubMade) {
+	private void setupEntryView(Contest theContest, Boolean theSubMade) throws IOException {
 		ContestantContestView ccv = myView.getContestantContestView();
 		ccv.setContestName(theContest.getName());
 		ccv.addBrowseButtonListener(new AbstractAction() {
@@ -187,6 +197,7 @@ public class ContestantController {
 			}
 			
 		});
+		if (theSubMade) ccv.subMade(myUser, theContest);
 		myView.showPage(ccv);
 	}
 	

@@ -24,6 +24,7 @@ import model.User;
 /**A view for submitting an entry to a certain contest.*/
 public class ContestantContestViewImp implements ContestantContestView {
 	
+	private static final int SUBMIT_CHOICE = 100;
 	private final JPanel myPanel;
 	private final JButton myBrowseButton;
 	private final JButton mySubmitButton;
@@ -36,10 +37,12 @@ public class ContestantContestViewImp implements ContestantContestView {
 	private final JTextField myEntryFilePath;
 	private final JTextField myEntryText;
 	private File myEntryFile;
+	private Boolean mySubMade;
 	
 	public ContestantContestViewImp() {
 		myPanel = new JPanel();
 		myEntryFile = null;
+		mySubMade = false;
 		myBrowseButton = new JButton("Browse...");
 		mySubmitButton = new JButton("Submit Entry");
 		myEntryNamelbl = new JLabel("Entry Name");
@@ -126,15 +129,40 @@ public class ContestantContestViewImp implements ContestantContestView {
 		}
 		else
 		{
-			Entry e = new Entry(theEntryDataBaseManager.getTotalEntries() + 1, 
-				theUser.getCardNumber(), myEntryFilePath.getText(), 
-				theContest.getContestNumber(), myEntryText.getText());
-		
-			theUser.addEntry(e, theEntryDataBaseManager);
-			JOptionPane.showMessageDialog(myPanel,
-				    "Entry Submitted!");
-			success = true;
+			int choice = SUBMIT_CHOICE;
+			if (mySubMade){
+				choice = JOptionPane.showConfirmDialog(myPanel,
+					    "Previous Entry will be overwritten, continue?",
+					    "Warning",
+					    JOptionPane.YES_NO_OPTION);
+				System.out.println(choice);
+			}
+			if (choice != 1 && choice != -1){
+				Entry e = new Entry(theEntryDataBaseManager.getTotalEntries() + 1, 
+					theUser.getCardNumber(), myEntryFilePath.getText(), 
+					theContest.getContestNumber(), myEntryText.getText());
+			
+				theUser.addEntry(e, theEntryDataBaseManager);
+				JOptionPane.showMessageDialog(myPanel,
+					    "Entry Submitted!");
+				success = true;
+			}
 		}
 		return success;
+	}
+
+	@Override
+	public void subMade(User theUser, Contest theContest) throws IOException {
+		mySubMade = true;
+		mySubmitButton.setText("Update Entry");
+		for (Entry e : theUser.getEntries()){
+			if (e.getContest() == theContest.getContestNumber())
+			{
+				myEntryText.setText(e.getEntry());
+				myEntryFilePath.setText(e.getFilePath());
+				myImagelbl.setIcon(new ImageIcon(ImageIO.read(new File(myEntryFilePath.getText()))));
+				myImagelbl.setVisible(true);
+			}
+		}		
 	}
 }
