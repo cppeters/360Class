@@ -31,7 +31,7 @@ public class View {
 	private final JPanel headRegion;
 	/**A button for page navigation that goes in the headRegion.*/
 	private final JButton backButton;
-	/**A button for loging out that goes in the headregion.*/
+	/**A button for logging out that goes in the headRegion.*/
 	private final JButton logoutButton;
 	/**The panel where the current page is displayed.*/
 	private final JPanel pageRegion;
@@ -121,6 +121,10 @@ public class View {
 	
 	public ContestantContestView getContestantContestView() {
 		return new ContestantContestViewImp();
+	}
+	
+	public AdminContestListView getAdminContestListView() {
+		return new AdminContestListViewImp();
 	}
 
 	
