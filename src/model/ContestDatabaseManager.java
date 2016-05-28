@@ -23,6 +23,7 @@ public class ContestDatabaseManager {
     private String fileName;
     private List<Contest> contests;
     private Map<Integer,Contest> contestMap;
+    /**The current number of Contests in the contestMap.*/
     private int contestCounter;
 
 
@@ -33,12 +34,43 @@ public class ContestDatabaseManager {
         contestCounter = 0;
     }
 
-    public void addContest(Contest contest) {
-        contestMap.put(contestCounter, contest);
-        contestCounter++;
-        writeCsvFile();
+    /**
+     * Creates and adds a Contest to the database, unless there was an existing contest by the same name.
+     * @author Liz, Tabi
+     * @param contestName
+     * @param contestDescription
+     * @param startDate
+     * @param endDate
+     * @return true on success; false otherwise.
+     */
+    public boolean addContest(String contestName, String contestDescription, String startDate,
+    		String endDate) {
+    	// TODO add any other business rules/checks to this if statement.
+    	// for example, a problem with the format of the dates, or strings are too long
+    	if (contestNameIsUnique(contestName)) {
+    		Contest contest = new Contest(++contestCounter, contestName, contestDescription, startDate, endDate);
+            contestMap.put(contest.getContestNumber(), contest);
+            contests.add(contest);
+            writeCsvFile();
+            return true;
+    	} else {
+    		return false;
+    	}
     }
-
+    
+    /**
+     * @author Tabi
+     * @param contestName
+     * @return true if there is no existing contest with the given name; false otherwise.
+     */
+    private boolean contestNameIsUnique(String contestName) {
+    	for (Contest c : contestMap.values()) {
+    		if (c.getName().equals(contestName)) {
+    			return false;
+    		}
+    	}
+    	return true;
+    }
 
 
     public List<Contest> getAllContests() {

@@ -92,7 +92,7 @@ public class NewContestFormImp implements NewContestForm {
 	}
 
 	@Override
-	public void setErrorMessage(String theString) {
+	public void setMessage(String theString) {
 		myErrorMsgLabel.setText(theString);
 	}
 
