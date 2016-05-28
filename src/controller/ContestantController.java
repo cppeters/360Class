@@ -1,5 +1,6 @@
 package controller;
 
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -23,9 +24,12 @@ import view.Viewable;
 
 /** Controls a session where a Contestant is logged in. 
  * @author Tabi
+ * @author Casey (setupEntryView method only)
  */
 public class ContestantController {
 	
+	protected static final Dimension IMAGE_SIZE = new Dimension(500, 500);
+	private static final Dimension ORIGINAL_SIZE = new Dimension(500, 300);
 	private final User myUser;
 	private final ContestDatabaseManager myContestDBManager;
 	private final EntryDatabaseManager myEntryDBManager;
@@ -57,6 +61,7 @@ public class ContestantController {
 		setupListView();		
 	}
 	
+	@SuppressWarnings("serial")
 	private void setupBackFunctionality() {
 		myView.addBackButtonListener(new AbstractAction() {
 
@@ -98,7 +103,6 @@ public class ContestantController {
 						try {
 							setupEntryView(selected, false, cclv);
 						} catch (IOException e1) {
-							// TODO Auto-generated catch block
 							e1.printStackTrace();
 						}
 						addToHistory(cclv);
@@ -120,7 +124,6 @@ public class ContestantController {
 						try {
 							setupEntryView(selected, true, cclv);
 						} catch (IOException e1) {
-							// TODO Auto-generated catch block
 							e1.printStackTrace();
 						}
 						addToHistory(cclv);
@@ -182,6 +185,7 @@ public class ContestantController {
 	 * @param cclv			The Contest list, so it can be refreshed when an entry is made/updated
 	 * @throws IOException
 	 */
+	@SuppressWarnings("serial")
 	private void setupEntryView(Contest theContest, Boolean theSubMade, ContestantContestListView cclv) throws IOException {
 		ContestantContestView ccv = myView.getContestantContestView();
 		ccv.setContestName(theContest.getName());
@@ -190,9 +194,9 @@ public class ContestantController {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {
-					ccv.setEntryFileName();
+					Boolean fileSuccess = ccv.setEntryFileName();
+					if (fileSuccess) myView.reSize(IMAGE_SIZE);
 				} catch (IOException e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
 			}
@@ -205,12 +209,17 @@ public class ContestantController {
 				Boolean submitSuccess = ccv.submitNewEntry(myUser, myEntryDBManager, theContest);
 				if (submitSuccess == true){
 					refreshLists(cclv);
+					myView.showPage(cclv);
+					myView.reSize(ORIGINAL_SIZE);
 				}
-			}
-			
+			}			
 		});
-		if (theSubMade) ccv.subMade(myUser, theContest);
+		
 		myView.showPage(ccv);
+		if (theSubMade) {
+			ccv.subMade(myUser, theContest);
+			myView.reSize(IMAGE_SIZE);
+		}
 	}
 	
 }
