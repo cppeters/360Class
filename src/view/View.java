@@ -78,23 +78,27 @@ public class View {
 		backButton.setEnabled(false);
 	}
 	
-	/**Enables/Disables the back button.*/
+	/**Enables/Disables the back button*/
 	public void setBackButtonEnabled(boolean enable) {
 		backButton.setEnabled(enable);
 	}
 	
-	/**Adds a listener for when logout button is clicked, and enables the button, and disables the button.*/
+	/**Adds a listener for when logout button is clicked, and enables the button, and enables the button
+	 * and makes it visible.*/
 	public void addLogoutButtonListener(Action theAction) {
 		logoutButton.addActionListener(theAction);
 		logoutButton.setEnabled(true);
+		logoutButton.setVisible(true);
 	}
 	
-	/**Removes the listeners for when logout button is clicked, and disables the button.*/
+	/**Removes the listeners for when logout button is clicked, and disables the button and
+	 * makes it invisible.*/
 	public void removeLogoutButtonListeners() {
 		for (ActionListener theAction : logoutButton.getActionListeners()) {
 			logoutButton.removeActionListener(theAction);
 		}
 		logoutButton.setEnabled(false);
+		logoutButton.setVisible(false);
 	}
 	
 	
@@ -132,28 +136,33 @@ public class View {
 	
 	/**Sets up a panel that persists at the top of the view with a back button
 	 * for viewing previous pages visited.*/
-	private void setupHeader() {
-		JLabel appBanner = new JLabel("Clark County Libraries Contest App");
-		appBanner.setHorizontalAlignment(SwingConstants.CENTER);
-		// Set font size
-		appBanner.setFont(appBanner.getFont().deriveFont (20.0f));
-		headRegion.add(appBanner, BorderLayout.CENTER);
-		
+	private void setupHeader() {		
 		JPanel westPanel = new JPanel();
 		westPanel.setLayout(new BoxLayout(westPanel, BoxLayout.Y_AXIS));
 		
 		JPanel eastPanel = new JPanel();
-		eastPanel.setLayout(new BorderLayout());
+		eastPanel.setLayout(new BoxLayout(eastPanel, BoxLayout.Y_AXIS));	
 		
-		JLabel logoLabel = new JLabel();
+		//Setup banner
+		JLabel appBanner = new JLabel("Clark County Libraries Contest App");
+		appBanner.setHorizontalAlignment(SwingConstants.CENTER);
+		appBanner.setFont(appBanner.getFont().deriveFont (20.0f));
+		
 		// Create and resize the logo
 		ImageIcon imageIcon = new ImageIcon(new ImageIcon("ex_logo.jpg").getImage().getScaledInstance(62, 62, Image.SCALE_DEFAULT));
-		logoLabel.setIcon(imageIcon);
+		JLabel logoLabel = new JLabel(imageIcon);
 		westPanel.add(logoLabel);
+		
+		// Setup buttons
 		backButton.setEnabled(false);
 		westPanel.add(backButton);
+		
 		logoutButton.setEnabled(false);
+		logoutButton.setVisible(false);
 		eastPanel.add(logoutButton);
+		
+		//Add everything to the header
+		headRegion.add(appBanner, BorderLayout.CENTER);
 		headRegion.add(westPanel, BorderLayout.WEST);
 		headRegion.add(eastPanel, BorderLayout.EAST);
 	}
