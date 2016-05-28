@@ -1,6 +1,7 @@
 package controller;
 
 import java.awt.event.ActionEvent;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -97,7 +98,12 @@ public class ContestantController {
 				if (!e.getValueIsAdjusting()) { // http://stackoverflow.com/questions/12975460/listselectionlistener-invoked-twice
 					Contest selected = cclv.getNoSubmissionMadeSelectedEntry();
 					if (selected != null) {
-						setupEntryViewNoSubMade(selected);
+						try {
+							setupEntryView(selected, false);
+						} catch (IOException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
 						addToHistory(cclv);
 					}
 					cclv.clearNoSubmissionMadeSelection(); // so the user can re-select if desired
@@ -115,9 +121,13 @@ public class ContestantController {
 				if (!e.getValueIsAdjusting()) {
 					Contest selected = cclv.getSubmissionMadeSelectedEntry();
 					if (selected != null) {
-						setupEntryViewSubMade(selected);
-						// TODO uncomment following line once view is created & added : 
-						// addToHistory(cclv);
+						try {
+							setupEntryView(selected, true);
+						} catch (IOException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+						addToHistory(cclv);
 					}
 					cclv.clearSubmissionMadeSelection(); // so the user can re-select if desired
 				}
@@ -159,20 +169,20 @@ public class ContestantController {
     	}
 	}
 	
-	private void setupEntryViewSubMade(Contest theContest) {
-		System.out.println("Contest selected that User submitted to already. Contest name: " + theContest.getName());
-		// TODO add view showing that contest has already been submitted to, but let them change it from there.
-	}
 	
-	private void setupEntryViewNoSubMade(Contest theContest) {
-		System.out.println("You selected: " + theContest);
+	private void setupEntryView(Contest theContest, Boolean theSubMade) throws IOException {
 		ContestantContestView ccv = myView.getContestantContestView();
 		ccv.setContestName(theContest.getName());
 		ccv.addBrowseButtonListener(new AbstractAction() {
 		
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				ccv.getEntryFileName();
+				try {
+					ccv.setEntryFileName();
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
 			
 		});
@@ -180,10 +190,14 @@ public class ContestantController {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				ccv.submitNewEntry(myUser, myEntryDBManager, theContest);				
+				Boolean submitSuccess = ccv.submitNewEntry(myUser, myEntryDBManager, theContest);
+				if (submitSuccess == true){
+					setupListView();
+				}
 			}
 			
 		});
+		if (theSubMade) ccv.subMade(myUser, theContest);
 		myView.showPage(ccv);
 	}
 	

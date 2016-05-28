@@ -40,7 +40,9 @@ public class Entry {
 
     @Override
     public String toString() {
-        return "["+cardNumber + ", " + contest + ", " + entry + ", " + filePath+"]";
+        //return "["+cardNumber + ", " + contest + ", " + entry + ", " + filePath+"]";
+    	// Changed this to be consistent with Entries CSV file
+        return "["+entry + ", " + cardNumber + ", " + filePath + ", " + contest+"]";
     }
 
 }
