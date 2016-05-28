@@ -23,8 +23,9 @@ public interface ContestantContestView extends Viewable {
 	public void setContestName(String theContestName);	
 	
 	/** Opening and getting input from file chooser for entry submission 
+	 * @return 
 	 * @throws IOException */
-	public void setEntryFileName() throws IOException;
+	public Boolean setEntryFileName() throws IOException;
 	
 	/** Submit Entry to Contest 
 	 * @return */
