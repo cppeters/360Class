@@ -1,6 +1,7 @@
 package controller;
 
 import java.awt.event.ActionEvent;
+import java.util.LinkedList;
 import java.util.List;
 
 import javax.swing.AbstractAction;
@@ -11,6 +12,7 @@ import model.User;
 import view.AdminContestListView;
 import view.NewContestForm;
 import view.View;
+import view.Viewable;
 
 /**
  * An admin can view contests and add new ones.
@@ -23,13 +25,44 @@ public class AdminController {
 	private final User myUser;
 	private final ContestDatabaseManager myContestDBManager; 
 	
-	
+	/**List of all views that have been displayed to this user since this controller
+	 * was created.*/
+	private final LinkedList<Viewable> viewHistory;
 
 	public AdminController(User theUser, ContestDatabaseManager theConDatMan,  View theView) {
 		myView = theView;
 		myUser = theUser;
 		myContestDBManager = theConDatMan; 
+		viewHistory = new LinkedList<>();
+		setupBackFunctionality();
 		setupListView();
+	}
+	
+	private void setupBackFunctionality() {
+		myView.addBackButtonListener(new AbstractAction() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				System.out.println("Clicked back.");
+				if (!viewHistory.isEmpty() && viewHistory.getLast() != null) {
+					myView.showPage(viewHistory.pop());	
+					System.out.println("Swapped page.");
+				}
+				
+				if (viewHistory.isEmpty()) {
+					myView.setBackButtonEnabled(false);
+				}
+			}			
+		});
+		
+		if (viewHistory.isEmpty()) {
+			myView.setBackButtonEnabled(false);
+		}
+	}
+	
+	private void addToHistory(Viewable theViewable) {
+		viewHistory.add(theViewable);
+		myView.setBackButtonEnabled(true);
 	}
 	
 	private void setupListView() {
@@ -40,6 +73,7 @@ public class AdminController {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				onAddContestView(listView);
+				addToHistory(listView);
 			}
 			
 		});
