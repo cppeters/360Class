@@ -76,11 +76,11 @@ public class AdminController {
 	private void onAddingContest(NewContestForm theForm, AdminContestListView theListView) {
 		String[] formInfo = theForm.getFormInfo();
 		if (formInfo.length >= 4 && addContest(formInfo[0], formInfo[1], formInfo[2], formInfo[3])) {
-			theForm.setErrorMessage("");
+			theForm.setMessage("Contest added!");
 			// update view
 			theListView.setContestList(allContests());
 		} else {
-			theForm.setErrorMessage("Please fill all fields.");
+			theForm.setMessage("Please fill all fields.");
 		}
 	}
 	
@@ -94,13 +94,10 @@ public class AdminController {
 		boolean added = false;
 		if (name != null && !name.isEmpty() && description != null && !description.isEmpty() && startDate != null
 			&& !startDate.isEmpty() && endDate != null && !endDate.isEmpty()) {
-				//TODO call add contest method in model, passing in these fields.
-				//TODO if it could be added, uncomment following:
-				// added = true;
-		} 		
-		
-		return added;
-		
+			added = myContestDBManager.addContest(name, description, startDate, endDate);	
+		} 	
+		System.out.println(added);
+		return added;		
 	}
 	
 }

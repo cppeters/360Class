@@ -15,6 +15,8 @@ public interface NewContestForm extends Viewable {
 	public void addSubmitListener(AbstractAction theAction);
 	
 	/**Sets an error message to display.*/
-	public void setErrorMessage(String theString);
+	public void setMessage(String theString);
+	
+	
 	
 }
