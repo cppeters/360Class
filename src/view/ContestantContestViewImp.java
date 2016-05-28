@@ -21,7 +21,9 @@ import model.Entry;
 import model.EntryDatabaseManager;
 import model.User;
 
-/**A view for submitting an entry to a certain contest.*/
+/**A view for submitting an entry to a certain contest.
+ * @author Casey
+ */
 public class ContestantContestViewImp implements ContestantContestView {
 	
 	private static final int SUBMIT_CHOICE = 100;
@@ -58,7 +60,7 @@ public class ContestantContestViewImp implements ContestantContestView {
 		GUI();
 	}
 	
-	public void GUI(){
+	private void GUI(){
 		myEntryFilePath.setEditable(false);
 		myImagelbl.setVisible(false);
 		
