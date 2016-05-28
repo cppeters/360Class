@@ -1,8 +1,8 @@
 package view;
 
+import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.LayoutManager;
 import java.io.File;
 import java.io.IOException;
 
@@ -14,7 +14,9 @@ import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextField;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 import model.Contest;
 import model.Entry;
@@ -38,6 +40,7 @@ public class ContestantContestViewImp implements ContestantContestView {
 	private final JLabel mySpacer3;
 	private final JTextField myEntryFilePath;
 	private final JTextField myEntryText;
+	private final JScrollPane myScrollPane;
 	private File myEntryFile;
 	private Boolean mySubMade;
 	
@@ -55,7 +58,7 @@ public class ContestantContestViewImp implements ContestantContestView {
 		mySpacer3 = new JLabel("                      ");
 		myEntryFilePath = new JTextField(25);		
 		myEntryText = new JTextField(25);
-		
+		myScrollPane = new JScrollPane(myImagelbl);
 		
 		GUI();
 	}
@@ -63,6 +66,8 @@ public class ContestantContestViewImp implements ContestantContestView {
 	private void GUI(){
 		myEntryFilePath.setEditable(false);
 		myImagelbl.setVisible(false);
+		myScrollPane.setPreferredSize(new Dimension(230, 230));
+		myScrollPane.setVisible(false);
 		
 		myContestName.setFont(new Font(myContestName.getName(), Font.PLAIN, 20));
 		
@@ -73,7 +78,7 @@ public class ContestantContestViewImp implements ContestantContestView {
 		myPanel.add(mySpacer2);
 		myPanel.add(myBrowseButton);
 		myPanel.add(myEntryFilePath);
-		myPanel.add(myImagelbl);
+		myPanel.add(myScrollPane, BorderLayout.CENTER);
 		myPanel.add(mySpacer3);
 		myPanel.add(mySubmitButton);
 		
@@ -107,21 +112,28 @@ public class ContestantContestViewImp implements ContestantContestView {
 	
 	
 	@Override
-	public void setEntryFileName() throws IOException {
+	public Boolean setEntryFileName() throws IOException {
+		Boolean theFileSuccess = false;
 		JFileChooser jfc = new JFileChooser();
+		jfc.setFileFilter(new FileNameExtensionFilter("Image files (*.gif, *.jpeg, *.jpg, *.png)", 
+				"gif", "jpeg", "jpg", "png"));
 		if (jfc.showOpenDialog(null) == JFileChooser.APPROVE_OPTION)
 		{
 			myEntryFile = jfc.getSelectedFile();
 			myEntryFilePath.setText(myEntryFile.getAbsolutePath());
+			myImagelbl.setIcon(new ImageIcon(ImageIO.read(new File(myEntryFilePath.getText()))));
+			myScrollPane.setVisible(true);
+			myImagelbl.setVisible(true);
+			myPanel.revalidate();
+			theFileSuccess = true;
 		}
-		myImagelbl.setIcon(new ImageIcon(ImageIO.read(new File(myEntryFilePath.getText()))));
-		myImagelbl.setVisible(true);
+		return theFileSuccess;
 	}
 
 	@Override
 	public Boolean submitNewEntry(User theUser, EntryDatabaseManager theEntryDataBaseManager,
 			Contest theContest) {
-		Boolean success = false;
+		Boolean theSubmitSuccess = false;
 		if (myEntryText.getText().isEmpty() || myEntryFilePath.getText().isEmpty())
 		{
 			JOptionPane.showMessageDialog(myPanel,
@@ -137,7 +149,6 @@ public class ContestantContestViewImp implements ContestantContestView {
 					    "Previous Entry will be overwritten, continue?",
 					    "Warning",
 					    JOptionPane.YES_NO_OPTION);
-				System.out.println(choice);
 			}
 			if (choice != 1 && choice != -1){
 				Entry e = new Entry(theEntryDataBaseManager.getTotalEntries() + 1, 
@@ -147,10 +158,10 @@ public class ContestantContestViewImp implements ContestantContestView {
 				theUser.addEntry(e, theEntryDataBaseManager);
 				JOptionPane.showMessageDialog(myPanel,
 					    "Entry Submitted!");
-				success = true;
+				theSubmitSuccess = true;
 			}
 		}
-		return success;
+		return theSubmitSuccess;
 	}
 
 	@Override
@@ -163,7 +174,9 @@ public class ContestantContestViewImp implements ContestantContestView {
 				myEntryText.setText(e.getEntry());
 				myEntryFilePath.setText(e.getFilePath());
 				myImagelbl.setIcon(new ImageIcon(ImageIO.read(new File(myEntryFilePath.getText()))));
+				myScrollPane.setVisible(true);
 				myImagelbl.setVisible(true);
+				myPanel.revalidate();
 			}
 		}		
 	}

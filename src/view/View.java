@@ -158,4 +158,10 @@ public class View {
 		headRegion.add(eastPanel, BorderLayout.EAST);
 	}
 	
+
+	public void reSize(Dimension theDimension){
+		myFrame.setResizable(true);
+		myFrame.setSize(theDimension);
+		myFrame.setResizable(false);
+	}
 }
