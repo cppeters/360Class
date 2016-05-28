@@ -102,8 +102,7 @@ public class MainController {
 		
 		switch (UserType.checkType(theUser.getType())) {
 		case ADMIN:
-			// TODO Create Admin Controller
-			onLogout(); // immediately logout until we have a controller to start
+			new AdminController(theUser, myContestDBManager, myView);
 			//need to write to the file to make sure information is updated
 			break;
 
@@ -119,6 +118,8 @@ public class MainController {
 			onLogout(); // immediately logout because something went wrong if User didn't have one of those types.
 			break;		
 		}
+		
+		
 	}
 	
 	/**Logs the user out by removing listeners to the back and logout buttons and swapping the view,

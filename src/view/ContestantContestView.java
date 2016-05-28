@@ -8,6 +8,9 @@ import model.Contest;
 import model.EntryDatabaseManager;
 import model.User;
 
+/** 
+ * @author Casey
+ */
 public interface ContestantContestView extends Viewable {
 	
 	/**Set the action for when the browse for files button is clicked.*/
