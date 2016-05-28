@@ -1,5 +1,7 @@
 package view;
 
+import java.io.IOException;
+
 import javax.swing.AbstractAction;
 
 import model.Contest;
@@ -17,11 +19,17 @@ public interface ContestantContestView extends Viewable {
 	/**Sets a name for the contest to display.*/
 	public void setContestName(String theContestName);	
 	
-	/** Opening and getting input from file chooser for entry submission */
-	public String getEntryFileName();
+	/** Opening and getting input from file chooser for entry submission 
+	 * @throws IOException */
+	public void setEntryFileName() throws IOException;
 	
-	/** Submit Entry to Contest */
-	public void submitNewEntry(User theUser, EntryDatabaseManager theEntryDataBaseManager,
+	/** Submit Entry to Contest 
+	 * @return */
+	public Boolean submitNewEntry(User theUser, EntryDatabaseManager theEntryDataBaseManager,
 			Contest theContest);
+
+	/** If submission has been made for contest update CCV with pertinent info. 
+	 * @throws IOException */
+	public void subMade(User theUser, Contest theContest) throws IOException;
 	
 }
