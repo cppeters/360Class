@@ -8,6 +8,9 @@ import model.Contest;
 import model.EntryDatabaseManager;
 import model.User;
 
+/** 
+ * @author Casey
+ */
 public interface ContestantContestView extends Viewable {
 	
 	/**Set the action for when the browse for files button is clicked.*/
@@ -20,8 +23,9 @@ public interface ContestantContestView extends Viewable {
 	public void setContestName(String theContestName);	
 	
 	/** Opening and getting input from file chooser for entry submission 
+	 * @return 
 	 * @throws IOException */
-	public void setEntryFileName() throws IOException;
+	public Boolean setEntryFileName() throws IOException;
 	
 	/** Submit Entry to Contest 
 	 * @return */

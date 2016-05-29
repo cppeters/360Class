@@ -102,23 +102,22 @@ public class MainController {
 		
 		switch (UserType.checkType(theUser.getType())) {
 		case ADMIN:
-			// TODO Create Admin Controller
-			onLogout(); // immediately logout until we have a controller to start
+			new AdminController(theUser, myContestDBManager, myView);
 			//need to write to the file to make sure information is updated
 			break;
-
 		case CONTESTANT:
 			new ContestantController(theUser, myContestDBManager, myEntryDBManager, myView);
-			//need to write to the file to make sure information is updated
 			break;
 		case JUDGE:
-			// TODO Create Judge Controller
-			onLogout(); // immediately logout until we have a controller to start
+			// TODO uncomment the following when controller is ready, and uncomment logout
+			// new JudgeController(theUser, myContestDBManager, myEntryDBManager, myView);
+			onLogout();
 			break;
 		default:
 			onLogout(); // immediately logout because something went wrong if User didn't have one of those types.
 			break;		
 		}
+		
 	}
 	
 	/**Logs the user out by removing listeners to the back and logout buttons and swapping the view,

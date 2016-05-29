@@ -1,5 +1,6 @@
 package controller;
 
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -22,9 +23,13 @@ import view.View;
 import view.Viewable;
 
 /** Controls a session where a Contestant is logged in. 
- * @author Tabi*/
+ * @author Tabi
+ * @author Casey (setupEntryView method only)
+ */
 public class ContestantController {
 	
+	protected static final Dimension IMAGE_SIZE = new Dimension(500, 500);
+	private static final Dimension ORIGINAL_SIZE = new Dimension(500, 300);
 	private final User myUser;
 	private final ContestDatabaseManager myContestDBManager;
 	private final EntryDatabaseManager myEntryDBManager;
@@ -56,6 +61,7 @@ public class ContestantController {
 		setupListView();		
 	}
 	
+	@SuppressWarnings("serial")
 	private void setupBackFunctionality() {
 		myView.addBackButtonListener(new AbstractAction() {
 
@@ -85,12 +91,8 @@ public class ContestantController {
 	
 	private void setupListView() {
 		ContestantContestListView cclv = myView.getContestantContestListView();
-		
-		List<Contest> allSubmittedTo = new ArrayList<>();
-		List<Contest> allNotSubmittedTo = new ArrayList<>();
-		distributeContests(allSubmittedTo, allNotSubmittedTo);		
+		refreshLists(cclv);
 
-		cclv.setNoSubmissionMadeList(allNotSubmittedTo.toArray(new Contest[allNotSubmittedTo.size()]));
 		cclv.addNoSubmissionMadeListener(new ListSelectionListener() {
 
 			@Override
@@ -99,9 +101,8 @@ public class ContestantController {
 					Contest selected = cclv.getNoSubmissionMadeSelectedEntry();
 					if (selected != null) {
 						try {
-							setupEntryView(selected, false);
+							setupEntryView(selected, false, cclv);
 						} catch (IOException e1) {
-							// TODO Auto-generated catch block
 							e1.printStackTrace();
 						}
 						addToHistory(cclv);
@@ -112,8 +113,7 @@ public class ContestantController {
 			}
 			
 		});
-		
-		cclv.setSubmissionMadeList(allSubmittedTo.toArray(new Contest[allSubmittedTo.size()]));
+
 		cclv.addSubmissionMadeListener(new ListSelectionListener() {
 
 			@Override
@@ -122,9 +122,8 @@ public class ContestantController {
 					Contest selected = cclv.getSubmissionMadeSelectedEntry();
 					if (selected != null) {
 						try {
-							setupEntryView(selected, true);
+							setupEntryView(selected, true, cclv);
 						} catch (IOException e1) {
-							// TODO Auto-generated catch block
 							e1.printStackTrace();
 						}
 						addToHistory(cclv);
@@ -137,6 +136,16 @@ public class ContestantController {
 		
 		
 		myView.showPage(cclv);
+	}
+	
+	/**Re-distributes the lists of contests submitted/contests not submitted to, 
+	 * updating the given ContestantContestListView.*/
+	private void refreshLists(ContestantContestListView cclv) {
+		List<Contest> allSubmittedTo = new ArrayList<>();
+		List<Contest> allNotSubmittedTo = new ArrayList<>();
+		distributeContests(allSubmittedTo, allNotSubmittedTo);	
+		cclv.setNoSubmissionMadeList(allNotSubmittedTo.toArray(new Contest[allNotSubmittedTo.size()]));
+		cclv.setSubmissionMadeList(allSubmittedTo.toArray(new Contest[allSubmittedTo.size()]));
 	}
 	
 	/**
@@ -169,8 +178,15 @@ public class ContestantController {
     	}
 	}
 	
-	
-	private void setupEntryView(Contest theContest, Boolean theSubMade) throws IOException {
+	/**
+	 * @author Casey
+	 * @param theContest	The Contest to make/update a submission for.
+	 * @param theSubMade	True if the user has already made a submission to theContest; false otherwise.
+	 * @param cclv			The Contest list, so it can be refreshed when an entry is made/updated
+	 * @throws IOException
+	 */
+	@SuppressWarnings("serial")
+	private void setupEntryView(Contest theContest, Boolean theSubMade, ContestantContestListView cclv) throws IOException {
 		ContestantContestView ccv = myView.getContestantContestView();
 		ccv.setContestName(theContest.getName());
 		ccv.addBrowseButtonListener(new AbstractAction() {
@@ -178,9 +194,9 @@ public class ContestantController {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {
-					ccv.setEntryFileName();
+					Boolean fileSuccess = ccv.setEntryFileName();
+					if (fileSuccess) myView.reSize(IMAGE_SIZE);
 				} catch (IOException e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
 			}
@@ -192,13 +208,18 @@ public class ContestantController {
 			public void actionPerformed(ActionEvent e) {
 				Boolean submitSuccess = ccv.submitNewEntry(myUser, myEntryDBManager, theContest);
 				if (submitSuccess == true){
-					setupListView();
+					refreshLists(cclv);
+					myView.showPage(cclv);
+					myView.reSize(ORIGINAL_SIZE);
 				}
-			}
-			
+			}			
 		});
-		if (theSubMade) ccv.subMade(myUser, theContest);
+		
 		myView.showPage(ccv);
+		if (theSubMade) {
+			ccv.subMade(myUser, theContest);
+			myView.reSize(IMAGE_SIZE);
+		}
 	}
 	
 }
