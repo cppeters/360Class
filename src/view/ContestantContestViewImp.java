@@ -5,6 +5,7 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 import javax.swing.AbstractAction;
@@ -43,11 +44,18 @@ public class ContestantContestViewImp implements ContestantContestView {
 	private final JScrollPane myScrollPane;
 	private File myEntryFile;
 	private Boolean mySubMade;
+	ArrayList<String> myImgTypes;
 	
 	public ContestantContestViewImp() {
-		myPanel = new JPanel();
 		myEntryFile = null;
 		mySubMade = false;
+		myImgTypes = new ArrayList<>();
+		myImgTypes.add("gif");
+		myImgTypes.add("jpeg");
+		myImgTypes.add("jpg");
+		myImgTypes.add("png");
+		
+		myPanel = new JPanel();
 		myBrowseButton = new JButton("Browse...");
 		mySubmitButton = new JButton("Submit Entry");
 		myEntryNamelbl = new JLabel("Entry Name");
@@ -120,18 +128,28 @@ public class ContestantContestViewImp implements ContestantContestView {
 		if (jfc.showOpenDialog(null) == JFileChooser.APPROVE_OPTION)
 		{
 			myEntryFile = jfc.getSelectedFile();
-			myEntryFilePath.setText(myEntryFile.getAbsolutePath());
-			myImagelbl.setIcon(new ImageIcon(ImageIO.read(new File(myEntryFilePath.getText()))));
-			myScrollPane.setVisible(true);
-			myImagelbl.setVisible(true);
-			myPanel.revalidate();
-			theFileSuccess = true;
+			String theFileType = myEntryFile.getAbsolutePath();
+			theFileType = theFileType.substring(theFileType.lastIndexOf('.') + 1);
+			if (myImgTypes.contains(theFileType)) {
+				myEntryFilePath.setText(myEntryFile.getAbsolutePath());
+				myImagelbl.setIcon(new ImageIcon(ImageIO.read(new File(myEntryFilePath.getText()))));
+				myScrollPane.setVisible(true);
+				myImagelbl.setVisible(true);
+				myPanel.revalidate();
+				theFileSuccess = true;
+			}
+			else {
+				JOptionPane.showMessageDialog(myPanel,
+					    "Invalid File Type",
+					    "Error",
+					    JOptionPane.ERROR_MESSAGE);
+			}
 		}
 		return theFileSuccess;
 	}
 
 	@Override
-	public Boolean submitNewEntry(User theUser, EntryDatabaseManager theEntryDataBaseManager,
+	public Boolean submitNewEntry(User theUser, EntryDatabaseManager theEntryDatabase,
 			Contest theContest) {
 		Boolean theSubmitSuccess = false;
 		if (myEntryText.getText().isEmpty() || myEntryFilePath.getText().isEmpty())
@@ -149,17 +167,31 @@ public class ContestantContestViewImp implements ContestantContestView {
 					    "Previous Entry will be overwritten, continue?",
 					    "Warning",
 					    JOptionPane.YES_NO_OPTION);
+				if (choice == 0) {
+					for (Entry e : theUser.getEntries()){
+						if (e.getContest() == theContest.getContestNumber()){
+							Entry theEntry = new Entry(e.getEntryNumber(), 
+									theUser.getCardNumber(), myEntryFilePath.getText(), 
+									theContest.getContestNumber(), myEntryText.getText());
+							theUser.updateEntry(theUser.getEntries().indexOf(e), theEntry, 
+									theEntryDatabase);
+						}						
+					}					
+					JOptionPane.showMessageDialog(myPanel,
+						    "Entry Updated!");
+					theSubmitSuccess = true;
+				}
 			}
-			if (choice != 1 && choice != -1){
-				Entry e = new Entry(theEntryDataBaseManager.getTotalEntries() + 1, 
+			else{
+				Entry e = new Entry(theEntryDatabase.getTotalEntries() + 1, 
 					theUser.getCardNumber(), myEntryFilePath.getText(), 
 					theContest.getContestNumber(), myEntryText.getText());
 			
-				theUser.addEntry(e, theEntryDataBaseManager);
+				theUser.addEntry(e, theEntryDatabase);
 				JOptionPane.showMessageDialog(myPanel,
 					    "Entry Submitted!");
 				theSubmitSuccess = true;
-			}
+			}			
 		}
 		return theSubmitSuccess;
 	}
@@ -179,5 +211,5 @@ public class ContestantContestViewImp implements ContestantContestView {
 				myPanel.revalidate();
 			}
 		}		
-	}
+	}	
 }
