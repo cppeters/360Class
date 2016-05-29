@@ -2,6 +2,8 @@ package view;
 
 import javax.swing.event.ListSelectionListener;
 
+import model.Contest;
+
 /**
  * 
  * @author Lan
@@ -9,7 +11,14 @@ import javax.swing.event.ListSelectionListener;
  */
 public interface JudgeContestListView extends Viewable {
 
+	/**
+	 * Sets the Contests to display for the admin.
+	 * @param theContest
+	 */
+	public void setContestList(Contest[] theContest);
+	
+	
 	/** Add a listener to the list of contests. */
-	public void addContestListListiner(ListSelectionListener theListener);
+	public void addContestListListener(ListSelectionListener theListener);
 	
 }

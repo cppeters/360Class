@@ -57,7 +57,7 @@ public class View {
 		contentPanel.add(pageRegion, BorderLayout.CENTER);
 		myFrame.setContentPane(contentPanel);		
 		myFrame.setPreferredSize(new Dimension(500,300));
-		myFrame.setResizable(false);
+		myFrame.setResizable(true);
 		myFrame.setTitle("Library Contest App");
 		myFrame.setVisible(true);
 	}
@@ -131,6 +131,14 @@ public class View {
 
 	public AdminContestListView getAdminContestListView() {
 		return new AdminContestListViewImp();
+	}
+	
+	public JudgeContestListView getJugdgeContestListView() {
+		return new JudgeContestListViewImp();
+	}
+	
+	public JudgeEntryListView getJugdgeEntryListView() {
+		return new JudgeEntryListViewImp();
 	}
 
 	
