@@ -149,7 +149,7 @@ public class ContestantContestViewImp implements ContestantContestView {
 	}
 
 	@Override
-	public Boolean submitNewEntry(User theUser, EntryDatabaseManager theEntryDataBaseManager,
+	public Boolean submitNewEntry(User theUser, EntryDatabaseManager theEntryDatabase,
 			Contest theContest) {
 		Boolean theSubmitSuccess = false;
 		if (myEntryText.getText().isEmpty() || myEntryFilePath.getText().isEmpty())
@@ -168,17 +168,26 @@ public class ContestantContestViewImp implements ContestantContestView {
 					    "Warning",
 					    JOptionPane.YES_NO_OPTION);
 				if (choice == 0) {
+					for (Entry e : theUser.getEntries()){
+						if (e.getContest() == theContest.getContestNumber()){
+							Entry theEntry = new Entry(e.getEntryNumber(), 
+									theUser.getCardNumber(), myEntryFilePath.getText(), 
+									theContest.getContestNumber(), myEntryText.getText());
+							theUser.updateEntry(theUser.getEntries().indexOf(e), theEntry, 
+									theEntryDatabase);
+						}						
+					}					
 					JOptionPane.showMessageDialog(myPanel,
-						    "Entry Submitted!");
+						    "Entry Updated!");
 					theSubmitSuccess = true;
 				}
 			}
 			else{
-				Entry e = new Entry(theEntryDataBaseManager.getTotalEntries() + 1, 
+				Entry e = new Entry(theEntryDatabase.getTotalEntries() + 1, 
 					theUser.getCardNumber(), myEntryFilePath.getText(), 
 					theContest.getContestNumber(), myEntryText.getText());
 			
-				theUser.addEntry(e, theEntryDataBaseManager);
+				theUser.addEntry(e, theEntryDatabase);
 				JOptionPane.showMessageDialog(myPanel,
 					    "Entry Submitted!");
 				theSubmitSuccess = true;
