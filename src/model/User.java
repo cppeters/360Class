@@ -47,16 +47,24 @@ public class User {
         return loginCredential;
     }
 
-    public String toString() {
-        return  "["+name + ", " + cardNumber + ", " + age + ", " + loginCredential + ", " + type+"]" ;
-    }
-
     //When a new entry is added
     public void addEntry(Entry entry, EntryDatabaseManager entryDatabase){
 
         //adds the entry to the actual db entry list
         entryDatabase.addEntry(entry);
         entries.add(entry);
+    }
+    
+    
+    /**
+     * @author Casey
+     * @param theOldEntryIdx
+     * @param theNewEntry
+     * @param theEntryDatabase
+     */
+    public void updateEntry(int theOldEntryIdx, Entry theNewEntry, EntryDatabaseManager theEntryDatabase) {
+    	theEntryDatabase.updateEntry(entries.get(theOldEntryIdx), theNewEntry);
+    	entries.set(theOldEntryIdx, theNewEntry);		
     }
 
 
@@ -72,4 +80,8 @@ public class User {
         return entries;
     }
 
+
+    public String toString() {
+        return  "["+name + ", " + cardNumber + ", " + age + ", " + loginCredential + ", " + type+"]" ;
+    }
 }

@@ -64,6 +64,20 @@ public class EntryDatabaseManager {
         writeCsvFile();
 
     }
+    
+    /**
+     * @author Casey
+     * @param theOldEntry
+     * @param theNewEntry
+     */
+    public void updateEntry(Entry theOldEntry, Entry theNewEntry) {
+		for (int i : entryMap.keySet()){
+			if (entryMap.get(i).equals(theOldEntry)){
+				entryMap.replace(i, theNewEntry);
+			}
+		}
+		writeCsvFile();
+	}
 
     public int getTotalEntries() {
         return entryCounter;
