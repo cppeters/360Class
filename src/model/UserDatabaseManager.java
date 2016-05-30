@@ -1,6 +1,4 @@
 package model;
-import javax.print.attribute.IntegerSyntax;
-
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.*;
@@ -32,7 +30,7 @@ public class UserDatabaseManager {
 
     }
 
-    public User checkCredientals(int cardNumber, String pin) {
+    public User checkCredentials(int cardNumber, String pin) {
         //check user map first then judge map
         User user = null;
         if(userMap.containsKey(cardNumber)) {
@@ -50,7 +48,8 @@ public class UserDatabaseManager {
         return userMap;
     }
 
-    public void readCsvFile() {
+    @SuppressWarnings("resource")
+	public void readCsvFile() throws Exception{
         BufferedReader fileReader = null;
         Iterator it = entries.entrySet().iterator();
         try {
@@ -78,6 +77,7 @@ public class UserDatabaseManager {
             }
         } catch (Exception e) {
             System.out.println(e);
+            throw e;
         }
     }
 }

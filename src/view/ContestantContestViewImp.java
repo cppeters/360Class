@@ -203,7 +203,7 @@ public class ContestantContestViewImp implements ContestantContestView {
 		for (Entry e : theUser.getEntries()){
 			if (e.getContest() == theContest.getContestNumber())
 			{
-				myEntryText.setText(e.getEntry());
+				myEntryText.setText(e.getEntryName());
 				myEntryFilePath.setText(e.getFilePath());
 				myImagelbl.setIcon(new ImageIcon(ImageIO.read(new File(myEntryFilePath.getText()))));
 				myScrollPane.setVisible(true);

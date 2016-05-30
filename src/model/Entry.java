@@ -7,14 +7,14 @@ public class Entry {
     private int cardNumber;
     private String filePath;
     private int contest;
-    private String entry;
+    private String entryName;
     private int entryNumber;
 
     public Entry(int entry,int cardNumber, String filePath, int contest, String entryName) {
         this.cardNumber = cardNumber;
         this.filePath = filePath;
         this.contest = contest;
-        this.entry = entryName;
+        this.entryName = entryName;
         this.entryNumber = entry;
 
     }
@@ -27,8 +27,8 @@ public class Entry {
         return cardNumber;
     }
 
-    public String getEntry() {
-        return entry;
+    public String getEntryName() {
+        return entryName;
     }
 
     public String getFilePath() {
@@ -42,7 +42,7 @@ public class Entry {
     public String toString() {
         //return "["+cardNumber + ", " + contest + ", " + entry + ", " + filePath+"]";
     	// Changed this to be consistent with Entries CSV file
-        return "["+entry + ", " + cardNumber + ", " + filePath + ", " + contest+"]";
+        return "["+entryName + ", " + cardNumber + ", " + filePath + ", " + contest+"]";
     }
 
 }
