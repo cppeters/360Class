@@ -110,8 +110,8 @@ public class MainController {
 			break;
 		case JUDGE:
 			// TODO uncomment the following when controller is ready, and uncomment logout
-			// new JudgeController(theUser, myContestDBManager, myEntryDBManager, myView);
-			onLogout();
+			 new JudgeController(theUser, myContestDBManager, myEntryDBManager, myView);
+//			onLogout();
 			break;
 		default:
 			onLogout(); // immediately logout because something went wrong if User didn't have one of those types.

@@ -20,12 +20,18 @@ public class EntryDatabaseManager {
     private static final int HEADER_SIZE = 5;
     private static final String FILE_HEADER = "EntryNumber,UserCardNumber,FilePath,EntryName,Contest";
     private String fileName;
+    private List<Entry> entries;
     private int entryCounter;
     Map<Integer,Entry> entryMap;
-
+    
+    // Get entries
+    public List<Entry> getAllEntries() {
+        return entries;
+    }
 
     public EntryDatabaseManager(String filename)  {
         entryCounter = 0;
+        entries = new ArrayList<>();
         this.fileName = filename;
         entryMap = new HashMap<>();
     }
@@ -48,6 +54,7 @@ public class EntryDatabaseManager {
                             Integer.parseInt(entryInfo[USER_CONTEST_NUMBER_IDX]), (entryInfo[USER_ENTRY_NAME_IDX]));
 
                     entryMap.put(Integer.parseInt(entryInfo[USER_ENTRY_NUMBER_IDX]),entryData);
+                    entries.add(entryData);
                     //Increments the entries because we do not know how many have been added in the db
                     entryCounter++;
 
