@@ -20,7 +20,7 @@ public abstract class DatabaseManager {
     private static final int HEADER_SIZE = 5;
     private final String myFileName;
     private List<?> myItems;
-    private Map<Integer,Contest> myMap;
+    private Map<Integer,?> myMap;
     private int myCounter;
 
 
