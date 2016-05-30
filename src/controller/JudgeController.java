@@ -41,7 +41,6 @@ public class JudgeController {
 		viewHistory = new LinkedList<>();
 		setupBackFunctionality();
 		setupListView();
-		System.out.println("THE END");
 	}
 	
 	@SuppressWarnings("serial")
@@ -55,13 +54,11 @@ public class JudgeController {
 					myView.showPage(viewHistory.pop());	
 					System.out.println("Swapped page.");
 				}
-				
 				if (viewHistory.isEmpty()) {
 					myView.setBackButtonEnabled(false);
 				}
 			}			
 		});
-		
 		if (viewHistory.isEmpty()) {
 			myView.setBackButtonEnabled(false);
 		}
@@ -73,35 +70,22 @@ public class JudgeController {
 	}
 	
 	private void setupListView() {
-		JudgeContestListView listView = myView.getJugdgeContestListView();
-		JudgeEntryListView listView1 = myView.getJugdgeEntryListView();
-		listView.setContestList(allContests());
-		listView.addContestListListener(new ListSelectionListener() {
+		JudgeContestListView ClistView = myView.getJugdgeContestListView();
+		ClistView.setContestList(allContests());
+		ClistView.addContestListListener(new ListSelectionListener() {
 
+			// Show the entries from the contest
 			@Override
 			public void valueChanged(ListSelectionEvent e) {
 				if (!e.getValueIsAdjusting()) {
-					// Contest selected =
-					// listView.getNoSubmissionMadeSelectedEntry();
-					// if (selected != null) {
-					// try {
-					// setupEntryView(selected, false, cclv);
-					// } catch (IOException e1) {
-					// e1.printStackTrace();
-					// }
-					
-					listView1.setEntryList(allEntries());
-					System.out.print("Contest clicked");
-					myView.showPage(listView1);
-					addToHistory(listView);
+					JudgeEntryListView ElistView = myView.getJugdgeEntryListView();
+					ElistView.setEntryList(allEntries());
+					myView.showPage(ElistView);
+					addToHistory(ClistView);
 				}
-				// listview.clearNoSubmissionMadeSelection(); // so the user can
-				// re-select if desired
 			}
 		});
-        
-		myView.showPage(listView);
-		myView.showPage(listView1);
+		myView.showPage(ClistView);
 	}
 	
 	private Contest[] allContests() {
@@ -111,12 +95,8 @@ public class JudgeController {
 	
 	private Entry[] allEntries() {
 		List<Entry> entries = myEntryDBManager.getAllEntries();
-		System.out.print(entries);
 		return entries.toArray(new Entry[entries.size()]);
 	}
-	
-	
-	
 }
 
 		
