@@ -1,0 +1,8 @@
+CardNumber,Name,Age,Pin,Type
+1,Bob Bob,34,test,ADMIN
+2,Cal Cal,33,test1,CONTESTANT
+3,Tim Kal,45,testing,ADMIN
+4,Kylie Smith,10,ieie,CONTESTANT
+5,Tabi Stein,21,pin123,CONTESTANT
+6,Timmy Tim,20,6,JUDGE
+7,Timmy Tim,20,kdkd,JUDGE
