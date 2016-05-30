@@ -17,8 +17,6 @@ public interface JudgeContestListView extends Viewable {
 	 */
 	public void setContestList(Contest[] theContest);
 	
-	
 	/** Add a listener to the list of contests. */
 	public void addContestListListener(ListSelectionListener theListener);
-	
 }

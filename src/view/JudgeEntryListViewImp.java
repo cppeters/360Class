@@ -8,7 +8,6 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.event.ListSelectionListener;
 
-import model.Contest;
 import model.Entry;
 
 public class JudgeEntryListViewImp implements JudgeEntryListView {
@@ -24,7 +23,7 @@ public class JudgeEntryListViewImp implements JudgeEntryListView {
 		JPanel listContainerPanel = new JPanel();
 		listContainerPanel.setLayout(new BoxLayout(listContainerPanel, BoxLayout.Y_AXIS));	
 		listContainerPanel.add(JudgeEntryList.getColumnTitleHeader());
-//		listContainerPanel.add(new JScrollPane(myList));
+		listContainerPanel.add(new JScrollPane(myList));
 		
 		listContainerPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
 		
@@ -46,8 +45,7 @@ public class JudgeEntryListViewImp implements JudgeEntryListView {
 	}
 	@Override
 	public void setEntryList(Entry[] theEntry) {
-		System.out.print(theEntry);
-		System.out.print("sadfasdfasdf");
+		System.out.println("dddddddddd" +theEntry[1]);
 		myList.setListData(theEntry);
 
 	}
