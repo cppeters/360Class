@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -173,8 +174,13 @@ public class ContestantContestViewImp implements ContestantContestView {
 							Entry theEntry = new Entry(e.getEntryNumber(), 
 									theUser.getCardNumber(), myEntryFilePath.getText(), 
 									theContest.getContestNumber(), myEntryText.getText());
-							theUser.updateEntry(theUser.getEntries().indexOf(e), theEntry, 
-									theEntryDatabase);
+							try {
+								theUser.updateEntry(theUser.getEntries().indexOf(e), theEntry, 
+										theEntryDatabase);
+							} catch (FileNotFoundException e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							}
 						}						
 					}					
 					JOptionPane.showMessageDialog(myPanel,
@@ -187,7 +193,12 @@ public class ContestantContestViewImp implements ContestantContestView {
 					theUser.getCardNumber(), myEntryFilePath.getText(), 
 					theContest.getContestNumber(), myEntryText.getText());
 			
-				theUser.addEntry(e, theEntryDatabase);
+				try {
+					theUser.addEntry(e, theEntryDatabase);
+				} catch (FileNotFoundException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 				JOptionPane.showMessageDialog(myPanel,
 					    "Entry Submitted!");
 				theSubmitSuccess = true;

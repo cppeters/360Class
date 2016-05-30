@@ -116,7 +116,7 @@ public class JudgeEntryList extends JList<Entry> {
 			}
 			list.setToolTipText("" + value.getCardNumber());
 			sDateLabel.setText(value.getFilePath());
-			eDateLabel.setText(value.getEntry());
+			eDateLabel.setText(value.getEntryName());
 
 			/*
 			 * The following two statements are from StackOverFlow problem
