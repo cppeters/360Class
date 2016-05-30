@@ -18,7 +18,7 @@ import java.util.Map;
  * @param <T>
  *
  */
-public class DatabaseManager<T> {
+public abstract class DatabaseManager<T> {
 	private static final String COMMA_DELIMITER = ",";
     private static final String NEW_LINE_SEPARATOR = "\n";
     private static final String CONTEST_FILE_HEADER = 
@@ -40,20 +40,16 @@ public class DatabaseManager<T> {
         myCounter = 0;
     }
     
-    public void add() {
-    	
-    }
-    
-    public void update() {
-    	
-    }
-    
     public List<T> getAll() {
         return myItems;
     }
     
     public int getCount() {
     	return myCounter;
+    }
+    
+    public void updateCount() {
+    	myCounter++;
     }
 
     public Map<Integer, T> getMap() {
