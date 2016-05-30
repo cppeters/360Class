@@ -62,7 +62,9 @@ public class User {
      * @param theNewEntry
      * @param theEntryDatabase
      */
-    public void updateEntry(int theOldEntryIdx, Entry theNewEntry, EntryDatabaseManager theEntryDatabase) {
+    public void updateEntry(int theOldEntryIdx, Entry theNewEntry, 
+    		EntryDatabaseManager theEntryDatabase) {
+    	
     	theEntryDatabase.updateEntry(entries.get(theOldEntryIdx), theNewEntry);
     	entries.set(theOldEntryIdx, theNewEntry);		
     }

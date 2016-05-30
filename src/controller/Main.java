@@ -1,5 +1,6 @@
 package controller;
 import java.awt.EventQueue;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -20,7 +21,7 @@ public class Main {
 	private static final String CONTEST_FILE = "Contests.csv";
 	private static final String ENTRY_FILE = "Entries.csv";
 	
-    public static void main(String args[]) {
+    public static void main(String args[]) throws Exception {
 
     	//modelTests(); 
     	modelContestListTests();
@@ -33,8 +34,9 @@ public class Main {
      * Lists the contests a User has made submissions to, and has not, to
      * test how complex it is and whether there should be helpers in the model.
      * @author Tabi
+     * @throws Exception 
      */
-    private static void modelContestListTests() {
+    private static void modelContestListTests() throws Exception {
     	/* ======get user for test======= */  
     	
         ContestDatabaseManager contestDatabaseManager = new ContestDatabaseManager(CONTEST_FILE);
@@ -46,7 +48,7 @@ public class Main {
         UserDatabaseManager userDatabaseManager = new UserDatabaseManager(USER_FILE, entryDatabaseManager);
         userDatabaseManager.readCsvFile();
         
-    	User testUser = userDatabaseManager.checkCredientals(5,"pin123");
+    	User testUser = userDatabaseManager.checkCredentials(5,"pin123");
     	
     	/* =======determine lists========= */    	
     	
@@ -85,8 +87,9 @@ public class Main {
 	/**
      * Start up the Controller which starts the GUI.
      * @author Tabi
+	 * @throws Exception 
      */
-    private static void startController() {
+    private static void startController() throws Exception {
 
         ContestDatabaseManager contestDatabaseManager = new ContestDatabaseManager(CONTEST_FILE);
         contestDatabaseManager.readCsvFile();
@@ -110,8 +113,9 @@ public class Main {
     
     /** all of Liz's tests, moved to a separate function
      * @author Liz
+     * @throws Exception 
      */
-    private static void modelTests() {
+    private static void modelTests() throws Exception {
         /*
         * every time a new entry is added update the map and increment the counter for the id of the entry
         * when we need to display the entries to the screen us the updated map
@@ -154,7 +158,7 @@ public class Main {
         //checking if user exists
         //card number: 5
         //pin: pin123
-        User findUser = userDatabaseManager.checkCredientals(5,"pin123");
+        User findUser = userDatabaseManager.checkCredentials(5,"pin123");
 
 
         //ADDING A NEW ENTRY!!!!!!!!!!!!!!!!!!!!

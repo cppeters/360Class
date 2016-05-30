@@ -60,7 +60,7 @@ public class MainController {
 				} else if (pass.length() < 1) { // username is ok. But is the password?
 					aLoginView.addLoginFailText("Please enter a password.");
 				} else { // both username and password are ok.
-					User aUser = myUserDBManager.checkCredientals(Integer.parseInt(cardNo), pass);
+					User aUser = myUserDBManager.checkCredentials(Integer.parseInt(cardNo), pass);
 					if (aUser != null) {
 						onLogin(aUser);
 					} else {

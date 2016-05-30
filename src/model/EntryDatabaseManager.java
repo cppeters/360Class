@@ -112,7 +112,7 @@ public class EntryDatabaseManager {
                 fileWriter.append(COMMA_DELIMITER);
                 fileWriter.append(String.valueOf(entry.getFilePath()));
                 fileWriter.append(COMMA_DELIMITER);
-                fileWriter.append(String.valueOf(entry.getEntry()));
+                fileWriter.append(String.valueOf(entry.getEntryName()));
                 fileWriter.append(COMMA_DELIMITER);
                 fileWriter.append(String.valueOf(entry.getContest()));
                 fileWriter.append(NEW_LINE_SEPARATOR);
