@@ -1,14 +1,65 @@
 package model;
+import java.io.FileNotFoundException;
+import java.util.*;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.*;
 
 /**
  * Created by lizmiller on 5/12/16.
  */
-public class EntryDatabaseManager {
+public class EntryDatabaseManager {//extends DatabaseManager<Entry>{
+	
+	/* Liz after extending the class this commented block is all that would be needed 
+	 * I already tested for the most part.
+	 * And even the last 3 get methods are pure wrappers that could be removed and I'll update
+	 * any calls that it would affect. 
+	 
+	
+	// EntryDatabaseManager is type 2
+	private final static int DATABASE_TYPE = 2;
+
+	public EntryDatabaseManager(String theFileName) {
+		super(theFileName);
+		
+	}	
+	
+	@SuppressWarnings("unchecked")
+	public void readCsvFile() {
+		super.readCsvFile(DATABASE_TYPE, null);
+	}
+	
+	public void writeCsvFile() throws FileNotFoundException {
+		super.writeCsvFile(DATABASE_TYPE);
+	}
+	
+	public void addEntry( Entry entry) throws FileNotFoundException {
+        super.updateCount();
+        super.getMap().put(super.getCount(),entry);
+        writeCsvFile();
+    }
+	
+	public void updateEntry(Entry theOldEntry, Entry theNewEntry) throws FileNotFoundException {
+		for (int i : super.getMap().keySet()){
+			if (super.getMap().get(i).equals(theOldEntry)){
+				super.getMap().replace(i, theNewEntry);
+			}
+		}
+		writeCsvFile();
+	}
+
+    public int getTotalEntries() {
+        return super.getCount();
+    }
+    
+    public List<Entry> getAllEntries() {
+        return super.getAll();
+    }
+
+    public Map<Integer,Entry> getEntryMap() {
+        return super.getMap();
+    }*/
 
     private static final String COMMA_DELIMITER = ",";
     private static final String NEW_LINE_SEPARATOR = "\n";

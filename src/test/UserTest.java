@@ -5,6 +5,8 @@ package test;
 
 import static org.junit.Assert.*;
 
+import java.io.FileNotFoundException;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -48,9 +50,10 @@ public class UserTest {
 
 	/**
 	 * Test method for {@link model.User#addEntry(model.Entry, model.EntryDatabaseManager)}.
+	 * @throws FileNotFoundException 
 	 */
 	@Test
-	public void testAddEntry() {
+	public void testAddEntry() throws FileNotFoundException {
 		Entry theEntry = new Entry(0, 
 				myUser.getCardNumber(), "Path Test", 
 				myContest.getContestNumber(), "Name Test");
@@ -69,9 +72,10 @@ public class UserTest {
 
 	/**
 	 * Test method for {@link model.User#updateEntry(int, model.Entry, model.EntryDatabaseManager)}.
+	 * @throws FileNotFoundException 
 	 */
 	@Test
-	public void testUpdateEntry() {
+	public void testUpdateEntry() throws FileNotFoundException {
 		Entry theOldEntry = new Entry(0, myUser.getCardNumber(), "Path Test 2", 
 				myContest.getContestNumber(), "Name Test 2");
 		Entry theNewEntry = new Entry(0, 
