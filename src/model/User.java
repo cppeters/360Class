@@ -1,5 +1,6 @@
 package model;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -48,7 +49,7 @@ public class User {
     }
 
     //When a new entry is added
-    public void addEntry(Entry entry, EntryDatabaseManager entryDatabase){
+    public void addEntry(Entry entry, EntryDatabaseManager entryDatabase) throws FileNotFoundException{
 
         //adds the entry to the actual db entry list
         entryDatabase.addEntry(entry);
@@ -61,9 +62,10 @@ public class User {
      * @param theOldEntryIdx
      * @param theNewEntry
      * @param theEntryDatabase
+     * @throws FileNotFoundException 
      */
     public void updateEntry(int theOldEntryIdx, Entry theNewEntry, 
-    		EntryDatabaseManager theEntryDatabase) {
+    		EntryDatabaseManager theEntryDatabase) throws FileNotFoundException {
     	
     	theEntryDatabase.updateEntry(entries.get(theOldEntryIdx), theNewEntry);
     	entries.set(theOldEntryIdx, theNewEntry);		
