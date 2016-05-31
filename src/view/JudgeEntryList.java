@@ -113,15 +113,10 @@ public class JudgeEntryList extends JList<Entry> {
 			} else {
 				container.setBackground(Color.WHITE);
 			}
-<<<<<<< HEAD
+
 //			list.setToolTipText();
 			cardLabel.setText("" + value.getCardNumber());
 			pathLabel.setText("" + value.getFilePath());
-=======
-			list.setToolTipText("" + value.getCardNumber());
-			sDateLabel.setText(value.getFilePath());
-			eDateLabel.setText(value.getEntryName());
->>>>>>> refs/remotes/origin/master
 
 			/*
 			 * The following two statements are from StackOverFlow problem
