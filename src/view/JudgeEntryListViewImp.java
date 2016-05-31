@@ -65,10 +65,16 @@ public class JudgeEntryListViewImp implements JudgeEntryListView {
 		}else {
 			myContestLabel.setText(subString + theContest.getName());
 		}
+
 		if(theEntry.length == 0){
 			noEntyLabel.setText("(No Entry)");
+			noEntyLabel.setForeground(Color.RED);
+		}else if (theEntry.length == 1) {
+			noEntyLabel.setText(theEntry.length + " Entry");
 		}
-		noEntyLabel.setForeground(Color.RED);
+		else{
+			noEntyLabel.setText(theEntry.length + " Entries");
+		}
 		myContestLabel.setForeground( new Color(65, 40, 118));
 		myContestLabel.setFont(myContestLabel.getFont().deriveFont (15.0f));
 	}
