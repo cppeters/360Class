@@ -66,7 +66,7 @@ public class AdminController {
 	}
 	
 	private void setupListView() {
-		AdminContestListView listView = myView.getAdminContestListView();
+		final AdminContestListView listView = myView.getAdminContestListView();
 		listView.setContestList(allContests());
 		listView.addNewContestButtonListener(new AbstractAction() {
 
@@ -88,8 +88,8 @@ public class AdminController {
 	/**
 	 * 
 	 */
-	private void onAddContestView(AdminContestListView theListView) {
-		NewContestForm theForm = theListView.createNewContestForm();
+	private void onAddContestView(final AdminContestListView theListView) {
+		final NewContestForm theForm = theListView.createNewContestForm();
 		theForm.addSubmitListener(new AbstractAction() {
 
 			@Override

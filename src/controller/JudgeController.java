@@ -15,6 +15,7 @@ import model.Entry;
 import model.EntryDatabaseManager;
 import model.User;
 import view.AdminContestListView;
+import view.ContestList;
 import view.JudgeContestListView;
 import view.JudgeEntryListView;
 import view.NewContestForm;
@@ -70,7 +71,7 @@ public class JudgeController {
 	}
 	
 	private void setupListView() {
-		JudgeContestListView ClistView = myView.getJugdgeContestListView();
+		final JudgeContestListView ClistView = myView.getJugdgeContestListView();
 		ClistView.setContestList(allContests());
 		ClistView.addContestListListener(new ListSelectionListener() {
 
@@ -79,9 +80,10 @@ public class JudgeController {
 			public void valueChanged(ListSelectionEvent e) {
 				if (!e.getValueIsAdjusting()) {
 					JudgeEntryListView ElistView = myView.getJugdgeEntryListView();
-					ElistView.setEntryList(allEntries());
+					ElistView.setEntryList(allEntries(),((ContestList)e.getSource()).getSelectedValue());
 					myView.showPage(ElistView);
 					addToHistory(ClistView);
+					System.out.println(((ContestList)e.getSource()).getSelectedValue().getName());
 				}
 			}
 		});

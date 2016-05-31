@@ -90,7 +90,7 @@ public class ContestantController {
 	}
 	
 	private void setupListView() {
-		ContestantContestListView cclv = myView.getContestantContestListView();
+		final ContestantContestListView cclv = myView.getContestantContestListView();
 		refreshLists(cclv);
 
 		cclv.addNoSubmissionMadeListener(new ListSelectionListener() {
@@ -186,8 +186,8 @@ public class ContestantController {
 	 * @throws IOException
 	 */
 	@SuppressWarnings("serial")
-	private void setupEntryView(Contest theContest, Boolean theSubMade, ContestantContestListView cclv) throws IOException {
-		ContestantContestView ccv = myView.getContestantContestView();
+	private void setupEntryView(final Contest theContest, Boolean theSubMade, final ContestantContestListView cclv) throws IOException {
+		final ContestantContestView ccv = myView.getContestantContestView();
 		ccv.setContestName(theContest.getName());
 		ccv.addBrowseButtonListener(new AbstractAction() {
 		

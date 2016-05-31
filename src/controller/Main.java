@@ -91,13 +91,13 @@ public class Main {
      */
     private static void startController() throws Exception {
 
-        ContestDatabaseManager contestDatabaseManager = new ContestDatabaseManager(CONTEST_FILE);
+        final ContestDatabaseManager contestDatabaseManager = new ContestDatabaseManager(CONTEST_FILE);
         contestDatabaseManager.readCsvFile();
 
-        EntryDatabaseManager entryDatabaseManager = new EntryDatabaseManager(ENTRY_FILE);
+        final EntryDatabaseManager entryDatabaseManager = new EntryDatabaseManager(ENTRY_FILE);
         entryDatabaseManager.readCsvFile();
 
-        UserDatabaseManager userDatabaseManager = new UserDatabaseManager(USER_FILE, entryDatabaseManager);
+        final UserDatabaseManager userDatabaseManager = new UserDatabaseManager(USER_FILE, entryDatabaseManager);
         userDatabaseManager.readCsvFile(); // should this happen automatically in userDatabaseManager constructor?
         
     	EventQueue.invokeLater(new Runnable() {
