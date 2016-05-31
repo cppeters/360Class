@@ -10,6 +10,7 @@ import java.awt.event.ComponentEvent;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 import javax.swing.JTextArea;
 import javax.swing.ListCellRenderer;
 
@@ -80,7 +81,7 @@ public class JudgeEntryList extends JList<Entry> {
 		private final JTextArea nameLab;
 		private final JLabel cardLabel;
 		private final JLabel pathLabel;
-	
+		
 		public EntryListCellRenderer() {
 			JPanel infoColumns = new JPanel(new GridLayout(1, 2));
 			JPanel namePanel = new JPanel(new BorderLayout());
@@ -92,9 +93,11 @@ public class JudgeEntryList extends JList<Entry> {
 			nameLab.setLineWrap(true);
 			nameLab.setWrapStyleWord(true);
 			nameLab.setOpaque(false);
+			
 			cardLabel = new JLabel();
 			pathLabel = new JLabel();
-
+		
+			
 			namePanel.add(nameLab);
 			infoColumns.add(cardLabel);
 			infoColumns.add(pathLabel);
@@ -113,11 +116,11 @@ public class JudgeEntryList extends JList<Entry> {
 			} else {
 				container.setBackground(Color.WHITE);
 			}
-
+			
 //			list.setToolTipText();
 			cardLabel.setText("" + value.getCardNumber());
 			pathLabel.setText("" + value.getFilePath());
-
+			pathLabel.setToolTipText("" + value.getFilePath());
 			/*
 			 * The following two statements are from StackOverFlow problem
 			 * #7306295, solution by user kleopatra. Necessary for allowing text
