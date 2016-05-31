@@ -75,9 +75,20 @@ public class EntryDatabaseManager {//extends DatabaseManager<Entry>{
     private int entryCounter;
     Map<Integer,Entry> entryMap;
     
-    // Get entries
+    // Get entries added from Lan
     public List<Entry> getAllEntries() {
         return entries;
+    }
+    
+    public List<Entry> getEntries(int theContestNumber) {
+    	List<Entry>subListEntriess = new ArrayList<>();
+    	for(int index = 0; index < entries.size(); index++){
+    		if(entries.get(index).getContest() == theContestNumber){
+    			subListEntriess.add(entries.get(index));
+    			System.out.print(subListEntriess);
+    		}
+    	} 	 
+        return subListEntriess;
     }
 
     public EntryDatabaseManager(String filename)  {

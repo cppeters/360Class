@@ -57,7 +57,7 @@ public class View {
 		contentPanel.add(pageRegion, BorderLayout.CENTER);
 		myFrame.setContentPane(contentPanel);		
 		myFrame.setPreferredSize(new Dimension(500,300));
-		myFrame.setResizable(true);
+		myFrame.setResizable(false);
 		myFrame.setTitle("Library Contest App");
 		myFrame.setVisible(true);
 	}
