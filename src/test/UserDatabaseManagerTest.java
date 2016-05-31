@@ -41,14 +41,13 @@ public class UserDatabaseManagerTest {
 
 	/**
 	 * Test method for {@link model.UserDatabaseManager#readCsvFile()}.
-	 * @throws Exception
+	 * @throws FileNotFoundException
 	 */
 	@Test(expected = FileNotFoundException.class)
 	public void testReadCsvFile1() throws Exception {
 		// Test No File Found
 		UserDatabaseManager theUserDB = new UserDatabaseManager("Not a file name", myEntryDB);
 	    theUserDB.readCsvFile();
-	    
 	}
 	
 	/**
@@ -77,10 +76,10 @@ public class UserDatabaseManagerTest {
 	 * Test method for {@link model.UserDatabaseManager#checkCredentials(int, java.lang.String)}.
 	 */
 	@Test
-	public void testCheckCredientals() {
+	public void testCheckCredentials() {
 		// Credentials Fail
 		int theCardNumber = 0;
-		String thePin = "";
+		String thePin = "notapin";
 		assertNull(myUserDB.checkCredentials(theCardNumber, thePin));
 		
 		// Credentials Pass

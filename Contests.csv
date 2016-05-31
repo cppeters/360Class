@@ -1,4 +1,4 @@
 ContestNumber,Name,Description,StartDate,EndDate
-1,Super Hero, This is the contest for super hero, 1/1/1111,2/2/2222
-2,Lego Model,This is a lego model contest, 1/1/1112,2/3/2222
-9,rrrrrrrrrrrrrrrreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeallllllllllyloooooooooooooong,Just a contest with a really long name., 1/1/1113,2/4/2222
+1,Super Hero,Super Hero,1/1/1111,2/2/2222
+2,Lego Model,Lego Model,1/1/1112,2/3/2222
+3,Testing,Just More Testing,3/3/3333,4/4/4444

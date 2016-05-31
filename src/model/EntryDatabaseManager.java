@@ -16,7 +16,7 @@ public class EntryDatabaseManager extends DatabaseManager<Entry> {
     }
 
     @SuppressWarnings("unchecked")
-    public void readCsvFile() {
+    public void readCsvFile() throws Exception {
         super.readCsvFile(DATABASE_TYPE, null);
     }
 

@@ -13,7 +13,7 @@ public class ContestDatabaseManager extends DatabaseManager<Contest>{
         super(theFileName);
     }
 
-    public void readCsvFile() {
+    public void readCsvFile() throws Exception {
         super.readCsvFile(DATABASE_TYPE, null);
     }
 

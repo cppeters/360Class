@@ -1,4 +1,5 @@
 package model;
+import java.io.FileNotFoundException;
 import java.util.*;
 
 
@@ -17,7 +18,7 @@ public class UserDatabaseManager extends DatabaseManager<User>{
         myEntries = theEntryDatabase.getMap();
     }
 
-    public void readCsvFile() {
+    public void readCsvFile() throws Exception {
         super.readCsvFile(DATABASE_TYPE, myEntries);
     }
 

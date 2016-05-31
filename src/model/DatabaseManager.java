@@ -57,7 +57,7 @@ public abstract class DatabaseManager<T> {
     }
 
     @SuppressWarnings("unchecked")
-	public void readCsvFile(int theType, Map<Integer, Entry> theEntriesMap) {
+	public void readCsvFile(int theType, Map<Integer, Entry> theEntriesMap) throws Exception{
         try {
         	T theData = null;
         	String[] theInfo;
@@ -102,6 +102,7 @@ public abstract class DatabaseManager<T> {
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());
+            throw e;
         }
     }
 
