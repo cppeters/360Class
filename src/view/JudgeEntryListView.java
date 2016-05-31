@@ -1,5 +1,6 @@
 package view;
 
+import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import model.Contest;
@@ -12,5 +13,7 @@ public interface JudgeEntryListView extends Viewable {
 
 
 	public void setEntryList(Entry[] theEntry, Contest contest);
+
+	public void addPreview(Entry seclectedEntry);
 	
 }

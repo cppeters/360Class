@@ -6,6 +6,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import javax.swing.AbstractAction;
+import javax.swing.JList;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
@@ -77,13 +78,25 @@ public class JudgeController {
 
 			// Show the entries from the contest
 			@Override
-			public void valueChanged(ListSelectionEvent e) {
-				if (!e.getValueIsAdjusting()) {
+			public void valueChanged(ListSelectionEvent Event) {
+				if (!Event.getValueIsAdjusting()) {
 					JudgeEntryListView ElistView = myView.getJugdgeEntryListView();
-					ElistView.setEntryList(allEntries(),((ContestList)e.getSource()).getSelectedValue());
-					myView.showPage(ElistView);
-					addToHistory(ClistView);
-					System.out.println(((ContestList)e.getSource()).getSelectedValue().getName());
+					Contest seclectedContest = ((JList<Contest>) Event.getSource()).getSelectedValue();
+					if (seclectedContest != null) {
+						ElistView.setEntryList(getEntries(seclectedContest.getContestNumber()),seclectedContest);
+						ElistView.addEntryListListener(new ListSelectionListener() {
+							@Override
+							public void valueChanged(ListSelectionEvent Event) {
+								if (!Event.getValueIsAdjusting()) {
+									Entry seclectedEntry = ((JList<Entry>) Event .getSource()) .getSelectedValue();
+									ElistView .addPreview(seclectedEntry);
+									}
+								}
+							});
+						myView.showPage(ElistView);
+						addToHistory(ClistView);
+						ClistView.clearSelection();
+					}
 				}
 			}
 		});
@@ -95,8 +108,8 @@ public class JudgeController {
 		return contests.toArray(new Contest[contests.size()]);
 	}
 	
-	private Entry[] allEntries() {
-		List<Entry> entries = myEntryDBManager.getAllEntries();
+	private Entry[] getEntries(int theContestNumber) {
+		List<Entry> entries = myEntryDBManager.getEntries(theContestNumber);
 		return entries.toArray(new Entry[entries.size()]);
 	}
 }

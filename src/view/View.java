@@ -57,7 +57,7 @@ public class View {
 		contentPanel.add(pageRegion, BorderLayout.CENTER);
 		myFrame.setContentPane(contentPanel);		
 		myFrame.setPreferredSize(new Dimension(500,300));
-		myFrame.setResizable(true);
+		myFrame.setResizable(false);
 		myFrame.setTitle("Library Contest App");
 		myFrame.setVisible(true);
 	}
@@ -157,7 +157,7 @@ public class View {
 		appBanner.setFont(appBanner.getFont().deriveFont (20.0f));
 		
 		// Create and resize the logo
-		ImageIcon imageIcon = new ImageIcon(new ImageIcon("ex_logo.jpg").getImage().getScaledInstance(62, 62, Image.SCALE_DEFAULT));
+		ImageIcon imageIcon = new ImageIcon(new ImageIcon("logo.png").getImage().getScaledInstance(62, 62, Image.SCALE_DEFAULT));
 		JLabel logoLabel = new JLabel(imageIcon);
 		westPanel.add(logoLabel);
 		

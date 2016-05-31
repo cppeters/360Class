@@ -96,6 +96,7 @@ public class ContestList extends JList<Contest> {
 			namePanel.add(nameLab);
 			dateContainer.add(sDateLabel);
 			dateContainer.add(eDateLabel);
+			
 
 			container.add(namePanel);
 			container.add(dateContainer);
@@ -115,6 +116,7 @@ public class ContestList extends JList<Contest> {
 			list.setToolTipText(value.getDescription());
 			sDateLabel.setText(value.getStartDate());
 			eDateLabel.setText(value.getEndDate());
+			
 
 			/*
 			 * The following two statements are from StackOverFlow problem

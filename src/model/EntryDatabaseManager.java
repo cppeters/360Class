@@ -79,6 +79,30 @@ public class EntryDatabaseManager {//extends DatabaseManager<Entry>{
     public List<Entry> getAllEntries() {
         return entries;
     }
+    
+    /**
+     * @author Lan
+     * @param theContestNumber
+     */
+    public List<Entry> getEntries(int theContestNumber) {
+    	List<Entry>subListEntriess = new ArrayList<>();
+    	for(int index = 0; index < entries.size(); index++){
+    		if(entries.get(index).getContest() == theContestNumber){
+    			subListEntriess.add(entries.get(index));
+    		}
+    	} 	 
+        return subListEntriess;
+    }
+    
+//    public int getTotalEntriesFromContest(int theContestNumber) {
+//    	List<Entry>subListEntriess = new ArrayList<>();
+//    	for(int index = 0; index < entries.size(); index++){
+//    		if(entries.get(index).getContest() == theContestNumber){
+//    			subListEntriess.add(entries.get(index));
+//    		}
+//    	} 	 
+//        return subListEntriess.size();
+//    }
 
     public EntryDatabaseManager(String filename)  {
         entryCounter = 0;
