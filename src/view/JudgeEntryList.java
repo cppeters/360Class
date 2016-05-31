@@ -46,6 +46,7 @@ public class JudgeEntryList extends JList<Entry> {
 		return true;
 	}
 	
+	
 	/**
 	 * Makes a panel that aligns with the list cells if they are in the same
 	 * container, showing the column names.
@@ -59,7 +60,6 @@ public class JudgeEntryList extends JList<Entry> {
 		container.add(new JLabel("Entry#"));
 		columnTitleRow.add(new JLabel("Card#"));
 		columnTitleRow.add(new JLabel("Path"));
-//		dateContainer.add(new JLabel("Contest"));
 		
 		container.add(columnTitleRow);
 		return container;
@@ -131,5 +131,6 @@ public class JudgeEntryList extends JList<Entry> {
 
 			return container;
 		}
+		
 	}
 }

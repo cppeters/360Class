@@ -78,14 +78,25 @@ public class JudgeController {
 
 			// Show the entries from the contest
 			@Override
-			public void valueChanged(ListSelectionEvent e) {
-				if (!e.getValueIsAdjusting()) {
+			public void valueChanged(ListSelectionEvent Event) {
+				if (!Event.getValueIsAdjusting()) {
 					JudgeEntryListView ElistView = myView.getJugdgeEntryListView();
-					Contest seclectedContest = ((JList<Contest>) e.getSource()).getSelectedValue();
-					ElistView.setEntryList(getEntries(seclectedContest.getContestNumber()), seclectedContest);
-					myView.showPage(ElistView);
-					addToHistory(ClistView);
-					System.out.println(((ContestList)e.getSource()).getSelectedValue().getName());
+					Contest seclectedContest = ((JList<Contest>) Event.getSource()).getSelectedValue();
+					if (seclectedContest != null) {
+						ElistView.setEntryList(getEntries(seclectedContest.getContestNumber()),seclectedContest);
+						ElistView.addEntryListListener(new ListSelectionListener() {
+							@Override
+							public void valueChanged(ListSelectionEvent Event) {
+								if (!Event.getValueIsAdjusting()) {
+									Entry seclectedEntry = ((JList<Entry>) Event .getSource()) .getSelectedValue();
+									ElistView .addPreview(seclectedEntry);
+									}
+								}
+							});
+						myView.showPage(ElistView);
+						addToHistory(ClistView);
+						ClistView.clearSelection();
+					}
 				}
 			}
 		});
@@ -99,7 +110,6 @@ public class JudgeController {
 	
 	private Entry[] getEntries(int theContestNumber) {
 		List<Entry> entries = myEntryDBManager.getEntries(theContestNumber);
-		System.out.println(myEntryDBManager.getEntries(theContestNumber));
 		return entries.toArray(new Entry[entries.size()]);
 	}
 }

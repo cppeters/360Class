@@ -45,4 +45,9 @@ public class JudgeContestListViewImp implements JudgeContestListView {
 		myList.setListData(theContest);
 	}
 
+	@Override
+	public void clearSelection() {
+		myList.clearSelection();
+		
+	}
 }
