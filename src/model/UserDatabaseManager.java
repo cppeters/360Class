@@ -13,7 +13,7 @@ public class UserDatabaseManager extends DatabaseManager<User>{
     private Map<Integer,Entry> myEntries;
 
 
-    public UserDatabaseManager(String theFileName, EntryDatabaseManager theEntryDatabase) {
+    public UserDatabaseManager(String theFileName, EntryDatabaseManager theEntryDatabase) throws Exception {
         super(theFileName);
         myEntries = theEntryDatabase.getMap();
     }

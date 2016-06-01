@@ -2,6 +2,7 @@ package controller;
 
 import java.awt.event.ActionEvent;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -108,11 +109,16 @@ public class JudgeController {
 		List<Contest> contests = myContestDBManager.getAllItems();
 		return contests.toArray(new Contest[contests.size()]);
 	}
-	
-	private Entry[] getEntries(int theContestNumber) {
-		List<Entry> entries = myEntryDBManager.getEntries(theContestNumber);
-		return entries.toArray(new Entry[entries.size()]);
-	}
+
+    private Entry[] getEntries(int theContestNumber) {
+        List<Entry> entries = new ArrayList<>();
+        for(int index = 0; index < myEntryDBManager.getAllItems().size(); index++){
+            if(myEntryDBManager.getAllItems().get(index).getContest() == theContestNumber){
+                entries.add(myEntryDBManager.getAllItems().get(index));
+            }
+        }
+        return entries.toArray(new Entry[entries.size()]);
+    }
 }
 
 		

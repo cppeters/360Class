@@ -97,7 +97,7 @@ public class AdminController {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					onAddingContest(theForm, theListView);
-				} catch (FileNotFoundException e1) {
+				} catch (Exception e1) {
 					e1.printStackTrace();
 				}
 			}
@@ -112,7 +112,7 @@ public class AdminController {
 	 * To be called when the user submits a new contest form.
 	 * Adds new contest to db and updates list view.
 	 */
-	private void onAddingContest(NewContestForm theForm, AdminContestListView theListView) throws FileNotFoundException {
+	private void onAddingContest(NewContestForm theForm, AdminContestListView theListView) throws Exception {
 		String[] formInfo = theForm.getFormInfo();
 		if (formInfo.length >= 4 && addContest(formInfo[0], formInfo[1], formInfo[2], formInfo[3])) {
 			theForm.setMessage("Contest added!");
@@ -129,7 +129,7 @@ public class AdminController {
 	 * adds contest to db and returns true.
 	 * @return
 	 */
-	private boolean addContest(String name, String description, String startDate, String endDate) throws FileNotFoundException {
+	private boolean addContest(String name, String description, String startDate, String endDate) throws Exception {
 		boolean added = false;
 		if (name != null && !name.isEmpty() && description != null && !description.isEmpty() && startDate != null
 			&& !startDate.isEmpty() && endDate != null && !endDate.isEmpty()) {
