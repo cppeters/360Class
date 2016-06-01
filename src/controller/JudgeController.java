@@ -88,7 +88,8 @@ public class JudgeController {
 							@Override
 							public void valueChanged(ListSelectionEvent Event) {
 								if (!Event.getValueIsAdjusting()) {
-									Entry seclectedEntry = ((JList<Entry>) Event .getSource()) .getSelectedValue();
+									Entry seclectedEntry = ((JList<Entry>) Event.getSource()) .getSelectedValue();
+									System.out.println(((JList<Entry>) Event.getSource()) .getSelectedValue().getClass());
 									ElistView .addPreview(seclectedEntry);
 									}
 								}
