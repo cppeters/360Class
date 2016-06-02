@@ -10,7 +10,7 @@ public class EntryDatabaseManager extends DatabaseManager<Entry> {
     // EntryDatabaseManager is type 2
     private final static int DATABASE_TYPE = 2;
 
-    public EntryDatabaseManager(String theFileName) {
+    public EntryDatabaseManager(String theFileName) throws Exception {
         super(theFileName);
 
     }
@@ -20,36 +20,29 @@ public class EntryDatabaseManager extends DatabaseManager<Entry> {
         super.readCsvFile(DATABASE_TYPE, null);
     }
 
-    public void writeCsvFile() throws FileNotFoundException {
+    public void writeCsvFile() throws Exception {
         super.writeCsvFile(DATABASE_TYPE);
     }
 
-    public void addEntry(Entry entry) throws FileNotFoundException {
+    public void addEntry(Entry entry) throws Exception {
+        super.getMap().put(super.getItemCount() + 1, entry);
         super.updateCount();
-        super.getMap().put(super.getItemCount(), entry);
+        super.getAllItems().add(entry);
         writeCsvFile();
     }
 
-    public void updateEntry(Entry theOldEntry, Entry theNewEntry) throws FileNotFoundException {
+    public void updateEntry(Entry theOldEntry, Entry theNewEntry) throws Exception {
+        // Update the Map
         for (int i : super.getMap().keySet()) {
             if (super.getMap().get(i).equals(theOldEntry)) {
                 super.getMap().replace(i, theNewEntry);
             }
         }
-        writeCsvFile();
-    }
 
-    /**
-     * @author Lan
-     * @param theContestNumber
-     */
-    public List<Entry> getEntries(int theContestNumber) {
-        List<Entry>subListEntries = new ArrayList<>();
-        for(int index = 0; index < super.getAllItems().size(); index++){
-            if(super.getAllItems().get(index).getContest() == theContestNumber){
-                subListEntries.add(super.getAllItems().get(index));
-            }
-        }
-        return subListEntries;
+        // Update the List
+        super.getAllItems().set(super.getAllItems().indexOf(theOldEntry), theNewEntry);
+
+        // Save changes
+        writeCsvFile();
     }
 }

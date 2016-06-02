@@ -178,7 +178,7 @@ public class ContestantContestViewImp implements ContestantContestView {
 							try {
 								theUser.updateEntry(theUser.getEntries().indexOf(e), theEntry, 
 										theEntryDatabase);
-							} catch (FileNotFoundException e1) {
+							} catch (Exception e1) {
 								// TODO Auto-generated catch block
 								e1.printStackTrace();
 							}
@@ -196,7 +196,7 @@ public class ContestantContestViewImp implements ContestantContestView {
 			
 				try {
 					theUser.addEntry(e, theEntryDatabase);
-				} catch (FileNotFoundException e1) {
+				} catch (Exception e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}

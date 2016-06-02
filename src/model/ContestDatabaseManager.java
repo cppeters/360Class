@@ -9,7 +9,7 @@ public class ContestDatabaseManager extends DatabaseManager<Contest>{
     // ContestDatabaseManager is type 1
     private final static int DATABASE_TYPE = 1;
 
-    public ContestDatabaseManager(String theFileName) {
+    public ContestDatabaseManager(String theFileName) throws Exception {
         super(theFileName);
     }
 
@@ -17,7 +17,7 @@ public class ContestDatabaseManager extends DatabaseManager<Contest>{
         super.readCsvFile(DATABASE_TYPE, null);
     }
 
-    public void writeCsvFile() throws FileNotFoundException {
+    public void writeCsvFile() throws Exception {
         super.writeCsvFile(DATABASE_TYPE);
     }
 
@@ -31,7 +31,7 @@ public class ContestDatabaseManager extends DatabaseManager<Contest>{
      * @return true on success; false otherwise.
      */
     public boolean addContest(String contestName, String contestDescription, String startDate,
-                              String endDate) throws FileNotFoundException {
+                              String endDate) throws Exception {
         if (contestNameIsUnique(contestName)) {
             int contestCounter = super.getItemCount();
             super.updateCount();

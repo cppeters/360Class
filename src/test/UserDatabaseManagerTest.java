@@ -1,12 +1,10 @@
 package test;
 
-import static com.sun.xml.internal.ws.dump.LoggingDumpTube.Position.Before;
 import static org.junit.Assert.*;
 
 import java.io.FileNotFoundException;
 import org.junit.Before;
 import org.junit.Test;
-import model.ContestDatabaseManager;
 import model.EntryDatabaseManager;
 import model.UserDatabaseManager;
 
@@ -16,22 +14,19 @@ import model.UserDatabaseManager;
  *
  */
 public class UserDatabaseManagerTest {
+
+	// Instances fields
 	private static final String USER_FILE = "User.csv";
-	private static final String CONTEST_FILE = "Contests.csv";
 	private static final String ENTRY_FILE = "Entries.csv";
-	private ContestDatabaseManager myContestDB;
 	private EntryDatabaseManager myEntryDB;
 	private UserDatabaseManager myUserDB;
 	
 	/**
-	 * 
+	 * Setup method for testing.
 	 * @throws Exception
 	 */
 	@Before
 	public void setUp() throws Exception {
-		myContestDB = new ContestDatabaseManager(CONTEST_FILE);
-		myContestDB.readCsvFile();
-
         myEntryDB = new EntryDatabaseManager(ENTRY_FILE);
         myEntryDB.readCsvFile();
         

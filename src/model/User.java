@@ -26,8 +26,6 @@ public class User {
 
     }
 
-
-
     public String getType() {
         return type;
     }
@@ -49,23 +47,23 @@ public class User {
     }
 
     //When a new entry is added
-    public void addEntry(Entry entry, EntryDatabaseManager entryDatabase) throws FileNotFoundException{
+    public void addEntry(Entry entry, EntryDatabaseManager entryDatabase) throws Exception{
 
         //adds the entry to the actual db entry list
         entryDatabase.addEntry(entry);
         entries.add(entry);
     }
-    
-    
+
     /**
      * @author Casey
+     *
      * @param theOldEntryIdx
      * @param theNewEntry
      * @param theEntryDatabase
-     * @throws FileNotFoundException 
+     * @throws Exception
      */
     public void updateEntry(int theOldEntryIdx, Entry theNewEntry, 
-    		EntryDatabaseManager theEntryDatabase) throws FileNotFoundException {
+    		EntryDatabaseManager theEntryDatabase) throws Exception {
     	
     	theEntryDatabase.updateEntry(entries.get(theOldEntryIdx), theNewEntry);
     	entries.set(theOldEntryIdx, theNewEntry);		
