@@ -158,26 +158,25 @@ public class JudgeEntryListViewImp implements JudgeEntryListView {
 		}
 		myJudgeSumissionButton.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent event) {
-				if (my1stRankingPlace.getSelectedItem()
+				if(my1stRankingPlace.getSelectedItem().equals(none)){
+					JOptionPane.showMessageDialog(myPanel,"1st place cannot be empty"
+							+ "", "Warning",JOptionPane.WARNING_MESSAGE);
+				}else if (my1stRankingPlace.getSelectedItem()
 						.equals(my2ndRankingPlace.getSelectedItem())
 						|| my2ndRankingPlace.getSelectedItem()
 								.equals(my3rdRankingPlace.getSelectedItem())) {
+					if(!(my2ndRankingPlace.getSelectedItem().equals(none)))
 					JOptionPane.showMessageDialog(myPanel,"One entry can't has two ranking"
 							+ "", "Warning",JOptionPane.WARNING_MESSAGE);
+					else{
+						myEntryCountandResultlabel.setText(myEntryCountandResultlabel.getText() + " JUDGED");
+					}
 				} else {
 					myEntryCountandResultlabel.setText(myEntryCountandResultlabel.getText() + " JUDGED");
 				}
 			}
 		});
-	}
-
-		
-		
-		
-//		my1stRankingPlace = new JComboBox<String>();
-//		my2ndRankingPlace = new JComboBox<String>();
-//		my3rdRankingPlace = new JComboBox<String>();
-		
+	}	
 
 	@Override
 	public void addPreview(Entry theEntry) {

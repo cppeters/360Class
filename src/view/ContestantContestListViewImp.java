@@ -34,8 +34,8 @@ public class ContestantContestListViewImp implements ContestantContestListView {
 		
 		JPanel listPanel = new JPanel();
 		listPanel.setLayout(new BoxLayout(listPanel, BoxLayout.Y_AXIS));
-		mySubMadeList = new JList<>(); 
-		myNoSubMadeList = new JList<>();
+		mySubMadeList = new ContestList(); 
+		myNoSubMadeList = new ContestList();
 		
 		
 		
@@ -52,13 +52,16 @@ public class ContestantContestListViewImp implements ContestantContestListView {
 		description.setForeground(Color.black);
 		listPanel.add(description);
 		
-		//testing
-		JPanel title = new JPanel(new GridLayout(1, 2));
-		title.add(new JLabel("No"));
-		title.add(new JLabel("Name"));
-		title.add(new JLabel("Start Date"));
-		title.add(new JLabel("End Date"));
-		listPanel.add(title);
+//		//testing
+//		JPanel title = new JPanel(new GridLayout(1, 2));
+//		title.add(new JLabel("No"));
+//		title.add(new JLabel("Name"));
+//		title.add(new JLabel("Start Date"));
+//		title.add(new JLabel("End Date"));
+//		listPanel.add(title);
+		
+		listPanel.add(ContestList.getColumnTitleHeader());
+		
 		listPanel.add(new JScrollPane(myNoSubMadeList));
 		
 		
