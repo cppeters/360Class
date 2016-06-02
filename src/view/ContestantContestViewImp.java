@@ -62,8 +62,9 @@ public class ContestantContestViewImp implements ContestantContestView {
 		myEntryNamelbl = new JLabel("Entry Name");
 		myContestName = new JLabel();
 		myImagelbl = new JLabel();
-		mySpacer1 = new JLabel("                                                                                     ");
-		mySpacer2 = new JLabel("                 ");		
+		mySpacer1 = new JLabel("                                                 " +
+				               "                                                    ");
+		mySpacer2 = new JLabel("                 ");
 		mySpacer3 = new JLabel("                      ");
 		myEntryFilePath = new JTextField(25);		
 		myEntryText = new JTextField(25);
@@ -177,7 +178,7 @@ public class ContestantContestViewImp implements ContestantContestView {
 							try {
 								theUser.updateEntry(theUser.getEntries().indexOf(e), theEntry, 
 										theEntryDatabase);
-							} catch (FileNotFoundException e1) {
+							} catch (Exception e1) {
 								// TODO Auto-generated catch block
 								e1.printStackTrace();
 							}
@@ -189,13 +190,13 @@ public class ContestantContestViewImp implements ContestantContestView {
 				}
 			}
 			else{
-				Entry e = new Entry(theEntryDatabase.getTotalEntries() + 1, 
+				Entry e = new Entry(theEntryDatabase.getItemCount() + 1,
 					theUser.getCardNumber(), myEntryFilePath.getText(), 
 					theContest.getContestNumber(), myEntryText.getText());
 			
 				try {
 					theUser.addEntry(e, theEntryDatabase);
-				} catch (FileNotFoundException e1) {
+				} catch (Exception e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}

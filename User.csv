@@ -4,5 +4,6 @@ CardNumber,Name,Age,Pin,Type
 3,Tim Kal,45,testing,ADMIN
 4,Kylie Smith,10,ieie,CONTESTANT
 5,Tabi Stein,21,pin123,CONTESTANT
-6,Timmy Tim,20,kdkd,JUDGE
+6,Timmy Tim,20,6,JUDGE
 7,Timmy Tim,20,kdkd,JUDGE
+8,Rintaro Okabe,18,8,CONTESTANT

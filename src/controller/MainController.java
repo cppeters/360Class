@@ -46,7 +46,7 @@ public class MainController {
 	 * the {@link #onLogin(User)} method.
 	 */
 	private void onLoginScreen() {		
-		LoginView aLoginView = myView.getLoginView();
+		final LoginView aLoginView = myView.getLoginView();
 		aLoginView.addLoginButtonListener(new AbstractAction() {
 			@Override
 			public void actionPerformed(ActionEvent e) {

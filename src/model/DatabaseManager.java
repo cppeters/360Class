@@ -3,10 +3,7 @@
  */
 package model;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.PrintWriter;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -33,18 +30,24 @@ public abstract class DatabaseManager<T> {
     private int myCounter;
 
 
-    public DatabaseManager(String theFileName)  {
+    public DatabaseManager(String theFileName) throws Exception {
         myItems = new ArrayList<>();
-        myFileName = theFileName;
         myMap = new HashMap<>();
         myCounter = 0;
+
+        File theFile = new File(theFileName);
+        String theFileStr = theFile.getAbsolutePath();
+        String theFileType = theFileStr.substring(theFileStr.lastIndexOf('.') + 1);
+        if (!theFile.exists()) throw new FileNotFoundException();
+        else if (!theFileType.equals("csv")) throw new NumberFormatException();
+        else myFileName = theFileName;
     }
     
-    public List<T> getAll() {
+    public List<T> getAllItems() {
         return myItems;
     }
     
-    public int getCount() {
+    public int getItemCount() {
     	return myCounter;
     }
     
@@ -57,7 +60,7 @@ public abstract class DatabaseManager<T> {
     }
 
     @SuppressWarnings("unchecked")
-	public void readCsvFile(int theType, Map<Integer, Entry> theEntriesMap) {
+	public void readCsvFile(int theType, Map<Integer, Entry> theEntriesMap) throws Exception{
         try {
         	T theData = null;
         	String[] theInfo;
@@ -102,28 +105,30 @@ public abstract class DatabaseManager<T> {
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());
+            throw e;
         }
     }
 
-    public void writeCsvFile(int theType) throws FileNotFoundException{        
+    public void writeCsvFile(int theType) throws Exception {
+
         PrintWriter pw = new PrintWriter(myFileName);
         StringBuilder sb = new StringBuilder();
-        switch(theType) {
-        case 1:
-        	sb.append(CONTEST_FILE_HEADER);
-        	break;
-        case 2:
-        	sb.append(ENTRY_FILE_HEADER);
-        	break;
-        case 3:
-        	sb.append(USER_FILE_HEADER);
-        	break;
-        default:
-        	break;
+        switch (theType) {
+            case 1:
+                sb.append(CONTEST_FILE_HEADER);
+                break;
+            case 2:
+                sb.append(ENTRY_FILE_HEADER);
+                break;
+            case 3:
+                sb.append(USER_FILE_HEADER);
+                break;
+            default:
+                break;
         }
         sb.append(NEW_LINE_SEPARATOR);
-        for (int i : myMap.keySet()){
-        	sb.append(myMap.get(i).toString());
+        for (int i : myMap.keySet()) {
+            sb.append(myMap.get(i).toString());
             sb.append(NEW_LINE_SEPARATOR);
         }
         pw.write(sb.toString());

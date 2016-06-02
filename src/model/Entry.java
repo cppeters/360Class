@@ -44,4 +44,26 @@ public class Entry {
         		"," + contest;
     }
 
+    @Override
+    public boolean equals(Object theObject) {
+        boolean result = false;
+        if(theObject == null) result = false;
+        final Entry theOther = (Entry) theObject;
+        if (this.getClass().equals(theObject.getClass())  &&
+                (this.entryName.equals(theOther.entryName) &&
+                (this.cardNumber == theOther.cardNumber) &&
+                (this.contest) == theOther.contest) &&
+                (this.filePath.equals(theOther.filePath)) &&
+                (this.entryNumber == theOther.entryNumber))
+            result = true;
+        return result;
+    }
+
+    @Override
+    public int hashCode(){
+        int result = 0;
+        result = (int) this.entryNumber / 11;
+        return result;
+    }
+
 }

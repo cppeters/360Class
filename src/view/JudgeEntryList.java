@@ -10,27 +10,27 @@ import java.awt.event.ComponentEvent;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 import javax.swing.JTextArea;
 import javax.swing.ListCellRenderer;
 
 import model.Entry;
 
 /**
- * A list that can be used anywhere to display a list of 
+ * A list that can be used anywhere to display a list of Entries
  * 
  * Some information necessary for allowing word wrap in text areas inside of
  * JList are taken from StackOverFlow problem #7306295, solution by user
  * kleopatra.
  * 
  * @author Tabi
+ * @author Lan
  */
-@SuppressWarnings("serial")
 public class JudgeEntryList extends JList<Entry> {
 
 	private static final Color HUSKY_PURPLE = new Color(177, 144, 212);
 
 	public JudgeEntryList() {
-	      System.out.println("fffffffffffffffffffffffffffffffff");
 		this.setCellRenderer(new EntryListCellRenderer());
 		this.addComponentListener(new ComponentAdapter() {
 
@@ -39,7 +39,6 @@ public class JudgeEntryList extends JList<Entry> {
 				setFixedCellHeight(10);
 				setFixedCellHeight(-1);
 			}
-
 		});
 	}
 
@@ -48,7 +47,7 @@ public class JudgeEntryList extends JList<Entry> {
 		return true;
 	}
 	
-
+	
 	/**
 	 * Makes a panel that aligns with the list cells if they are in the same
 	 * container, showing the column names.
@@ -56,13 +55,14 @@ public class JudgeEntryList extends JList<Entry> {
 	 * @return the header panel.
 	 */
 	public static Component getColumnTitleHeader() {
-		JPanel dateContainer = new JPanel(new GridLayout(1, 2));
-		dateContainer.setOpaque(false);
+		JPanel columnTitleRow = new JPanel(new GridLayout(1, 2));
+		columnTitleRow.setOpaque(false);
 		JPanel container = new JPanel(new GridLayout(1, 2));
-		container.add(new JLabel("Entry"));
-		dateContainer.add(new JLabel("Name"));
-		dateContainer.add(new JLabel("somthing"));
-		container.add(dateContainer);
+		container.add(new JLabel("Entry#"));
+		columnTitleRow.add(new JLabel("Card#"));
+		columnTitleRow.add(new JLabel("Path"));
+		
+		container.add(columnTitleRow);
 		return container;
 	}
 
@@ -72,19 +72,20 @@ public class JudgeEntryList extends JList<Entry> {
 	 * tip text for the Contest's description.
 	 * 
 	 * @author Tabi
+	 * @author Lan
 	 */
 	private class EntryListCellRenderer implements ListCellRenderer<Entry> {
 
 		private final JPanel container;
 
 		private final JTextArea nameLab;
-		private final JLabel sDateLabel;
-		private final JLabel eDateLabel;
-
+		private final JLabel cardLabel;
+		private final JLabel pathLabel;
+		
 		public EntryListCellRenderer() {
-			JPanel dateContainer = new JPanel(new GridLayout(1, 2));
+			JPanel infoColumns = new JPanel(new GridLayout(1, 2));
 			JPanel namePanel = new JPanel(new BorderLayout());
-			dateContainer.setOpaque(false);
+			infoColumns.setOpaque(false);
 			namePanel.setOpaque(false);
 
 			container = new JPanel(new GridLayout(1, 2));
@@ -92,21 +93,22 @@ public class JudgeEntryList extends JList<Entry> {
 			nameLab.setLineWrap(true);
 			nameLab.setWrapStyleWord(true);
 			nameLab.setOpaque(false);
-			sDateLabel = new JLabel();
-			eDateLabel = new JLabel();
-
+			
+			cardLabel = new JLabel();
+			pathLabel = new JLabel();
+		
+			
 			namePanel.add(nameLab);
-			dateContainer.add(sDateLabel);
-			dateContainer.add(eDateLabel);
-
+			infoColumns.add(cardLabel);
+			infoColumns.add(pathLabel);
+			
 			container.add(namePanel);
-			container.add(dateContainer);
+			container.add(infoColumns);
 		}
 
 		@Override
 		public Component getListCellRendererComponent(JList<? extends Entry> list, Entry value, int index,
 				boolean isSelected, boolean cellHasFocus) {
-
 			if (isSelected) {
 				container.setBackground(HUSKY_PURPLE);
 			} else if (cellHasFocus) {
@@ -114,25 +116,24 @@ public class JudgeEntryList extends JList<Entry> {
 			} else {
 				container.setBackground(Color.WHITE);
 			}
-			list.setToolTipText("" + value.getCardNumber());
-			sDateLabel.setText(value.getFilePath());
-			eDateLabel.setText(value.getEntryName());
-
+			
+//			list.setToolTipText();
+			cardLabel.setText("" + value.getCardNumber());
+			pathLabel.setText("" + value.getFilePath());
+			pathLabel.setToolTipText("" + value.getFilePath());
 			/*
 			 * The following two statements are from StackOverFlow problem
 			 * #7306295, solution by user kleopatra. Necessary for allowing text
 			 * area to be multi-line.
 			 */
 			int width = list.getWidth();
-			if (width > 0)
+			if (width > 0){
 				nameLab.setSize(width / 2, Short.MAX_VALUE);
+			}
+			nameLab.setText(value.getEntryName());
 
-			nameLab.setText("hello");
-            System.out.println("fffffffffffffffffffffffffffffffff");
 			return container;
 		}
-
+		
 	}
-
-
 }

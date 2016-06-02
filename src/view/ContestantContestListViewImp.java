@@ -2,6 +2,7 @@ package view;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.GridLayout;
 
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
@@ -28,34 +29,47 @@ public class ContestantContestListViewImp implements ContestantContestListView {
 	private final JList<Contest> myNoSubMadeList;
 	
 	public ContestantContestListViewImp() {
+		
 		myPanel = new JPanel(new BorderLayout()); 
 		
 		JPanel listPanel = new JPanel();
 		listPanel.setLayout(new BoxLayout(listPanel, BoxLayout.Y_AXIS));
-		mySubMadeList = new JList<>(); 
-		myNoSubMadeList = new JList<>();
+		mySubMadeList = new ContestList(); 
+		myNoSubMadeList = new ContestList();
 		
 		
 		
 		
-		//mySubMadeList.setVisibleRowCount(5);
+		
 		mySubMadeList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		myNoSubMadeList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		mySubMadeList.setBorder(new EmptyBorder(20,20,20,20));
-		myNoSubMadeList.setBorder(new EmptyBorder(20,20,20,20));
-		
-		listPanel.setBackground(Color.lightGray);
+		mySubMadeList.setBorder(new EmptyBorder(5,0,0,5));
+		myNoSubMadeList.setBorder(new EmptyBorder(5,0,0,5));
 		
 		
-		JLabel description = new JLabel("Contests You Have Not Submitted to:");
-		description.setForeground(Color.MAGENTA);
+		
+		JLabel description = new JLabel("Contests You Have Not Submitted to");
+		description.setForeground(Color.black);
 		listPanel.add(description);
+		
+//		//testing
+//		JPanel title = new JPanel(new GridLayout(1, 2));
+//		title.add(new JLabel("No"));
+//		title.add(new JLabel("Name"));
+//		title.add(new JLabel("Start Date"));
+//		title.add(new JLabel("End Date"));
+//		listPanel.add(title);
+		
+		listPanel.add(ContestList.getColumnTitleHeader());
+		
 		listPanel.add(new JScrollPane(myNoSubMadeList));
 		
 		
-		//listPanel.add(myNoSubMadeList);
-		listPanel.add(new JLabel("Contests You Have Already Submitted to:"));
+	
 		
+		JLabel description1 = new JLabel("Contests You Have Already Submitted to");
+		description1.setForeground(Color.black);
+		listPanel.add(description1);
 		listPanel.add(new JScrollPane(mySubMadeList));
 		myPanel.add(listPanel);
 	}

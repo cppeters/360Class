@@ -9,7 +9,7 @@ package model;
  */
 public class JudgeDatabaseManager extends DatabaseManager{
 
-	public JudgeDatabaseManager(String theFileName) {
+	public JudgeDatabaseManager(String theFileName) throws Exception {
 		super(theFileName);
 	}
 	

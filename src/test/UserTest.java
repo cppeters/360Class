@@ -38,14 +38,14 @@ public class UserTest {
 	public void setUp() throws Exception {
 		myContestDB = new ContestDatabaseManager(CONTEST_FILE);
 		myContestDB.readCsvFile();
-		myContest = myContestDB.getAllContests().get(1);
+		myContest = myContestDB.getAllItems().get(1);
 		
         myEntryDB = new EntryDatabaseManager(ENTRY_FILE);
         myEntryDB.readCsvFile();
         
         myUserDB = new UserDatabaseManager(USER_FILE, myEntryDB);
         myUserDB.readCsvFile();
-        myUser = myUserDB.getUserMap().get(1);
+        myUser = myUserDB.getMap().get(1);
 	}
 
 	/**
@@ -53,7 +53,7 @@ public class UserTest {
 	 * @throws FileNotFoundException 
 	 */
 	@Test
-	public void testAddEntry() throws FileNotFoundException {
+	public void testAddEntry() throws Exception {
 		Entry theEntry = new Entry(0, 
 				myUser.getCardNumber(), "Path Test", 
 				myContest.getContestNumber(), "Name Test");
@@ -63,11 +63,11 @@ public class UserTest {
 		// Check if entries size increased
 		assertEquals(total + 1, myUser.getEntries().size());
 		
-		// Check if myEntry was added to myUser entries list
+		// Check if theEntry was added to myUser entries list
 		assertEquals(theEntry, myUser.getEntries().get(myUser.getEntries().size() - 1));
 		
-		// Check if myEntry was added to myEntryDB
-		assertEquals(theEntry, myEntryDB.getEntryMap().get(myEntryDB.getTotalEntries()));
+		// Check if theEntry was added to myEntryDB Map
+		assertEquals(theEntry, myEntryDB.getMap().get(myEntryDB.getItemCount()));
 	}
 
 	/**
@@ -75,8 +75,8 @@ public class UserTest {
 	 * @throws FileNotFoundException 
 	 */
 	@Test
-	public void testUpdateEntry() throws FileNotFoundException {
-		Entry theOldEntry = new Entry(0, myUser.getCardNumber(), "Path Test 2", 
+	public void testUpdateEntry() throws Exception {
+		Entry theOldEntry = new Entry(0, myUser.getCardNumber(), "Path Test 2",
 				myContest.getContestNumber(), "Name Test 2");
 		Entry theNewEntry = new Entry(0, 
 				myUser.getCardNumber(), "Path Test 3", 
@@ -87,10 +87,10 @@ public class UserTest {
 		// Update the Entry
 		myUser.updateEntry(theOldEntryIdx, theNewEntry, myEntryDB);
 		
-		// Check if theOldEntry is still in myEntryDB
+		// Check if theOldEntry is still in User Map
 		assertNotEquals(theOldEntry, myUser.getEntries().get(theOldEntryIdx));
 		
-		// Check if theNewEntry was inserted in place of theOldEntry myEntryDB
+		// Check if theNewEntry was inserted in place of theOldEntry
 		assertEquals(theNewEntry, myUser.getEntries().get(theOldEntryIdx));
 	}
 

@@ -5,7 +5,6 @@ import static org.junit.Assert.*;
 import java.io.FileNotFoundException;
 import org.junit.Before;
 import org.junit.Test;
-import model.ContestDatabaseManager;
 import model.EntryDatabaseManager;
 import model.UserDatabaseManager;
 
@@ -15,22 +14,19 @@ import model.UserDatabaseManager;
  *
  */
 public class UserDatabaseManagerTest {
+
+	// Instances fields
 	private static final String USER_FILE = "User.csv";
-	private static final String CONTEST_FILE = "Contests.csv";
 	private static final String ENTRY_FILE = "Entries.csv";
-	private ContestDatabaseManager myContestDB;
 	private EntryDatabaseManager myEntryDB;
 	private UserDatabaseManager myUserDB;
 	
 	/**
-	 * 
+	 * Setup method for testing.
 	 * @throws Exception
 	 */
 	@Before
 	public void setUp() throws Exception {
-		myContestDB = new ContestDatabaseManager(CONTEST_FILE);
-		myContestDB.readCsvFile();
-
         myEntryDB = new EntryDatabaseManager(ENTRY_FILE);
         myEntryDB.readCsvFile();
         
@@ -40,14 +36,13 @@ public class UserDatabaseManagerTest {
 
 	/**
 	 * Test method for {@link model.UserDatabaseManager#readCsvFile()}.
-	 * @throws Exception
+	 * @throws FileNotFoundException
 	 */
 	@Test(expected = FileNotFoundException.class)
 	public void testReadCsvFile1() throws Exception {
 		// Test No File Found
 		UserDatabaseManager theUserDB = new UserDatabaseManager("Not a file name", myEntryDB);
 	    theUserDB.readCsvFile();
-	    
 	}
 	
 	/**
@@ -76,10 +71,10 @@ public class UserDatabaseManagerTest {
 	 * Test method for {@link model.UserDatabaseManager#checkCredentials(int, java.lang.String)}.
 	 */
 	@Test
-	public void testCheckCredientals() {
+	public void testCheckCredentials() {
 		// Credentials Fail
 		int theCardNumber = 0;
-		String thePin = "";
+		String thePin = "notapin";
 		assertNull(myUserDB.checkCredentials(theCardNumber, thePin));
 		
 		// Credentials Pass
