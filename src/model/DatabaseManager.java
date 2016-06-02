@@ -28,14 +28,12 @@ public abstract class DatabaseManager<T> {
             "CardNumber,Name,Age,Pin,Type,ContestNumber,FirstPlace,SecondPlace,ThirdPlace";
     private final String myFileName;
     private List<T> myItems;
-    private Map<Integer, T> myMap;
-    private int myCounter;
+    private Map<Integer, T> myMap;                  // Map<Unique Identifier Number, Type of Object>
 
 
     public DatabaseManager(String theFileName) throws Exception {
         myItems = new ArrayList<>();
         myMap = new HashMap<>();
-        myCounter = 0;
 
         File theFile = new File(theFileName);
         String theFileStr = theFile.getAbsolutePath();
@@ -50,11 +48,7 @@ public abstract class DatabaseManager<T> {
     }
     
     public int getItemCount() {
-    	return myCounter;
-    }
-    
-    public void updateCount() {
-    	myCounter++;
+    	return myItems.size();
     }
 
     public Map<Integer, T> getMap() {
@@ -65,6 +59,7 @@ public abstract class DatabaseManager<T> {
 	public void readCsvFile(int theType, EntryDatabaseManager theEntryDB) throws Exception{
         try {
         	T theData = null;
+            boolean notJudged = true;
         	String[] theInfo;
             String line = "";
             BufferedReader theFileReader = new BufferedReader(new FileReader(myFileName));
@@ -99,26 +94,23 @@ public abstract class DatabaseManager<T> {
                     	break;
                     // Case 4: Judge
                     case 4:
-                        if (myMap.get(Integer.parseInt(theInfo[0])) == null) {
+                        try{ //(myMap.get(Integer.parseInt(theInfo[0])) == null)
                             theData = (T) new Judge(Integer.parseInt(theInfo[0]), theInfo[1],
-                                    Integer.parseInt(theInfo[2]), theInfo[3], theInfo[4]);
-                            ((Judge)theData).setMyContestNumber(Integer.parseInt(theInfo[5]));
-                            ((Judge)theData).buildJudge(Integer.parseInt(theInfo[6]), Integer.parseInt(theInfo[7]),
-                                    Integer.parseInt(theInfo[8]), theEntryDB);
+                                    Integer.parseInt(theInfo[2]), theInfo[3], theInfo[4],
+                                    Integer.parseInt(theInfo[5]), Integer.parseInt(theInfo[6]),
+                                    Integer.parseInt(theInfo[7]), Integer.parseInt(theInfo[8]));
                         }
-                        else {
-                            Judge j = (Judge) myMap.get(Integer.parseInt(theInfo[0]));
-                            j.setMyContestNumber(Integer.parseInt(theInfo[5]));
-                            j.buildJudge(Integer.parseInt(theInfo[6]), Integer.parseInt(theInfo[7]),
-                                    Integer.parseInt(theInfo[8]), theEntryDB);
+                        catch (Exception f){
+                            notJudged = false;
                         }
                         break;
                     default:
                     	break;
                     }
-                    myMap.put(Integer.parseInt(theInfo[0]), theData);
-                    myItems.add(theData);
-                    myCounter++;
+                    if (notJudged) {
+                        myMap.put(Integer.parseInt(theInfo[0]), theData);
+                        myItems.add(theData);
+                    }
                 }
             }
         } catch (Exception e) {
@@ -148,9 +140,18 @@ public abstract class DatabaseManager<T> {
                 break;
         }
         sb.append(NEW_LINE_SEPARATOR);
-        for (int i : myMap.keySet()) {
-            sb.append(myMap.get(i).toString());
-            sb.append(NEW_LINE_SEPARATOR);
+        // If it is a Judge use the List for multiple occurrences
+        if (theType == 4) {
+            for (int i = 0; i < myItems.size(); i++) {
+                sb.append(myItems.get(i).toString());
+                sb.append(NEW_LINE_SEPARATOR);
+            }
+        }
+        else {
+            for (int i : myMap.keySet()) {
+                sb.append(myMap.get(i).toString());
+                sb.append(NEW_LINE_SEPARATOR);
+            }
         }
         pw.write(sb.toString());
         pw.close();

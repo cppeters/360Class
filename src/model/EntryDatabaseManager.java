@@ -26,7 +26,6 @@ public class EntryDatabaseManager extends DatabaseManager<Entry> {
 
     public void addEntry(Entry entry) throws Exception {
         super.getMap().put(entry.getEntryNumber(), entry);
-        super.updateCount();
         super.getAllItems().add(entry);
         writeCsvFile();
     }

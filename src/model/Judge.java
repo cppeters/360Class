@@ -1,9 +1,6 @@
 package model;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author Casey
@@ -11,56 +8,68 @@ import java.util.Map;
 public class Judge extends User {
 
     // Instance Fields
-    private Map<Integer, List<Entry>> myContests;
+    private Map<Integer, List<Integer>> myContests;         //Map<ContestNumber, List of Judged Entries>
+    List<Integer> myEntryNumbers;
     private int myContestNumber;
+    private int myFirst;
+    private int mySecond;
+    private int myThird;
+
 	
     public Judge(int theCardNumber, String theName, int theAge, String theLoginCredential,
-                 String theType) {
+                 String theType, int theContestNumber, int theFirst, int theSecond, int theThird) {
         super(theCardNumber, theName, theAge, theLoginCredential, theType);
     	myContests = new HashMap<>();
-        myContestNumber = -1;
-    }
-
-    public void setMyContestNumber(int theContestNumber) {
         myContestNumber = theContestNumber;
+        myFirst = theFirst;
+        mySecond = theSecond;
+        myThird = theThird;
+        myEntryNumbers = new ArrayList<>();
+        addToList();
     }
 
-    public void buildJudge(int theFirstPlace, int theSecondPlace, int theThirdPlace,
-                    EntryDatabaseManager theEntryDB) {
-        // Build List
-        List<Entry> theEntryJudgedList = new ArrayList<>();
-        theEntryJudgedList.add(theEntryDB.getMap().get(theFirstPlace));
-        theEntryJudgedList.add(theEntryDB.getMap().get(theSecondPlace));
-        theEntryJudgedList.add(theEntryDB.getMap().get(theThirdPlace));
-
-        // Add to Map
-        myContests.put(myContestNumber, theEntryJudgedList);
+    // Copy Constructor
+    public Judge(Judge theOtherJudge) {
+        super(theOtherJudge.getCardNumber(), theOtherJudge.getName(), theOtherJudge.getAge(),
+                theOtherJudge.getLoginCredential(), theOtherJudge.getType());
+        this.myContests = theOtherJudge.getContestsJudged();
+        this.myContestNumber = theOtherJudge.getContestNumber();
+        this.myFirst = theOtherJudge.getMyFirst();
+        this.mySecond = theOtherJudge.getMySecond();
+        this.myThird = theOtherJudge.getMyThird();
+        this.myEntryNumbers = new ArrayList<>();
+        addToList();
     }
 
+    private void addToList() {
+        // Clear and Add to List
+        myEntryNumbers.clear();
+        myEntryNumbers.add(myFirst);
+        myEntryNumbers.add(myFirst);
+        myEntryNumbers.add(myThird);
+    }
 
-    public void addContestJudged(int theFirstPlace, int theSecondPlace,
-                                 int theThirdPlace, EntryDatabaseManager theEntryDB,
-                                 JudgeDatabaseManager theJudgeDB) throws Exception {
-        // Build the Judge
-        buildJudge(theFirstPlace, theSecondPlace,
-        theThirdPlace, theEntryDB);
+    public void addContestJudged(JudgeDatabaseManager theJudgeDB) throws Exception {
+
+        // Add the new entries that have been set to List
+        addToList();
+
+        // Add to Map after contest number has been set
+        myContests.put(myContestNumber, myEntryNumbers);
 
         // Add to JudgeDB
-        theJudgeDB.addJudge(this, myContestNumber);
+        theJudgeDB.addJudge(this, super.getCardNumber());
     }
 
-    public void updateContestJudged(Entry theFirst, Entry theSecond, Entry theThird,
-                                    JudgeDatabaseManager theJudgeDB) throws Exception {
-        // Build List
-        List<Entry> theEntryJudgedList = new ArrayList<>();
-        theEntryJudgedList.add(theFirst);
-        theEntryJudgedList.add(theSecond);
-        theEntryJudgedList.add(theThird);
+    public void updateContestJudged(JudgeDatabaseManager theJudgeDB) throws Exception {
+
+        // Add the new entries that have been set to List
+        addToList();
 
         // Update Map
         for (int i : myContests.keySet()) {
             if (i == myContestNumber) {
-                myContests.replace(i, theEntryJudgedList);
+                myContests.replace(i, myEntryNumbers);
             }
         }
 
@@ -68,13 +77,63 @@ public class Judge extends User {
         theJudgeDB.updateJudge(this, myContestNumber);
     }
 
-    public Map<Integer, List<Entry>> getContestsJudged() {
+    public Map<Integer, List<Integer>> getContestsJudged() {
         return myContests;
     }
-
 
     public int getContestNumber() {
         return myContestNumber;
     }
 
+    public void setMyContestNumber(int theContestNumber) {
+        myContestNumber = theContestNumber;
+    }
+
+    public void setMyFirst(int theFirst) { myFirst = theFirst; }
+
+    public void setMySecond(int theSecond) { mySecond = theSecond; }
+
+    public void setMyThird (int theThird) { myThird = theThird; }
+
+    public int getMyFirst() { return myFirst; }
+
+    public int getMySecond() { return mySecond; }
+
+    public int getMyThird () { return myThird; }
+
+    public List<Integer> getEntryNumbers() {
+        return myEntryNumbers;
+    }
+
+
+    @Override
+    public boolean equals(Object theObject) {
+        boolean result = false;
+        if(theObject == null) result = false;
+        final Judge theOther = (Judge) theObject;
+        if (this.getClass().equals(theObject.getClass())  &&
+                this.getName().equals(theOther.getName()) &&
+                this.getCardNumber() == theOther.getCardNumber() &&
+                this.getAge() == theOther.getAge() &&
+                this.getLoginCredential().equals(theOther.getLoginCredential()) &&
+                this.getType().equals(theOther.getType()) &&
+                Arrays.equals(this.getEntries().toArray(), theOther.getEntries().toArray()))
+            result = true;
+        return result;
+    }
+
+    @Override
+    public int hashCode(){
+        int result = 0;
+        result = (int) this.getCardNumber() / 11;
+        return result;
+    }
+
+    @Override
+    public String toString() {
+
+        return  super.getCardNumber() + "," + super.getName() + "," + super.getAge() +
+                "," + super.getLoginCredential() + "," + super.getType() + "," +
+                myContestNumber + "," + myFirst + "," + mySecond + "," + myThird;
+    }
 }
