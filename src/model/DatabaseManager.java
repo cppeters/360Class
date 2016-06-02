@@ -24,6 +24,8 @@ public abstract class DatabaseManager<T> {
     		"EntryNumber,UserCardNumber,FilePath,EntryName,Contest";
     private static final String USER_FILE_HEADER = 
     		"CardNumber,Name,Age,Pin,Type";
+    private static final String JUDGE_FILE_HEADER =
+            "CardNumber,Name,Age,Pin,Type,ContestNumber,FirstPlace,SecondPlace,ThirdPlace";
     private final String myFileName;
     private List<T> myItems;
     private Map<Integer, T> myMap;
@@ -60,7 +62,7 @@ public abstract class DatabaseManager<T> {
     }
 
     @SuppressWarnings("unchecked")
-	public void readCsvFile(int theType, Map<Integer, Entry> theEntriesMap) throws Exception{
+	public void readCsvFile(int theType, EntryDatabaseManager theEntryDB) throws Exception{
         try {
         	T theData = null;
         	String[] theInfo;
@@ -88,13 +90,29 @@ public abstract class DatabaseManager<T> {
                     			Integer.parseInt(theInfo[2]), theInfo[3], theInfo[4]);
                     	
                     	//checking to see if user has an entry that already exists
-                    	for (Map.Entry<Integer, Entry> entry : theEntriesMap.entrySet()) {
+                    	for (Map.Entry<Integer, Entry> entry : theEntryDB.getMap().entrySet()) {
                             Entry en = entry.getValue();
                             if( en.getCardNumber() == ((User) theData).getCardNumber()) {
                                 ((User) theData).addReadEntries(en);
                             }
                         }
                     	break;
+                    // Case 4: Judge
+                    case 4:
+                        if (myMap.get(Integer.parseInt(theInfo[0])) == null) {
+                            theData = (T) new Judge(Integer.parseInt(theInfo[0]), theInfo[1],
+                                    Integer.parseInt(theInfo[2]), theInfo[3], theInfo[4]);
+                            ((Judge)theData).setMyContestNumber(Integer.parseInt(theInfo[5]));
+                            ((Judge)theData).buildJudge(Integer.parseInt(theInfo[6]), Integer.parseInt(theInfo[7]),
+                                    Integer.parseInt(theInfo[8]), theEntryDB);
+                        }
+                        else {
+                            Judge j = (Judge) myMap.get(Integer.parseInt(theInfo[0]));
+                            j.setMyContestNumber(Integer.parseInt(theInfo[5]));
+                            j.buildJudge(Integer.parseInt(theInfo[6]), Integer.parseInt(theInfo[7]),
+                                    Integer.parseInt(theInfo[8]), theEntryDB);
+                        }
+                        break;
                     default:
                     	break;
                     }
@@ -122,6 +140,9 @@ public abstract class DatabaseManager<T> {
                 break;
             case 3:
                 sb.append(USER_FILE_HEADER);
+                break;
+            case 4:
+                sb.append(JUDGE_FILE_HEADER);
                 break;
             default:
                 break;

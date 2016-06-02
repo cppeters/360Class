@@ -25,7 +25,7 @@ public class EntryDatabaseManager extends DatabaseManager<Entry> {
     }
 
     public void addEntry(Entry entry) throws Exception {
-        super.getMap().put(super.getItemCount() + 1, entry);
+        super.getMap().put(entry.getEntryNumber(), entry);
         super.updateCount();
         super.getAllItems().add(entry);
         writeCsvFile();
@@ -33,11 +33,12 @@ public class EntryDatabaseManager extends DatabaseManager<Entry> {
 
     public void updateEntry(Entry theOldEntry, Entry theNewEntry) throws Exception {
         // Update the Map
-        for (int i : super.getMap().keySet()) {
+       /* for (int i : super.getMap().keySet()) {
             if (super.getMap().get(i).equals(theOldEntry)) {
                 super.getMap().replace(i, theNewEntry);
             }
-        }
+        }*/
+        super.getMap().replace(theOldEntry.getEntryNumber(), theNewEntry);
 
         // Update the List
         super.getAllItems().set(super.getAllItems().indexOf(theOldEntry), theNewEntry);
