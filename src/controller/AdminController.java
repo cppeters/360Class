@@ -44,10 +44,10 @@ public class AdminController {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("Clicked back.");
+				//System.out.println("Clicked back.");
 				if (!viewHistory.isEmpty() && viewHistory.getLast() != null) {
 					myView.showPage(viewHistory.pop());	
-					System.out.println("Swapped page.");
+				//	System.out.println("Swapped page.");
 				}
 				
 				if (viewHistory.isEmpty()) {
@@ -135,7 +135,7 @@ public class AdminController {
 			&& !startDate.isEmpty() && endDate != null && !endDate.isEmpty()) {
 			added = myContestDBManager.addContest(name, description, startDate, endDate);	
 		} 	
-		System.out.println(added);
+		//System.out.println(added);
 		return added;		
 	}
 	

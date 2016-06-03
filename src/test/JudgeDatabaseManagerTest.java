@@ -67,10 +67,10 @@ public class JudgeDatabaseManagerTest {
         // Check if items incremented
         assertEquals(total + 1, myJudgeDB.getItemCount());
 
-        // Check if theEntry was added to myEntryDB Map
+        // Check if theEntry was added to myJudgeDB Map
         assertEquals(myJudge, myJudgeDB.getMap().get(myJudge.getCardNumber()));
 
-        // Check if theEntry was added to TEST_ENTRY_FILE
+        // Check if theEntry was added to TEST_JUDGE_FILE
         myJudgeDB.readCsvFile();
         assertEquals(myJudge, myJudgeDB.getMap().get(myJudge.getCardNumber()));
     }
@@ -91,24 +91,24 @@ public class JudgeDatabaseManagerTest {
         // Update the Judge
         myJudgeDB.updateJudge(myJudge, myJudge.getContestNumber());
 
-        // Read in the new TEST_JUDGE_FILE
-        //myJudgeDB.readCsvFile();
-
-        // Check if theOldJude is still in the Judge List
+        // Check if theOldJudge is still in the Judge List
         for (Judge j : myJudgeDB.getAllItems()) {
-            assertNotEquals(theOldJudge.toString(), j.toString());
+            assertNotEquals(theOldJudge, j);
         }
 
-        /*for (int i : myJudgeDB.getMap().keySet()) {
-            System.out.println(myJudgeDB.getMap().get(i));
+        // Check if theOldJudge is still in Judge Map
+        for (int i : myJudgeDB.getMap().keySet()) {
+            assertNotEquals(theOldJudge, myJudgeDB.getMap().get(i));
         }
-        // Check if theOldJudge is still in User Map
-        assertNotEquals(theOldJudge.toString(), myJudgeDB.getMap().get(myJudge.getCardNumber()).toString());
 
         // Check if theNewJudge was inserted in place of theOldJudge in Map
-        assertEquals(myJudge, myJudgeDB.getMap().get(myJudge.getCardNumber()));*/
-    }
+        for (int i : myJudgeDB.getMap().keySet()) {
+            if (myJudgeDB.getMap().get(i).getCardNumber() == myJudge.getCardNumber() &&
+                    myJudgeDB.getMap().get(i).getContestNumber() == myJudge.getContestNumber())
+                assertEquals(myJudge, myJudgeDB.getMap().get(i));
+        }
 
+    }
 
 /**** Test Suite for readCsv() ******//*
 

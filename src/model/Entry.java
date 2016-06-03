@@ -54,7 +54,8 @@ public class Entry {
                 (this.cardNumber == theOther.cardNumber) &&
                 (this.contest) == theOther.contest) &&
                 (this.filePath.equals(theOther.filePath)) &&
-                (this.entryNumber == theOther.entryNumber))
+                (this.entryNumber == theOther.entryNumber) &&
+                (this.toString().equals(theOther.toString())))
             result = true;
         return result;
     }

@@ -41,14 +41,12 @@ public class JudgeDatabaseManager extends DatabaseManager <Judge>{
 
 	public void updateJudge(Judge theJudge, int theContestNumber) throws Exception {
 
-		/*// Update the Map
+		// Update the Map
 		for (int i : super.getMap().keySet()) {
 			if (super.getMap().get(i).getCardNumber() == theJudge.getCardNumber() &&
-					super.getMap().get(i).getContestNumber() == theContestNumber) {
-				System.out.println("Old: " + super.getMap().get(i));
+					super.getMap().get(i).getContestNumber() == theContestNumber)
 				super.getMap().replace(i, theJudge);
-			}
-		}*/
+		}
 
 		// Update the List
 		for (int i = 0; i < super.getAllItems().size(); i++) {

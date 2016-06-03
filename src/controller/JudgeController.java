@@ -52,10 +52,10 @@ public class JudgeController {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("Clicked back.");
+				//System.out.println("Clicked back.");
 				if (!viewHistory.isEmpty() && viewHistory.getLast() != null) {
 					myView.showPage(viewHistory.pop());	
-					System.out.println("Swapped page.");
+					//System.out.println("Swapped page.");
 				}
 				if (viewHistory.isEmpty()) {
 					myView.setBackButtonEnabled(false);
@@ -90,7 +90,7 @@ public class JudgeController {
 							public void valueChanged(ListSelectionEvent Event) {
 								if (!Event.getValueIsAdjusting()) {
 									Entry seclectedEntry = ((JList<Entry>) Event.getSource()) .getSelectedValue();
-									System.out.println(((JList<Entry>) Event.getSource()) .getSelectedValue().getClass());
+									//System.out.println(((JList<Entry>) Event.getSource()) .getSelectedValue().getClass());
 									ElistView .addPreview(seclectedEntry);
 									}
 								}
