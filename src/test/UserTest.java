@@ -89,8 +89,10 @@ public class UserTest {
 		// Update the Entry
 		myUser.updateEntry(theOldEntryIdx, theNewEntry, myEntryDB);
 		
-		// Check if theOldEntry is still in User Map
-		assertNotEquals(theOldEntry, myUser.getEntries().get(theOldEntryIdx));
+		// Check if theOldEntry is still in User List
+		for (Entry e : myUser.getEntries()) {
+			assertNotEquals(theOldEntry, e);
+		}
 		
 		// Check if theNewEntry was inserted in place of theOldEntry
 		assertEquals(theNewEntry, myUser.getEntries().get(theOldEntryIdx));
