@@ -8,14 +8,34 @@ import java.util.*;
 public class Judge extends User {
 
     // Instance Fields
+    /** Map that holds all the contests*/
     private Map<Integer, List<Integer>> myContests;         //Map<ContestNumber, List of Judged Entries>
+
+    /** List of entry numbers*/
     List<Integer> myEntryNumbers;
+
+    /** The contest numbers*/
     private int myContestNumber;
+
+    /** First place*/
     private int myFirst;
+
+    /** Second place*/
     private int mySecond;
+
+    /** Third place*/
     private int myThird;
 
-	
+    /** Constructor()
+     * @param theAge - age of the contestant
+     * @param theCardNumber - card number for the contestant
+     * @param theContestNumber - contest number entry belongs to
+     * @param theName - name of the judge?
+     * @param theLoginCredential - credential log in
+     * @param theFirst - first place
+     * @param theSecond - second place
+     * @param theThird - third place
+     * @param theType - type of contest*/
     public Judge(int theCardNumber, String theName, int theAge, String theLoginCredential,
                  String theType, int theContestNumber, int theFirst, int theSecond, int theThird) {
         super(theCardNumber, theName, theAge, theLoginCredential, theType);
@@ -30,6 +50,9 @@ public class Judge extends User {
     }
 
     // Copy Constructor
+    /** Constructor()
+     * @param theOtherJudge - the just of the contest
+     * */
     public Judge(Judge theOtherJudge) {
         super(theOtherJudge.getCardNumber(), theOtherJudge.getName(), theOtherJudge.getAge(),
                 theOtherJudge.getLoginCredential(), theOtherJudge.getType());
@@ -43,6 +66,9 @@ public class Judge extends User {
         addToList();
     }
 
+    /**
+     * Adding places to the list
+     * */
     private void addToList() {
         // Clear and Add to List
         myEntryNumbers.clear();
@@ -51,6 +77,10 @@ public class Judge extends User {
         myEntryNumbers.add(myThird);
     }
 
+    /**
+     * Adding a contest that has been judged
+     * @param theJudgeDB - creating map of entries that have been judged
+     * @exception Exception*/
     public void addContestJudged(JudgeDatabaseManager theJudgeDB) throws Exception {
 
         // Add the new entries that have been set to List
@@ -63,6 +93,10 @@ public class Judge extends User {
         theJudgeDB.addJudge(this, super.getCardNumber());
     }
 
+    /**
+     * Updating a contest that already has been judged
+     * @param theJudgeDB the database for the judged entries
+     * */
     public void updateContestJudged(JudgeDatabaseManager theJudgeDB) throws Exception {
 
         // Add the new entries that have been set to List
@@ -75,30 +109,50 @@ public class Judge extends User {
         theJudgeDB.updateJudge(this, myContestNumber);
     }
 
+    /** What contests have been judged?
+     * @return the contests that have been judged*/
     public Map<Integer, List<Integer>> getContestsJudged() {
         return myContests;
     }
 
+    /** What is the contest number?
+     * @return the number of the contest*/
     public int getContestNumber() {
         return myContestNumber;
     }
 
+    /** Adding a contest number
+     * @param theContestNumber - contest number that belongs to the judge*/
     public void setMyContestNumber(int theContestNumber) {
         myContestNumber = theContestNumber;
     }
 
+    /** Adding my first choice
+     * @param theFirst - first place*/
     public void setMyFirst(int theFirst) { myFirst = theFirst; }
 
+    /** Adding my second choice
+     * @param theSecond - second place*/
     public void setMySecond(int theSecond) { mySecond = theSecond; }
 
+    /** Adding my third choice
+     * @param theThird - third place*/
     public void setMyThird (int theThird) { myThird = theThird; }
 
+    /** What is my first place choice?
+     * @return first place*/
     public int getMyFirst() { return myFirst; }
 
+    /** What is my second place choice?
+     * @return second place*/
     public int getMySecond() { return mySecond; }
 
+    /** What is my third place choice?
+     * @return third place*/
     public int getMyThird () { return myThird; }
 
+    /** Returns the list of contests ids
+     * @return contest entry numbers*/
     public List<Integer> getEntryNumbers() {
         return myEntryNumbers;
     }

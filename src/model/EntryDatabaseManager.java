@@ -1,15 +1,17 @@
 package model;
 import java.io.FileNotFoundException;
 import java.util.*;
-
 /**
- * Created by lizmiller on 5/12/16.
+ * @author liz
  */
 public class EntryDatabaseManager extends DatabaseManager<Entry> {
 
     // EntryDatabaseManager is type 2
+    /** The type for the database*/
     private final static int DATABASE_TYPE = 2;
 
+    /** Constructor()
+     * @param theFileName - the path of the file*/
     public EntryDatabaseManager(String theFileName) throws Exception {
         super(theFileName);
 
@@ -20,16 +22,23 @@ public class EntryDatabaseManager extends DatabaseManager<Entry> {
         super.readCsvFile(DATABASE_TYPE, null);
     }
 
+    /**
+     * Writes the the CSV file */
     public void writeCsvFile() throws Exception {
         super.writeCsvFile(DATABASE_TYPE);
     }
 
+    /** Adds a new entry to the database
+     * @param entry - new entry that will be added*/
     public void addEntry(Entry entry) throws Exception {
         super.getMap().put(entry.getEntryNumber(), entry);
         super.getAllItems().add(entry);
         writeCsvFile();
     }
 
+    /** Updates entry that is already in the database
+     * @param theNewEntry - the replacement entry
+     * @param theOldEntry - the entry that will be replaced*/
     public void updateEntry(Entry theOldEntry, Entry theNewEntry) throws Exception {
         // Update the Map
        /* for (int i : super.getMap().keySet()) {

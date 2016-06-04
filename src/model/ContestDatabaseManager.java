@@ -1,22 +1,29 @@
 package model;
-import java.io.*;
 
 /**
- * Created by lizmiller on 5/12/16.
+ * @author liz
  */
 public class ContestDatabaseManager extends DatabaseManager<Contest>{
 
+    /** The type for the database*/
     // ContestDatabaseManager is type 1
     private final static int DATABASE_TYPE = 1;
 
+    /** Constructor
+     * @param theFileName - name of the file
+     * @throws Exception*/
     public ContestDatabaseManager(String theFileName) throws Exception {
         super(theFileName);
     }
 
+    /** reads in the file
+     * @throws Exception*/
     public void readCsvFile() throws Exception {
         super.readCsvFile(DATABASE_TYPE, null);
     }
 
+    /** Writes back to the file
+     * @throws Exception*/
     public void writeCsvFile() throws Exception {
         super.writeCsvFile(DATABASE_TYPE);
     }
