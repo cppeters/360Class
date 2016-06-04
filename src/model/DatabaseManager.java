@@ -68,49 +68,43 @@ public abstract class DatabaseManager<T> {
             while((line = theFileReader.readLine()) != null ) {
                 theInfo = line.split(COMMA_DELIMITER);
                 if (theInfo.length > 0) {
-                    switch(theType){
-                    // Case 1: Contest
-                    case 1:
-                    	theData = (T) new Contest(Integer.parseInt(theInfo[0]), theInfo[1], 
-                    			theInfo[1], theInfo[3], theInfo[4]);
-                    	break;
-                    // Case 2: Entry
-                    case 2:
-                    	theData = (T) new Entry(Integer.parseInt(theInfo[0]),Integer.parseInt(theInfo[1]),(theInfo[2]),
-                                Integer.parseInt(theInfo[4]), theInfo[3]);
-                    	break;
-                    // Case 3: User
-                    case 3:
-                    	theData = (T) new User(Integer.parseInt(theInfo[0]), theInfo[1],
-                    			Integer.parseInt(theInfo[2]), theInfo[3], theInfo[4]);
-                    	
-                    	//checking to see if user has an entry that already exists
-                    	for (Map.Entry<Integer, Entry> entry : theEntryDB.getMap().entrySet()) {
-                            Entry en = entry.getValue();
-                            if( en.getCardNumber() == ((User) theData).getCardNumber()) {
-                                ((User) theData).addReadEntries(en);
+                    switch (theType) {
+                        // Case 1: Contest
+                        case 1:
+                            theData = (T) new Contest(Integer.parseInt(theInfo[0]), theInfo[1],
+                                    theInfo[1], theInfo[3], theInfo[4]);
+
+                            break;
+                        // Case 2: Entry
+                        case 2:
+                            theData = (T) new Entry(Integer.parseInt(theInfo[0]), Integer.parseInt(theInfo[1]), (theInfo[2]),
+                                    Integer.parseInt(theInfo[4]), theInfo[3]);
+                            break;
+                        // Case 3: User
+                        case 3:
+                            theData = (T) new User(Integer.parseInt(theInfo[0]), theInfo[1],
+                                    Integer.parseInt(theInfo[2]), theInfo[3], theInfo[4]);
+
+                            //checking to see if user has an entry that already exists
+                            for (Map.Entry<Integer, Entry> entry : theEntryDB.getMap().entrySet()) {
+                                Entry en = entry.getValue();
+                                if (en.getCardNumber() == ((User) theData).getCardNumber()) {
+                                    ((User) theData).addReadEntries(en);
+                                }
                             }
-                        }
-                    	break;
-                    // Case 4: Judge
-                    case 4:
-                        try{ //(myMap.get(Integer.parseInt(theInfo[0])) == null)
+                            break;
+                        // Case 4: Judge
+                        case 4:
+                            //(myMap.get(Integer.parseInt(theInfo[0])) == null)
                             theData = (T) new Judge(Integer.parseInt(theInfo[0]), theInfo[1],
                                     Integer.parseInt(theInfo[2]), theInfo[3], theInfo[4],
                                     Integer.parseInt(theInfo[5]), Integer.parseInt(theInfo[6]),
                                     Integer.parseInt(theInfo[7]), Integer.parseInt(theInfo[8]));
-                        }
-                        catch (Exception f){
-                            notJudged = false;
-                        }
-                        break;
-                    default:
-                    	break;
+                        default:
+                            break;
                     }
-                    if (notJudged) {
-                        myMap.put(Integer.parseInt(theInfo[0]), theData);
-                        myItems.add(theData);
-                    }
+                    myMap.put(Integer.parseInt(theInfo[0]), theData);
+                    myItems.add(theData);
                 }
             }
         } catch (Exception e) {

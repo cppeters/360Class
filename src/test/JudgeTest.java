@@ -4,6 +4,9 @@ import model.*;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.junit.Assert.*;
 
 /**
@@ -11,21 +14,15 @@ import static org.junit.Assert.*;
  */
 public class JudgeTest {
     private static final String TEST_JUDGE_FILE = "TestJudge.csv";
-    private static final String CONTEST_FILE = "Contests.csv";
     private static final String ENTRY_FILE = "Entries.csv";
     private static final String USER_FILE = "User.csv";
-    private ContestDatabaseManager myContestDB;
     private EntryDatabaseManager myEntryDB;
     private JudgeDatabaseManager myJudgeDB;
     private UserDatabaseManager myUserDB;
     private Judge myJudge;
-    private Contest myContest;
 
     @Before
     public void setUp() throws Exception {
-        myContestDB = new ContestDatabaseManager(CONTEST_FILE);
-        myContestDB.readCsvFile();
-        myContest = myContestDB.getAllItems().get(1);
 
         myEntryDB = new EntryDatabaseManager(ENTRY_FILE);
         myEntryDB.readCsvFile();
@@ -37,16 +34,9 @@ public class JudgeTest {
         myJudgeDB.readCsvFile();
         String newJudgeName = "Steve Testman";
         int theCardNumber = myUserDB.getItemCount() + 1;
-        for (int i : myUserDB.getMap().keySet()) {
-            User aUser = myUserDB.getMap().get(i);
-            if (newJudgeName.equals(aUser.getName())) {
-                theCardNumber = aUser.getCardNumber();
-            }
-        }
         myJudge = new Judge(theCardNumber, newJudgeName, 28, "steve", "JUDGE",
                 8, 7, 8, 9);
     }
-
     @Test
     public void addContestJudged() throws Exception {
         // Total amount of contests by this Judge
@@ -62,16 +52,53 @@ public class JudgeTest {
         // Check if Judged contests size increased
         assertEquals(total + 1, myJudge.getContestsJudged().size());
 
-        // Check if the judged contest was added to MyJudge list
-        //assertEquals(myJudge.getEntryNumbers().toArray().toString(), myJudge.getContestsJudged().get(myJudge.getContestNumber()));
+        List<Integer> intList = new ArrayList<>();
+        intList.add(100);
+        intList.add(101);
+        intList.add(102);
+
+        // Check if the update judged contest was updated to myJudge List
+        assertEquals(intList, myJudge.getEntryNumbers());
+
+        // Check if the judged contest was added to myJudge Map
+        assertEquals(myJudge.getEntryNumbers(), myJudge.getContestsJudged().get(myJudge.getContestNumber()));
 
         // Check if the judged contest was added to myJudgeDB Map
-        //assertEquals(myJudge.getContestNumber(), myJudgeDB.getMap().get(myJudge.getContestNumber()));
+        assertEquals(myJudge, myJudgeDB.getMap().get(myJudge.getCardNumber()));
     }
 
     @Test
     public void updateContestJudged() throws Exception {
+        // Total amount of contests by this Judge
+        int total = myJudge.getContestsJudged().size();
 
+        // Update a Contest Judged by using setters like it would in GUI then call updateContestJudged()
+        myJudge.setMyContestNumber(8);
+        myJudge.setMyFirst(1000);
+        myJudge.setMySecond(1010);
+        myJudge.setMyThird(1020);
+        myJudge.updateContestJudged(myJudgeDB);
+
+        // Check if Judged contests size increased (Should have only replaced)
+        assertNotEquals(total + 1, myJudge.getContestsJudged().size());
+
+        List<Integer> intList = new ArrayList<>();
+        intList.add(1000);
+        intList.add(1010);
+        intList.add(1020);
+
+        // Check if the update judged contest was updated to myJudge List*/
+        assertEquals(intList, myJudge.getEntryNumbers());
+
+        // Check if the new judged entry numbers were inserted in place of the old
+        assertEquals(myJudge.getEntryNumbers(), myJudge.getContestsJudged().get(myJudge.getContestNumber()));
+
+        // Check if theNewJudge was updated in place of theOldJudge in JudgeDB Map
+        for (int i : myJudgeDB.getMap().keySet()) {
+            if (myJudgeDB.getMap().get(i).getCardNumber() == myJudge.getCardNumber() &&
+                    myJudgeDB.getMap().get(i).getContestNumber() == myJudge.getContestNumber())
+                assertEquals(myJudge, myJudgeDB.getMap().get(i));
+        }
     }
 
 }

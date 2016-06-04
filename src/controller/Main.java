@@ -29,7 +29,35 @@ public class Main {
     	startController();
 
     }
-    
+
+    /**
+     * Start up the Controller which starts the GUI.
+     * @author Tabi
+     * @throws Exception
+     */
+    private static void startController() throws Exception {
+
+        final ContestDatabaseManager contestDatabaseManager = new ContestDatabaseManager(CONTEST_FILE);
+        contestDatabaseManager.readCsvFile();
+
+        final EntryDatabaseManager entryDatabaseManager = new EntryDatabaseManager(ENTRY_FILE);
+        entryDatabaseManager.readCsvFile();
+
+        final UserDatabaseManager userDatabaseManager = new UserDatabaseManager(USER_FILE, entryDatabaseManager);
+        userDatabaseManager.readCsvFile(); // should this happen automatically in userDatabaseManager constructor?
+
+        EventQueue.invokeLater(new Runnable() {
+
+            @Override
+            public void run() {
+                new MainController(userDatabaseManager, contestDatabaseManager, entryDatabaseManager);
+            }
+
+        });
+
+    }
+
+
     /**
      * Lists the contests a User has made submissions to, and has not, to
      * test how complex it is and whether there should be helpers in the model.
@@ -84,33 +112,7 @@ public class Main {
     	}
 	}
 
-	/**
-     * Start up the Controller which starts the GUI.
-     * @author Tabi
-	 * @throws Exception 
-     */
-    private static void startController() throws Exception {
 
-        final ContestDatabaseManager contestDatabaseManager = new ContestDatabaseManager(CONTEST_FILE);
-        contestDatabaseManager.readCsvFile();
-
-        final EntryDatabaseManager entryDatabaseManager = new EntryDatabaseManager(ENTRY_FILE);
-        entryDatabaseManager.readCsvFile();
-
-        final UserDatabaseManager userDatabaseManager = new UserDatabaseManager(USER_FILE, entryDatabaseManager);
-        userDatabaseManager.readCsvFile(); // should this happen automatically in userDatabaseManager constructor?
-        
-    	EventQueue.invokeLater(new Runnable() {
-
-			@Override
-			public void run() {
-				new MainController(userDatabaseManager, contestDatabaseManager, entryDatabaseManager);
-			}
-
-    	});
-
-    }
-    
     /** all of Liz's tests, moved to a separate function
      * @author Liz
      * @throws Exception 

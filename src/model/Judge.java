@@ -25,6 +25,7 @@ public class Judge extends User {
         mySecond = theSecond;
         myThird = theThird;
         myEntryNumbers = new ArrayList<>();
+        myContests.put(myContestNumber, myEntryNumbers);
         addToList();
     }
 
@@ -38,6 +39,7 @@ public class Judge extends User {
         this.mySecond = theOtherJudge.getMySecond();
         this.myThird = theOtherJudge.getMyThird();
         this.myEntryNumbers = new ArrayList<>();
+        this.myContests.put(myContestNumber, myEntryNumbers);
         addToList();
     }
 
@@ -45,7 +47,7 @@ public class Judge extends User {
         // Clear and Add to List
         myEntryNumbers.clear();
         myEntryNumbers.add(myFirst);
-        myEntryNumbers.add(myFirst);
+        myEntryNumbers.add(mySecond);
         myEntryNumbers.add(myThird);
     }
 
@@ -67,11 +69,7 @@ public class Judge extends User {
         addToList();
 
         // Update Map
-        for (int i : myContests.keySet()) {
-            if (i == myContestNumber) {
-                myContests.replace(i, myEntryNumbers);
-            }
-        }
+        myContests.replace(myContestNumber, myEntryNumbers);
 
         // Update JudgeDB
         theJudgeDB.updateJudge(this, myContestNumber);
@@ -117,7 +115,8 @@ public class Judge extends User {
                 this.getAge() == theOther.getAge() &&
                 this.getLoginCredential().equals(theOther.getLoginCredential()) &&
                 this.getType().equals(theOther.getType()) &&
-                Arrays.equals(this.getEntries().toArray(), theOther.getEntries().toArray()))
+                Arrays.equals(this.getEntries().toArray(), theOther.getEntries().toArray()) &&
+                this.toString().equals(theObject.toString()))
             result = true;
         return result;
     }
