@@ -10,27 +10,46 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * @author lizmiller
+ * @author liz
  * @author Casey
  * @param <T>
  *
  */
 public abstract class DatabaseManager<T> {
+    /** Used to write back to the file*/
 	private static final String COMMA_DELIMITER = ",";
+
+    /** Used to write back to the file*/
     private static final String NEW_LINE_SEPARATOR = "\n";
+
+    /** Creating file for the contest*/
     private static final String CONTEST_FILE_HEADER = 
     		"ContestNumber,Name,Description,StartDate,EndDate";
+
+    /** Creating file for the Entry*/
     private static final String ENTRY_FILE_HEADER = 
     		"EntryNumber,UserCardNumber,FilePath,EntryName,Contest";
+
+    /** Creating file for the User*/
     private static final String USER_FILE_HEADER = 
     		"CardNumber,Name,Age,Pin,Type";
+
+    /** Creating file for the judge*/
     private static final String JUDGE_FILE_HEADER =
             "CardNumber,Name,Age,Pin,Type,ContestNumber,FirstPlace,SecondPlace,ThirdPlace";
+
+    /** Name of the file*/
     private final String myFileName;
+
+    /** What is within the file*/
     private List<T> myItems;
+
+    /** What holds the items*/
     private Map<Integer, T> myMap;                  // Map<Unique Identifier Number, Type of Object>
 
 
+    /** Constructor()
+     * @param theFileName - file name*/
     public DatabaseManager(String theFileName) throws Exception {
         myItems = new ArrayList<>();
         myMap = new HashMap<>();
@@ -42,20 +61,27 @@ public abstract class DatabaseManager<T> {
         else if (!theFileType.equals("csv")) throw new NumberFormatException();
         else myFileName = theFileName;
     }
-    
+
+    /** Returns all the items in the db file
+     * @return myItems*/
     public List<T> getAllItems() {
         return myItems;
     }
-    
+
+    /** Gets the count of all the items in the in the db
+     * @return the total number of items*/
     public int getItemCount() {
     	return myItems.size();
     }
 
+    /** Gets the map
+     * @return the map of the values in the db*/
     public Map<Integer, T> getMap() {
         return myMap;
     }
 
     @SuppressWarnings("unchecked")
+    /** Reading in the file to create the list of values */
 	public void readCsvFile(int theType, EntryDatabaseManager theEntryDB) throws Exception{
         try {
         	T theData = null;
@@ -113,6 +139,8 @@ public abstract class DatabaseManager<T> {
         }
     }
 
+    /** Writing the new information back to the file
+     * @param theType -  which file to write to*/
     public void writeCsvFile(int theType) throws Exception {
 
         PrintWriter pw = new PrintWriter(myFileName);

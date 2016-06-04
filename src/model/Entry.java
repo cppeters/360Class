@@ -1,6 +1,7 @@
 package model;
 /**
- * Created by lizmiller on 5/12/16.
+ * @author liz
+ * The entry object
  */
 public class Entry {
 
@@ -10,6 +11,12 @@ public class Entry {
     private String entryName;
     private int entryNumber;
 
+    /** Constructor()
+     * @param entry - the entry unique number
+     * @param cardNumber - user card number
+     * @param filePath - path for the entry being submitted
+     * @param contest - which contest the entry is being submitted to
+     * @param entryName - the entries title*/
     public Entry(int entry,int cardNumber, String filePath, int contest, String entryName) {
         this.cardNumber = cardNumber;
         this.filePath = filePath;
@@ -19,21 +26,37 @@ public class Entry {
 
     }
 
+    /** What contest?
+     * @return the contest
+     * */
     public int getContest() {
         return contest;
     }
 
+    /** What card number?
+     * @return the card number for the user
+     * */
     public int getCardNumber() {
         return cardNumber;
     }
 
+    /** What entry?
+     * @return the name of the entry submitted*/
     public String getEntryName() {
         return entryName;
     }
 
+    /** What is the path?
+     *
+     * @return the path of the file submitted
+     * */
     public String getFilePath() {
         return filePath;
     }
+
+    /** What entry?
+     * @return the entry number that is unique
+     * */
     public int getEntryNumber() {
         return entryNumber;
     }
