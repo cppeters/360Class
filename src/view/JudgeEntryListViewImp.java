@@ -22,8 +22,15 @@ import javax.swing.event.ListSelectionListener;
 
 import model.Contest;
 import model.Entry;
-
+/**
+ * This class create the view of Judge window, holds all the components and 
+ * features for grading the contestants Entries.
+ * @author tabi
+ * @author Lan
+ * documented by abdul.
+ */
 public class JudgeEntryListViewImp implements JudgeEntryListView {
+	// fields
 	private final JPanel myPanel;
 	private final JLabel myContestLabel;
 	private final JLabel myEntryCountandResultlabel;
@@ -35,6 +42,10 @@ public class JudgeEntryListViewImp implements JudgeEntryListView {
 	private JFrame myPreviewPopup ;
 	private JScrollPane myScrollPane;
 	
+	//contructor.
+	/**
+	 * this constructor create the frame of JudgeEntryListViewImp class.
+	 */
 	public JudgeEntryListViewImp() {
 		myPanel = new JPanel();
 		myPanel.setLayout(new BoxLayout(myPanel, BoxLayout.Y_AXIS));
@@ -92,13 +103,17 @@ public class JudgeEntryListViewImp implements JudgeEntryListView {
 		myPanel.add(judgingPanel);
 	}
 	
-
-
+	
+	/**
+	 * return myPanel.
+	 */
 	@Override
 	public JPanel getView() {
 		return myPanel;
 	}
-
+	/**
+	 * the action listener for myList.
+	 */
 	@Override
 	public void addEntryListListener(ListSelectionListener theListener) {
 		myList.addListSelectionListener(theListener);
@@ -132,8 +147,13 @@ public class JudgeEntryListViewImp implements JudgeEntryListView {
 		
 	}
 	
+	
+	/**
+	 * the method creates a drop down window  and adds to an action listener.
+	 * @param theEntry 
+	 */
 	private void setupDropdownSubmissionRanking(Entry[] theEntry) {
-//		String[] entryNameList = new String[theEntry.length];
+
 		JComboBox[] dropdownGroup = new JComboBox[]{my1stRankingPlace, 
 				                                    my2ndRankingPlace, 
 				                                    my3rdRankingPlace};
@@ -177,7 +197,9 @@ public class JudgeEntryListViewImp implements JudgeEntryListView {
 			}
 		});
 	}	
-
+	/**
+	 * addPreview adds logo and Icon.
+	 */
 	@Override
 	public void addPreview(Entry theEntry) {
 		ImageIcon imageIcon = new ImageIcon(theEntry.getFilePath());

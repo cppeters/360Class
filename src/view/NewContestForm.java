@@ -3,7 +3,13 @@ package view;
 import javax.swing.AbstractAction;
 
 import model.Contest;
-
+/**
+ * This NewContestForm is an interface class 
+ * that extends Viewable interface class.
+ * its the method interface methods.
+ * Documented by Abdul.
+ *
+ */
 public interface NewContestForm extends Viewable {
 
 	/** Returns an array containing each of 4 strings from the form text

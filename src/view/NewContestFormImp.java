@@ -15,9 +15,15 @@ import javax.swing.JTextField;
 
 import model.Contest;
 
-
+/**
+ * This class create the a form the displays the contest data, 
+ * and their details. Such as Name, Description, Start date and End date.
+ * it also implements the interface of NewContestForm.
+ * @author Tabi
+ * Documented by Abdul.
+ */
 public class NewContestFormImp implements NewContestForm {
-	
+	// fields
 	private final JPanel myPanel;
 	private JTextField myNameField;
 	private JTextField myDescriptionField;
@@ -26,7 +32,9 @@ public class NewContestFormImp implements NewContestForm {
 	private JButton mySubmitButton;
 	private JLabel myErrorMsgLabel;
 	
+	// constructor.
 	public NewContestFormImp() {
+		// create the property and instantiates objects.
 		myPanel = new JPanel();
 		myPanel.setLayout(new BoxLayout(myPanel, BoxLayout.Y_AXIS));
 		myNameField = new JTextField();	
@@ -47,7 +55,7 @@ public class NewContestFormImp implements NewContestForm {
 	/**
 	 * Creates and returns the panel containing all the text fields with labels before
 	 * of them.
-	 * @return
+	 * @return its a panel object.
 	 */
 	private JPanel makeFieldPanel() {
 		JLabel nameLabel = new JLabel("Name", JLabel.RIGHT);
@@ -73,24 +81,32 @@ public class NewContestFormImp implements NewContestForm {
 		panel.setBorder(BorderFactory.createTitledBorder("Create a new Contest"));
 		return panel;
 	}
-
+	/**
+	 * getView return myPanel and  overrides the superclass.
+	 */
 
 	@Override
 	public JPanel getView() {
 		return myPanel;
 	}
-
+	/**
+	 * getFormInfo returns the data into the text fields as an string array.
+	 */
 	@Override
 	public String[] getFormInfo() {
 		return new String[]{myNameField.getText(), myDescriptionField.getText(),
 							myStartDateField.getText(), myEndDateField.getText()};
 	}
-
+	/**
+	 * this method listens the action of submission button.
+	 */
 	@Override
 	public void addSubmitListener(AbstractAction theAction) {
 		mySubmitButton.addActionListener(theAction);
 	}
-
+	/**
+	 * setMessage pass the info to text field.
+	 */
 	@Override
 	public void setMessage(String theString) {
 		myErrorMsgLabel.setText(theString);

@@ -28,6 +28,10 @@ public class ContestantContestListViewImp implements ContestantContestListView {
 	/**	The list of Contests that have not been submitted to.*/
 	private final JList<Contest> myNoSubMadeList;
 	
+	/**
+	 * Constructor for ContestantContestListViewImp class 
+	 * that initializes components and features of this class.
+	 */
 	public ContestantContestListViewImp() {
 		
 		myPanel = new JPanel(new BorderLayout()); 
@@ -51,14 +55,7 @@ public class ContestantContestListViewImp implements ContestantContestListView {
 		JLabel description = new JLabel("Contests You Have Not Submitted to");
 		description.setForeground(Color.black);
 		listPanel.add(description);
-		
-//		//testing
-//		JPanel title = new JPanel(new GridLayout(1, 2));
-//		title.add(new JLabel("No"));
-//		title.add(new JLabel("Name"));
-//		title.add(new JLabel("Start Date"));
-//		title.add(new JLabel("End Date"));
-//		listPanel.add(title);
+
 		
 		listPanel.add(ContestList.getColumnTitleHeader());
 		
@@ -88,46 +85,59 @@ public class ContestantContestListViewImp implements ContestantContestListView {
 		myNoSubMadeList.setListData(theContests);
 		
 	}	
-		
+	/**
+	 * take an array of contest and set the into the contest field.	
+	 */
 	@Override
 	public void setSubmissionMadeList(Contest[] theContests) {
 		mySubMadeList.setListData(theContests);
 	}
 	
-	/*		Adding Listeners	*/
+	/**Adding Listeners	
+	 */
 
 	@Override
 	public void addNoSubmissionMadeListener(ListSelectionListener theListener) {
 		myNoSubMadeList.addListSelectionListener(theListener);
 	}
 
-	
+	/**
+	 * calls the action listener 
+	 */
 	@Override
 	public void addSubmissionMadeListener(ListSelectionListener theListener) {
 		mySubMadeList.addListSelectionListener(theListener);		
 	}
 	
-	/*		Getting selections	*/
+	/** Getting selections	
+	 */
 
 	@Override
 	public Contest getNoSubmissionMadeSelectedEntry() {
 		return myNoSubMadeList.getSelectedValue();
 	}
 	
+	/**
+	 * returns the selected value.
+	 */
 	@Override
 	public Contest getSubmissionMadeSelectedEntry() {
 		return mySubMadeList.getSelectedValue();
 	}
 
 
-	/*		Clearing selections	*/
+	/**		
+	 * Clearing selections	
+	 */
 
 	@Override
 	public void clearNoSubmissionMadeSelection() {
 		myNoSubMadeList.clearSelection();
 	}
 
-
+	/**
+	 * Clearing the selected field.
+	 */
 
 	@Override
 	public void clearSubmissionMadeSelection() {

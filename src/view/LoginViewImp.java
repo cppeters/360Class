@@ -15,17 +15,24 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
-/** An implementation of LoginView. */
+/** LogingViewIm implements LoginView interface class.
+ *  It is also creates the components and frame of 
+ *  login panel. That has logging Text field and password.
+ * 	@author Tabi
+ * 	Documented by Abdul.
+ * 
+ */
 public class LoginViewImp implements LoginView {
-	
+	// fields.
 	private final JPanel myPanel;
 	private final JTextField myCardNoField;
 	private final JTextField myPassField;
 	private final JButton myLoginButton;
 	private final JLabel myLoginFailMessage;
 
-	
+	// constructors.
 	public LoginViewImp() {
+		// initializing components.
 		myPanel = new JPanel(new GridBagLayout());		
 
 		myCardNoField = new JTextField();
@@ -58,6 +65,11 @@ public class LoginViewImp implements LoginView {
 		myPanel.add(new JPanel(new BorderLayout()), c);
 	}
 	
+	/**
+	 * this method create the labels and returns a 
+	 * label components and its layout.
+	 * @return
+	 */
 	private JPanel createLoginComPanel() {
 		JPanel loginPanel = new JPanel();
 		JPanel cardLogin = new JPanel();
@@ -73,30 +85,42 @@ public class LoginViewImp implements LoginView {
 		loginPanel.add(pinLogin, BorderLayout.WEST);
 		return loginPanel;
 	}
-
+	/**
+	 * Returns myPanel.
+	 */
 	@Override
 	public JPanel getView() {
 		return myPanel;
 	}
-
+	/**
+	 * Calls a listener method to do action clicking login button.
+	 */
 	@Override
 	public void addLoginButtonListener(AbstractAction theAction) {
 		myLoginButton.addActionListener(theAction);
 	}
-
+	/**
+	 * getCarnumber returns string of data from the 
+	 * myCarNoField text field if the Card No is not null.
+	 */
 	@Override
 	public String getCardNumber() {
 		String cardNo = myCardNoField.getText();
 		return cardNo != null ? cardNo : "";
 	}
-
+	/**
+	 * getPin returns string of data from the 
+	 * myPassField text field if the Card No is not null.
+	 */
 	@Override
 	public String getPin() {
 		String pin = myPassField.getText();
 		return pin != null ? pin : "";
 	}
-
-
+	
+	/**
+	 * this methods pop up message if the login process fails.
+	 */
 	@Override
 	public void addLoginFailText(String theText) {
 		myLoginFailMessage.setText(theText);

@@ -8,7 +8,8 @@ import model.Contest;
 import model.EntryDatabaseManager;
 import model.User;
 
-/** 
+/** this is an interface class.
+ * Doc by abdul.
  * @author Casey
  */
 public interface ContestantContestView extends Viewable {

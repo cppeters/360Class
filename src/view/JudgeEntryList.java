@@ -25,9 +25,10 @@ import model.Entry;
  * 
  * @author Tabi
  * @author Lan
+ * Documented by Abdul.
  */
 public class JudgeEntryList extends JList<Entry> {
-
+	// fields
 	private static final Color HUSKY_PURPLE = new Color(177, 144, 212);
 
 	public JudgeEntryList() {
@@ -75,7 +76,7 @@ public class JudgeEntryList extends JList<Entry> {
 	 * @author Lan
 	 */
 	private class EntryListCellRenderer implements ListCellRenderer<Entry> {
-
+		// fields
 		private final JPanel container;
 
 		private final JTextArea nameLab;
@@ -105,7 +106,11 @@ public class JudgeEntryList extends JList<Entry> {
 			container.add(namePanel);
 			container.add(infoColumns);
 		}
-
+		
+		/** this method takes extended Entry, value and index
+		 * and pass the data to Jlist components to display the data.
+		 * 
+		 */
 		@Override
 		public Component getListCellRendererComponent(JList<? extends Entry> list, Entry value, int index,
 				boolean isSelected, boolean cellHasFocus) {
@@ -117,7 +122,7 @@ public class JudgeEntryList extends JList<Entry> {
 				container.setBackground(Color.WHITE);
 			}
 			
-//			list.setToolTipText();
+
 			cardLabel.setText("" + value.getCardNumber());
 			pathLabel.setText("" + value.getFilePath());
 			pathLabel.setToolTipText("" + value.getFilePath());

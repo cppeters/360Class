@@ -15,9 +15,10 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
 /**
- * 
+ * View the major frame class that all the other view class extended
+ * as top structure including logo image and navigation buttons
  * @author Tabi
- *
+ * documented by Abdul.
  */
 public class View {
 	
@@ -35,19 +36,24 @@ public class View {
 	private final JPanel pageRegion;
 
 	/**
-	 * 
+	 * The view contructor that calls its methods and creates the class fields.
 	 * @param topBannerText The text to display in the banner.
 	 */
-	public View() {		
+	public View() {	
+		// initialize fields
 		myFrame = new JFrame();
 		contentPanel = new JPanel(new BorderLayout());
 		headRegion = new JPanel(new BorderLayout());
 		backButton = new JButton("Back");
 		logoutButton = new JButton("Log out");
 		pageRegion = new JPanel(new BorderLayout());
+		// call createGui.
 		createGui();
 	}
-	
+	/**
+	 * CreateGui set the all the property of the view class 
+	 * such as the layout and dimensions.
+	 */
 	
 	private void createGui() {		
 		myFrame.setLocationRelativeTo(null);
@@ -127,16 +133,27 @@ public class View {
 	public ContestantContestView getContestantContestView() {
 		return new ContestantContestViewImp();
 	}
-	
+	/**
+	 * this method instantiates and returns new AdminContestListView Class object
+	 * @return instance of AdminContestListViewImp
+	 */
 
 	public AdminContestListView getAdminContestListView() {
 		return new AdminContestListViewImp();
 	}
-	
+	/**
+	 * this method instantiates and returns new JudgeContestListView Class object
+	 * @return instance of JudgeContestListView
+	 * 
+	 */
 	public JudgeContestListView getJugdgeContestListView() {
 		return new JudgeContestListViewImp();
 	}
-	
+	/**
+	 * this method instantiates and returns new JudgeEntryListView Class object
+	 * @return instance of JudgeEntryListView
+	 * 
+	 */
 	public JudgeEntryListView getJugdgeEntryListView() {
 		return new JudgeEntryListViewImp();
 	}
@@ -164,7 +181,6 @@ public class View {
 		// Setup buttons
 		backButton.setEnabled(false);
 		westPanel.add(backButton);
-		
 		logoutButton.setEnabled(false);
 		logoutButton.setVisible(false);
 		eastPanel.add(logoutButton);
@@ -175,10 +191,16 @@ public class View {
 		headRegion.add(eastPanel, BorderLayout.EAST);
 	}
 	
-
+	/**
+	 * resize is a method for resizing the myframe 
+	 * @param theDimension
+	 */
 	public void reSize(Dimension theDimension){
+		// set the frame size true
 		myFrame.setResizable(true);
+		// set the dimension of the frame
 		myFrame.setSize(theDimension);
+		// set the resizable false.
 		myFrame.setResizable(false);
 	}
 }

@@ -27,9 +27,10 @@ import model.User;
 
 /**A view for submitting an entry to a certain contest.
  * @author Casey
+ * Documented by Abdul.
  */
 public class ContestantContestViewImp implements ContestantContestView {
-	
+	// fields and global variable
 	private static final int SUBMIT_CHOICE = 100;
 	private final JPanel myPanel;
 	private final JButton myBrowseButton;
@@ -47,6 +48,7 @@ public class ContestantContestViewImp implements ContestantContestView {
 	private Boolean mySubMade;
 	ArrayList<String> myImgTypes;
 	
+	// constructor.
 	public ContestantContestViewImp() {
 		myEntryFile = null;
 		mySubMade = false;
@@ -69,10 +71,13 @@ public class ContestantContestViewImp implements ContestantContestView {
 		myEntryFilePath = new JTextField(25);		
 		myEntryText = new JTextField(25);
 		myScrollPane = new JScrollPane(myImagelbl);
-		
+		// calls GUI.
 		GUI();
 	}
 	
+	/**
+	 * creates the GUI and adds all the components
+	 */
 	private void GUI(){
 		myEntryFilePath.setEditable(false);
 		myImagelbl.setVisible(false);
@@ -93,26 +98,34 @@ public class ContestantContestViewImp implements ContestantContestView {
 		myPanel.add(mySubmitButton);
 		
 	}
-
+	/**
+	 * return getView.
+	 */
 	@Override
 	public JPanel getView() {
 		return myPanel;
 	}
 
 
-
+	/**
+	 * calls action listener procedure.
+	 */
 	@Override
 	public void addBrowseButtonListener(AbstractAction theAction) {
 		myBrowseButton.addActionListener(theAction);
 	}
-	
+	/**
+	 * calls action listener procedure.
+	 */
 	
 	@Override
 	public void addSubmitButtonListener(AbstractAction theAction) {
 		mySubmitButton.addActionListener(theAction);
 		
 	}
-
+	/**
+	 * sets the contest name into pass value.
+	 */
 
 	@Override
 	public void setContestName(String theContestName) {
@@ -120,7 +133,9 @@ public class ContestantContestViewImp implements ContestantContestView {
 		
 	}
 	
-	
+	/**
+	 * this method set the file chooser.
+	 */
 	@Override
 	public Boolean setEntryFileName() throws IOException {
 		Boolean theFileSuccess = false;

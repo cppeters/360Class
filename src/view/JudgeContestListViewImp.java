@@ -11,7 +11,11 @@ import javax.swing.JScrollPane;
 import javax.swing.event.ListSelectionListener;
 
 import model.Contest;
-
+/**
+ * 
+ * @author tabi
+ *
+ */
 public class JudgeContestListViewImp implements JudgeContestListView {
 	private final JPanel myPanel;
 	private final JList<Contest> myList;

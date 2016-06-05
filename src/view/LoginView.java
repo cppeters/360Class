@@ -1,7 +1,13 @@
 package view;
 
 import javax.swing.AbstractAction;
-
+/**
+ * 
+ * LoginView is an interface class that 
+ * extends Viewable class.
+ * Documented by Abdul.
+ *
+ */
 public interface LoginView extends Viewable {
 
 	/**Add a listener for when user selects to log in.*/

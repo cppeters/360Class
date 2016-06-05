@@ -4,7 +4,12 @@ import javax.swing.AbstractAction;
 import javax.swing.event.ListSelectionListener;
 
 import model.Contest;
-
+/**
+ * AdminContestListView is an interfaces class that 
+ * has four important procedures 
+ * Documented by Abdul.
+ *
+ */
 public interface AdminContestListView extends Viewable {
 
 	/**

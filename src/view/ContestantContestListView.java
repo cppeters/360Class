@@ -3,7 +3,11 @@ package view;
 import javax.swing.event.ListSelectionListener;
 
 import model.Contest;
-
+/**
+ * this is an interface class that extends Viewable.
+ * Doc by Abdul.
+ *
+ */
 public interface ContestantContestListView extends Viewable {
 	
 	/**Sets the list of Contests to display as contests to which the
