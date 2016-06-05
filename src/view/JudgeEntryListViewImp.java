@@ -18,18 +18,34 @@ import model.Judge;
 import model.JudgeDatabaseManager;
 
 public class JudgeEntryListViewImp implements JudgeEntryListView {
+	/** Panel for the judge view*/
 	private final JPanel myPanel;
+	/** Label for the contest*/
 	private final JLabel myContestLabel;
+	/** Label for the result*/
 	private final JLabel myEntryCountandResultlabel;
-	private final JList<Entry> myList;  
-	private JComboBox<String> my1stRankingPlace;
-	private JComboBox<String> my2ndRankingPlace;
-	private JComboBox<String> my3rdRankingPlace;
-	private JButton myJudgeSubmissionButton;
+
+	/** Holding the list of judged entries*/
+	private final JList<Entry> myList;
+	/** List for first place*/
+	JComboBox<String> my1stRankingPlace;
+	/** List for second place*/
+	JComboBox<String> my2ndRankingPlace;
+	/** List for third place*/
+	JComboBox<String> my3rdRankingPlace;
+	/** Button used to submit judged entries*/
+	JButton myJudgeSubmissionButton;
+	/** Pop up preview*/
+
 	private JFrame myPreviewPopup ;
+	/** Be able to scroll through entries*/
 	private JScrollPane myScrollPane;
+	/** The Entrys that are listed. */
 	private Entry[] myContestEntries;
 
+
+
+	/** Constructor()*/
 	public JudgeEntryListViewImp() {
 		myPanel = new JPanel();
 		myPanel.setLayout(new BoxLayout(myPanel, BoxLayout.Y_AXIS));
@@ -126,9 +142,12 @@ public class JudgeEntryListViewImp implements JudgeEntryListView {
 		setupDropdownSubmissionRanking();
 		
 	}
-	
+
+	/** Creates the drop down option for judging
+	 * @param theEntry - the entries that will be judged*/
 	private void setupDropdownSubmissionRanking() {
-		JComboBox[] dropdownGroup = new JComboBox[]{my1stRankingPlace,
+//		String[] entryNameList = new String[theEntry.length];
+		JComboBox[] dropdownGroup = new JComboBox[]{my1stRankingPlace, 
 				                                    my2ndRankingPlace, 
 				                                    my3rdRankingPlace};
 		String none = "None";
