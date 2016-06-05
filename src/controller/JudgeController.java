@@ -1,7 +1,6 @@
 package controller;
 
 import java.awt.event.ActionEvent;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -11,36 +10,34 @@ import javax.swing.JList;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
-import model.Contest;
-import model.ContestDatabaseManager;
-import model.Entry;
-import model.EntryDatabaseManager;
-import model.User;
-import view.AdminContestListView;
-import view.ContestList;
+import model.*;
 import view.JudgeContestListView;
 import view.JudgeEntryListView;
-import view.NewContestForm;
 import view.View;
 import view.Viewable;
 
 public class JudgeController {
 	private final View myView;
-	private final User myUser;
+	private final Judge myJudge;
 	private final ContestDatabaseManager myContestDBManager; 
-	private final EntryDatabaseManager myEntryDBManager; 
+	private final EntryDatabaseManager myEntryDBManager;
+	private final JudgeDatabaseManager myJudgeDBManager;
+	private boolean myContestJudged = false;
 	
 	/**List of all views that have been displayed to this user since this controller
 	 * was created.*/
 	private final LinkedList<Viewable> viewHistory;
 
 	
-	public JudgeController(User theUser, ContestDatabaseManager theContestDatabaseManager, 
-							EntryDatabaseManager theEntryDatabaseManager, View theView) {
+	public JudgeController(Judge theJudge, ContestDatabaseManager theContestDatabaseManager,
+							EntryDatabaseManager theEntryDatabaseManager,
+						    JudgeDatabaseManager theJudgeDatabaseManager,
+						    View theView) {
 		myView = theView;
-		myUser = theUser;
+		myJudge = theJudge;
 		myContestDBManager = theContestDatabaseManager;
 		myEntryDBManager = theEntryDatabaseManager;
+		myJudgeDBManager = theJudgeDatabaseManager;
 		viewHistory = new LinkedList<>();
 		setupBackFunctionality();
 		setupListView();
@@ -52,10 +49,8 @@ public class JudgeController {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				//System.out.println("Clicked back.");
 				if (!viewHistory.isEmpty() && viewHistory.getLast() != null) {
-					myView.showPage(viewHistory.pop());	
-					//System.out.println("Swapped page.");
+					myView.showPage(viewHistory.pop());
 				}
 				if (viewHistory.isEmpty()) {
 					myView.setBackButtonEnabled(false);
@@ -83,25 +78,52 @@ public class JudgeController {
 			// Show the entries from the contest
 			@Override
 			public void valueChanged(ListSelectionEvent Event) {
-				if (!Event.getValueIsAdjusting()) {
-					JudgeEntryListView ElistView = myView.getJugdgeEntryListView();
-					Contest seclectedContest = ((JList<Contest>) Event.getSource()).getSelectedValue();
-					if (seclectedContest != null) {
-						ElistView.setEntryList(getEntries(seclectedContest.getContestNumber()),seclectedContest);
-						ElistView.addEntryListListener(new ListSelectionListener() {
-							@Override
-							public void valueChanged(ListSelectionEvent Event) {
-								if (!Event.getValueIsAdjusting()) {
-									Entry seclectedEntry = ((JList<Entry>) Event.getSource()) .getSelectedValue();
-									//System.out.println(((JList<Entry>) Event.getSource()) .getSelectedValue().getClass());
-									ElistView .addPreview(seclectedEntry);
+				try {
+					if (!Event.getValueIsAdjusting()) {
+						JudgeEntryListView ElistView = myView.getJugdgeEntryListView();
+						Contest selectedContest = ((JList<Contest>) Event.getSource()).getSelectedValue();
+						if (selectedContest != null) {
+							if (myJudge.getContestsJudged().get(selectedContest.getContestNumber()) != null) {
+								Entry[] theEntries = getEntries(selectedContest.getContestNumber());
+								ElistView.setJudgedContest(myJudge, selectedContest, theEntries);
+								myContestJudged = true;
+							}
+							else {
+								myContestJudged = false;
+							}
+							ElistView.setEntryList(getEntries(selectedContest.getContestNumber()), selectedContest);
+							ElistView.addEntryListListener(new ListSelectionListener() {
+								@Override
+								public void valueChanged(ListSelectionEvent Event) {
+									if (!Event.getValueIsAdjusting()) {
+										Entry selectedEntry = ((JList<Entry>) Event.getSource()).getSelectedValue();
+										ElistView.addPreview(selectedEntry);
 									}
 								}
 							});
-						myView.showPage(ElistView);
-						addToHistory(ClistView);
-						ClistView.clearSelection();
+							ElistView.addSubmitButtonListener(new AbstractAction() {
+
+								@Override
+								public void actionPerformed(ActionEvent e) {
+									myJudge.setMyContestNumber(selectedContest.getContestNumber());
+									try {
+										if (myContestJudged) {
+											ElistView.updateJudged(myJudge, myJudgeDBManager, selectedContest);
+										} else {
+											ElistView.addJudged(myJudge, myJudgeDBManager, selectedContest);
+										}
+									} catch (Exception e1) {
+										e1.printStackTrace();
+									}
+								}
+							});
+							myView.showPage(ElistView);
+							addToHistory(ClistView);
+							ClistView.clearSelection();
+						}
 					}
+				}catch (Exception e1) {
+					e1.printStackTrace();
 				}
 			}
 		});

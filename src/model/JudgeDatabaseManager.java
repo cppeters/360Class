@@ -76,6 +76,4 @@ public class JudgeDatabaseManager extends DatabaseManager <Judge>{
 		// Save changes
 		writeCsvFile();
 	}
-
-
 }

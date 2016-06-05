@@ -20,14 +20,14 @@ public class Main {
 	private static final String USER_FILE = "User.csv";
 	private static final String CONTEST_FILE = "Contests.csv";
 	private static final String ENTRY_FILE = "Entries.csv";
+    private static final String JUDGE_FILE = "Judge.csv";
 	
     public static void main(String args[]) throws Exception {
 
     	//modelTests(); 
-    	modelContestListTests();
+    	//modelContestListTests();
     	System.out.println("\nStarting controller....");
     	startController();
-
     }
 
     /**
@@ -44,13 +44,17 @@ public class Main {
         entryDatabaseManager.readCsvFile();
 
         final UserDatabaseManager userDatabaseManager = new UserDatabaseManager(USER_FILE, entryDatabaseManager);
-        userDatabaseManager.readCsvFile(); // should this happen automatically in userDatabaseManager constructor?
+        userDatabaseManager.readCsvFile();
+
+        final JudgeDatabaseManager judgeDatabaseManager = new JudgeDatabaseManager(JUDGE_FILE, entryDatabaseManager);
+        judgeDatabaseManager.readCsvFile();
 
         EventQueue.invokeLater(new Runnable() {
 
             @Override
             public void run() {
-                new MainController(userDatabaseManager, contestDatabaseManager, entryDatabaseManager);
+                new MainController(userDatabaseManager, contestDatabaseManager,
+                        entryDatabaseManager, judgeDatabaseManager);
             }
 
         });

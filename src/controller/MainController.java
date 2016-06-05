@@ -4,11 +4,7 @@ import java.awt.event.ActionEvent;
 
 import javax.swing.AbstractAction;
 
-import model.ContestDatabaseManager;
-import model.EntryDatabaseManager;
-import model.User;
-import model.UserDatabaseManager;
-import model.UserType;
+import model.*;
 import view.LoginView;
 import view.View;
 
@@ -18,12 +14,15 @@ import view.View;
  *
  */
 public class MainController {
-	
+
+
+	private static final int INIT_JUDGE = -1;
 
 	/*   All the models:   */
 	private final UserDatabaseManager myUserDBManager;
 	private final ContestDatabaseManager myContestDBManager;
 	private final EntryDatabaseManager myEntryDBManager;
+	private final JudgeDatabaseManager myJudgeDBManager;
 	
 	
 	private final View myView;
@@ -32,10 +31,11 @@ public class MainController {
 	 * Creates a new controller that starts up and listens to a GUI using the given models.
 	 */
 	public MainController(UserDatabaseManager theUserDBManager, ContestDatabaseManager theContestDBManager,
-							EntryDatabaseManager theEntryDBManager) {
+						  EntryDatabaseManager theEntryDBManager, JudgeDatabaseManager theJudgeDBManager) {
 		myUserDBManager = theUserDBManager;
 		myContestDBManager = theContestDBManager;
 		myEntryDBManager = theEntryDBManager;
+		myJudgeDBManager = theJudgeDBManager;
 		
 		myView = new View();
 		onLoginScreen();
@@ -109,8 +109,17 @@ public class MainController {
 			new ContestantController(theUser, myContestDBManager, myEntryDBManager, myView);
 			break;
 		case JUDGE:
-			// TODO uncomment the following when controller is ready, and uncomment logout
-			 new JudgeController(theUser, myContestDBManager, myEntryDBManager, myView);
+			 Judge aJudge = new Judge(theUser.getCardNumber(), theUser.getName(), theUser.getAge(),
+					 theUser.getLoginCredential(), theUser.getType(), INIT_JUDGE, INIT_JUDGE, INIT_JUDGE,
+						INIT_JUDGE);
+			// If this Judge already has Contests Judge copy to newest iteration
+			 for (int i : myJudgeDBManager.getMap().keySet()) {
+				 if (aJudge.getCardNumber() == myJudgeDBManager.getMap().get(i).getCardNumber()) {
+					 aJudge = new Judge(myJudgeDBManager.getMap().get(i));
+				 }
+			 }
+
+			 new JudgeController(aJudge, myContestDBManager, myEntryDBManager, myJudgeDBManager, myView);
 //			onLogout();
 			break;
 		default:

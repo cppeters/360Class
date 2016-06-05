@@ -83,9 +83,9 @@ public class JudgeDatabaseManagerTest {
     public void updateJudge() throws Exception {
         Judge theOldJudge = new Judge(myJudge);     // Use copy constructor
         myJudge.setMyContestNumber(4);
-        myJudge.setMyFirst(90);
-        myJudge.setMySecond(91);
-        myJudge.setMyThird(92);
+        myJudge.setMyFirst(9);
+        myJudge.setMySecond(1);
+        myJudge.setMyThird(2);
 
 
         // Update the Judge
@@ -108,7 +108,16 @@ public class JudgeDatabaseManagerTest {
                 assertEquals(myJudge, myJudgeDB.getMap().get(i));
         }
 
+        // Check if the judged contest was updated in List
+        for (Judge j : myJudgeDB.getAllItems()) {
+            if (j.getCardNumber() == myJudge.getCardNumber() &&
+                    j.getContestNumber() == myJudge.getContestNumber()) {
+                assertEquals(j, myJudge);
+            }
+        }
     }
+
+
 
 /**** Test Suite for readCsv() ******//*
 

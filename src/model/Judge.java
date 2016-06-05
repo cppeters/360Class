@@ -28,14 +28,14 @@ public class Judge extends User {
 
     /** Constructor()
      * @param theAge - age of the contestant
-     * @param theCardNumber - card number for the contestant
+     * @param theCardNumber - card number for the User
      * @param theContestNumber - contest number entry belongs to
-     * @param theName - name of the judge?
+     * @param theName - name of User
      * @param theLoginCredential - credential log in
      * @param theFirst - first place
      * @param theSecond - second place
      * @param theThird - third place
-     * @param theType - type of contest*/
+     * @param theType - type of User*/
     public Judge(int theCardNumber, String theName, int theAge, String theLoginCredential,
                  String theType, int theContestNumber, int theFirst, int theSecond, int theThird) {
         super(theCardNumber, theName, theAge, theLoginCredential, theType);
@@ -45,13 +45,13 @@ public class Judge extends User {
         mySecond = theSecond;
         myThird = theThird;
         myEntryNumbers = new ArrayList<>();
-        myContests.put(myContestNumber, myEntryNumbers);
-        addToList();
+       // myContests.put(myContestNumber, myEntryNumbers);
+       // addToList();
     }
 
     // Copy Constructor
     /** Constructor()
-     * @param theOtherJudge - the just of the contest
+     * @param theOtherJudge - the judge to copy
      * */
     public Judge(Judge theOtherJudge) {
         super(theOtherJudge.getCardNumber(), theOtherJudge.getName(), theOtherJudge.getAge(),
@@ -62,8 +62,8 @@ public class Judge extends User {
         this.mySecond = theOtherJudge.getMySecond();
         this.myThird = theOtherJudge.getMyThird();
         this.myEntryNumbers = new ArrayList<>();
-        this.myContests.put(myContestNumber, myEntryNumbers);
-        addToList();
+        //this.myContests.put(myContestNumber, myEntryNumbers);
+      //  addToList();
     }
 
     /**
@@ -78,7 +78,7 @@ public class Judge extends User {
     }
 
     /**
-     * Adding a contest that has been judged
+     * Adding a contest that has been judged. Must use appropriate entry and contest setters before calling this method.
      * @param theJudgeDB - creating map of entries that have been judged
      * @exception Exception*/
     public void addContestJudged(JudgeDatabaseManager theJudgeDB) throws Exception {
@@ -95,6 +95,7 @@ public class Judge extends User {
 
     /**
      * Updating a contest that already has been judged
+     * Must use appropriate entry and contest setters before calling this method.
      * @param theJudgeDB the database for the judged entries
      * */
     public void updateContestJudged(JudgeDatabaseManager theJudgeDB) throws Exception {
