@@ -74,7 +74,8 @@ public class MainController {
 	}
 	
 	
-	/**Returns true if tryToParse can be parsed into an integer.*/
+	/**Returns true if tryToParse can be parsed into an integer.
+	 * @param tryToParse - parses the string to an integer*/
 	private boolean tryParseInt(String tryToParse) {
 		try {
 			Integer.parseInt(tryToParse);
@@ -89,7 +90,9 @@ public class MainController {
 	 * to the Contestant controller, but once we have different types of users
 	 * we want to send them to their appropriate controller.
 	 * If somehow theUser doesn't have a type or the controller was not implemented for
-	 * that type, the user is automatically logged out.*/
+	 * that type, the user is automatically logged out.
+	 *
+	 * @param theUser - Checkes to see which user has logged in*/
 	private void onLogin(User theUser) {
 		System.out.println("Success! Hello, " + theUser.getName() + "!");	
 		
