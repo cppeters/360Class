@@ -21,15 +21,21 @@ import view.Viewable;
  *
  */
 public class AdminController {
-	
+
+	/** Which view to use*/
 	private final View myView;
 	private final User myUser;
+	/** The database for the contests*/
 	private final ContestDatabaseManager myContestDBManager; 
 	
 	/**List of all views that have been displayed to this user since this controller
 	 * was created.*/
 	private final LinkedList<Viewable> viewHistory;
 
+	/** Constructor()
+	 * @param theUser - which user logged in
+	 * @param theConDatMan - the contest database
+	 * @param theView - which view to use*/
 	public AdminController(User theUser, ContestDatabaseManager theConDatMan,  View theView) {
 		myView = theView;
 		myUser = theUser;
@@ -38,7 +44,8 @@ public class AdminController {
 		setupBackFunctionality();
 		setupListView();
 	}
-	
+
+	/** Adding the back button functionality*/
 	private void setupBackFunctionality() {
 		myView.addBackButtonListener(new AbstractAction() {
 
@@ -60,12 +67,15 @@ public class AdminController {
 			myView.setBackButtonEnabled(false);
 		}
 	}
-	
+
+	/** Adding the history of the view
+	 * @param theViewable - what has been viewed*/
 	private void addToHistory(Viewable theViewable) {
 		viewHistory.add(theViewable);
 		myView.setBackButtonEnabled(true);
 	}
-	
+
+	/** Setting up the list for the view*/
 	private void setupListView() {
 		final AdminContestListView listView = myView.getAdminContestListView();
 		listView.setContestList(allContests());
@@ -80,14 +90,17 @@ public class AdminController {
 		});
 		myView.showPage(listView);
 	}
-	
+
+	/** What are the contests?
+	 * @return all the contests*/
 	private Contest[] allContests() {
 		List<Contest> contests = myContestDBManager.getAllItems();
 		return contests.toArray(new Contest[contests.size()]);
 	}
 	
 	/**
-	 * 
+	 * Adding a new view
+	 * @param theListView - the list of views that have been used
 	 */
 	private void onAddContestView(final AdminContestListView theListView) {
 		final NewContestForm theForm = theListView.createNewContestForm();
@@ -111,6 +124,8 @@ public class AdminController {
 	/**
 	 * To be called when the user submits a new contest form.
 	 * Adds new contest to db and updates list view.
+	 * @param theForm - form of the contest
+	 * @param theListView - list of the views seen
 	 */
 	private void onAddingContest(NewContestForm theForm, AdminContestListView theListView) throws Exception {
 		String[] formInfo = theForm.getFormInfo();
@@ -127,7 +142,13 @@ public class AdminController {
 	/**
 	 * Confirms that none of the strings are empty; if they are, returns false. Otherwise,
 	 * adds contest to db and returns true.
-	 * @return
+	 * @param name - name of the contest
+	 * @param description - describing the contest
+	 * @param startDate - start date for the contest
+	 * @param endDate - end date for the contest
+	 *
+	 * @return if a contest has been successfully added
+	 * @exception Exception
 	 */
 	private boolean addContest(String name, String description, String startDate, String endDate) throws Exception {
 		boolean added = false;

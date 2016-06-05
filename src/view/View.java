@@ -34,10 +34,7 @@ public class View {
 	/**The panel where the current page is displayed.*/
 	private final JPanel pageRegion;
 
-	/**
-	 * 
-	 * @param topBannerText The text to display in the banner.
-	 */
+
 	public View() {		
 		myFrame = new JFrame();
 		contentPanel = new JPanel(new BorderLayout());
@@ -47,8 +44,8 @@ public class View {
 		pageRegion = new JPanel(new BorderLayout());
 		createGui();
 	}
-	
-	
+
+	/** Creates the GUI for the user*/
 	private void createGui() {		
 		myFrame.setLocationRelativeTo(null);
 		myFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -174,8 +171,8 @@ public class View {
 		headRegion.add(westPanel, BorderLayout.WEST);
 		headRegion.add(eastPanel, BorderLayout.EAST);
 	}
-	
 
+	/** Resize the dimensions for the panel*/
 	public void reSize(Dimension theDimension){
 		myFrame.setResizable(true);
 		myFrame.setSize(theDimension);

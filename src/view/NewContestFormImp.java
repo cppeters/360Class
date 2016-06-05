@@ -25,7 +25,8 @@ public class NewContestFormImp implements NewContestForm {
 	private JTextField myEndDateField;
 	private JButton mySubmitButton;
 	private JLabel myErrorMsgLabel;
-	
+
+	/** Creates the new contest form */
 	public NewContestFormImp() {
 		myPanel = new JPanel();
 		myPanel.setLayout(new BoxLayout(myPanel, BoxLayout.Y_AXIS));

@@ -15,7 +15,7 @@ public interface AdminContestListView extends Viewable {
 	
 	/**
 	 * Sets the listener for the button for wanting to add a new contest.
-	 * @param theListener
+	 * @param theAction 
 	 */
 	public void addNewContestButtonListener(AbstractAction theAction);
 	
