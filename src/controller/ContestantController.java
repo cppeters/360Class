@@ -83,12 +83,15 @@ public class ContestantController {
 			myView.setBackButtonEnabled(false);
 		}
 	}
-	
+
+	/** Updates history
+	 * @param theViewable - veiw that has been used*/
 	private void addToHistory(Viewable theViewable) {
 		viewHistory.add(theViewable);
 		myView.setBackButtonEnabled(true);
 	}
-	
+
+	/** Creates the view*/
 	private void setupListView() {
 		final ContestantContestListView cclv = myView.getContestantContestListView();
 		refreshLists(cclv);

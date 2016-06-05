@@ -66,12 +66,15 @@ public class JudgeController {
 			myView.setBackButtonEnabled(false);
 		}
 	}
-	
+
+	/** Updates history
+	* @param theViewable - veiw that has been used*/
 	private void addToHistory(Viewable theViewable) {
 		viewHistory.add(theViewable);
 		myView.setBackButtonEnabled(true);
 	}
-	
+
+	/** Creates the view*/
 	private void setupListView() {
 		final JudgeContestListView ClistView = myView.getJugdgeContestListView();
 		ClistView.setContestList(allContests());
@@ -104,12 +107,16 @@ public class JudgeController {
 		});
 		myView.showPage(ClistView);
 	}
-	
+
+	/** Gets all the contest that have been submitted
+	 * @return the contests*/
 	private Contest[] allContests() {
 		List<Contest> contests = myContestDBManager.getAllItems();
 		return contests.toArray(new Contest[contests.size()]);
 	}
 
+	/** What entries have been submitted
+	 * @return gets all entries that have been submitted*/
     private Entry[] getEntries(int theContestNumber) {
         List<Entry> entries = new ArrayList<>();
         for(int index = 0; index < myEntryDBManager.getAllItems().size(); index++){

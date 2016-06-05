@@ -57,7 +57,8 @@ public class LoginViewImp implements LoginView {
 		c.gridy = 1;
 		myPanel.add(new JPanel(new BorderLayout()), c);
 	}
-	
+
+	/** Creates the login panel for the user*/
 	private JPanel createLoginComPanel() {
 		JPanel loginPanel = new JPanel();
 		JPanel cardLogin = new JPanel();

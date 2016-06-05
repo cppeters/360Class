@@ -72,7 +72,7 @@ public class ContestantContestViewImp implements ContestantContestView {
 		
 		GUI();
 	}
-	
+	/** GUI that will be sued in the code*/
 	private void GUI(){
 		myEntryFilePath.setEditable(false);
 		myImagelbl.setVisible(false);
