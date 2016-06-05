@@ -11,6 +11,7 @@ import static org.junit.Assert.*;
 
 /**
  * Created by cppeters on 6/2/2016.
+ * @author Casey
  */
 public class JudgeTest {
     private static final String TEST_JUDGE_FILE = "TestJudge.csv";
@@ -21,6 +22,10 @@ public class JudgeTest {
     private UserDatabaseManager myUserDB;
     private Judge myJudge;
 
+    /**
+     * Setup method for testing.
+     * @throws Exception
+     */
     @Before
     public void setUp() throws Exception {
 
@@ -37,6 +42,11 @@ public class JudgeTest {
         myJudge = new Judge(theCardNumber, newJudgeName, 28, "steve", "JUDGE",
                 8, 7, 8, 9);
     }
+
+    /**
+     * Test method for {@link model.Judge#addContestJudged(JudgeDatabaseManager)}
+     * @throws Exception
+     */
     @Test
     public void addContestJudged() throws Exception {
         // Total amount of contests by this Judge
@@ -67,6 +77,10 @@ public class JudgeTest {
         assertEquals(myJudge, myJudgeDB.getMap().get(myJudge.getCardNumber()));
     }
 
+    /**
+     * Test method for {@link model.Judge#updateContestJudged(JudgeDatabaseManager)}
+     * @throws Exception
+     */
     @Test
     public void updateContestJudged() throws Exception {
         // Total amount of contests by this Judge

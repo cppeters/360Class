@@ -85,7 +85,6 @@ public abstract class DatabaseManager<T> {
 	public void readCsvFile(int theType, EntryDatabaseManager theEntryDB) throws Exception{
         try {
         	T theData = null;
-            boolean notJudged = true;
         	String[] theInfo;
             String line = "";
             BufferedReader theFileReader = new BufferedReader(new FileReader(myFileName));
@@ -121,7 +120,6 @@ public abstract class DatabaseManager<T> {
                             break;
                         // Case 4: Judge
                         case 4:
-                            //(myMap.get(Integer.parseInt(theInfo[0])) == null)
                             theData = (T) new Judge(Integer.parseInt(theInfo[0]), theInfo[1],
                                     Integer.parseInt(theInfo[2]), theInfo[3], theInfo[4],
                                     Integer.parseInt(theInfo[5]), Integer.parseInt(theInfo[6]),
@@ -164,8 +162,8 @@ public abstract class DatabaseManager<T> {
         sb.append(NEW_LINE_SEPARATOR);
         // If it is a Judge use the List for multiple occurrences
         if (theType == 4) {
-            for (int i = 0; i < myItems.size(); i++) {
-                sb.append(myItems.get(i).toString());
+            for (T myItem : myItems) {
+                sb.append(myItem.toString());
                 sb.append(NEW_LINE_SEPARATOR);
             }
         }
