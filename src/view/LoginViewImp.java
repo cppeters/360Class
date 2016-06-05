@@ -17,14 +17,20 @@ import javax.swing.JTextField;
 
 /** An implementation of LoginView. */
 public class LoginViewImp implements LoginView {
-	
+
+	/** Panel for the login*/
 	private final JPanel myPanel;
+	/** Place to allow user to enter card number*/
 	private final JTextField myCardNoField;
+
+	/** Place to allow user to enter password*/
 	private final JTextField myPassField;
+	/** Button used to login*/
 	private final JButton myLoginButton;
+	/** Error when logging in*/
 	private final JLabel myLoginFailMessage;
 
-	
+	/** Constructor()*/
 	public LoginViewImp() {
 		myPanel = new JPanel(new GridBagLayout());		
 
