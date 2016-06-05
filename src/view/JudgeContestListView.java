@@ -5,9 +5,7 @@ import javax.swing.event.ListSelectionListener;
 import model.Contest;
 
 /**
- * 
  * @author Lan
- *
  */
 public interface JudgeContestListView extends Viewable {
 

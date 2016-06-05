@@ -1,10 +1,8 @@
 package view;
 
-import java.awt.BorderLayout;
 import java.awt.Component;
 
 import javax.swing.BoxLayout;
-import javax.swing.JButton;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
