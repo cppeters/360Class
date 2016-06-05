@@ -13,9 +13,12 @@ import javax.swing.event.ListSelectionListener;
 import model.Contest;
 
 public class AdminContestListViewImp implements AdminContestListView {
-	
+
+	/** Panel that will be used for the admin view*/
 	private final JPanel myPanel;
+	/** Holds the list of contest*/
 	private final JList<Contest> myList;
+	/** Creates a new contests when clicked*/
 	private final JButton newContestButton;
 	
 	public AdminContestListViewImp() {
@@ -83,16 +86,16 @@ public class AdminContestListViewImp implements AdminContestListView {
 //            }
 //
 //        };
-//		
+//
 //		public ContestList() {
 //			this.addComponentListener(l);
 //		}
-//		
+//
 //        @Override
 //        public boolean getScrollableTracksViewportWidth() {
 //            return true;
 //        }
-//        
+//
 //
 //	}
 
