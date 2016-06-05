@@ -18,10 +18,10 @@ import model.*;
 public class Main {
 	
 	/*		File Names  	*/
-	private static final String DB_DIRECTORY = "database";
-	private static final String USER_FILE = DB_DIRECTORY + File.separator + "User.csv";
-	private static final String CONTEST_FILE = DB_DIRECTORY + File.separator + "Contests.csv";
-	private static final String ENTRY_FILE = DB_DIRECTORY + File.separator + "Entries.csv";
+	private static final String DB_DIRECTORY = "database" + File.separator;
+	private static final String USER_FILE = DB_DIRECTORY  + "User.csv";
+	private static final String CONTEST_FILE = DB_DIRECTORY + "Contests.csv";
+	private static final String ENTRY_FILE = DB_DIRECTORY + "Entries.csv";
 	
     public static void main(String args[]) throws Exception {
 

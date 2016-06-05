@@ -1,6 +1,5 @@
 package model;
-import java.io.FileNotFoundException;
-import java.util.*;
+
 /**
  * @author liz
  */
@@ -17,7 +16,6 @@ public class EntryDatabaseManager extends DatabaseManager<Entry> {
 
     }
 
-    @SuppressWarnings("unchecked")
     public void readCsvFile() throws Exception {
         super.readCsvFile(DATABASE_TYPE, null);
     }
