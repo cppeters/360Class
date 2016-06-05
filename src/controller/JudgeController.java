@@ -1,7 +1,6 @@
 package controller;
 
 import java.awt.event.ActionEvent;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -16,29 +15,24 @@ import model.ContestDatabaseManager;
 import model.Entry;
 import model.EntryDatabaseManager;
 import model.User;
-import view.AdminContestListView;
-import view.ContestList;
 import view.JudgeContestListView;
 import view.JudgeEntryListView;
-import view.NewContestForm;
 import view.View;
 import view.Viewable;
 
 public class JudgeController {
+	
 	private final View myView;
-	private final User myUser;
 	private final ContestDatabaseManager myContestDBManager; 
 	private final EntryDatabaseManager myEntryDBManager; 
 	
 	/**List of all views that have been displayed to this user since this controller
 	 * was created.*/
 	private final LinkedList<Viewable> viewHistory;
-
 	
 	public JudgeController(User theUser, ContestDatabaseManager theContestDatabaseManager, 
 							EntryDatabaseManager theEntryDatabaseManager, View theView) {
 		myView = theView;
-		myUser = theUser;
 		myContestDBManager = theContestDatabaseManager;
 		myEntryDBManager = theEntryDatabaseManager;
 		viewHistory = new LinkedList<>();
@@ -52,10 +46,8 @@ public class JudgeController {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				//System.out.println("Clicked back.");
 				if (!viewHistory.isEmpty() && viewHistory.getLast() != null) {
 					myView.showPage(viewHistory.pop());	
-					//System.out.println("Swapped page.");
 				}
 				if (viewHistory.isEmpty()) {
 					myView.setBackButtonEnabled(false);
@@ -68,7 +60,8 @@ public class JudgeController {
 	}
 
 	/** Updates history
-	* @param theViewable - veiw that has been used*/
+	* @param theViewable - view that has been used
+	*/
 	private void addToHistory(Viewable theViewable) {
 		viewHistory.add(theViewable);
 		myView.setBackButtonEnabled(true);
@@ -85,6 +78,7 @@ public class JudgeController {
 			public void valueChanged(ListSelectionEvent Event) {
 				if (!Event.getValueIsAdjusting()) {
 					JudgeEntryListView ElistView = myView.getJugdgeEntryListView();
+					@SuppressWarnings("unchecked")
 					Contest seclectedContest = ((JList<Contest>) Event.getSource()).getSelectedValue();
 					if (seclectedContest != null) {
 						ElistView.setEntryList(getEntries(seclectedContest.getContestNumber()),seclectedContest);
@@ -92,8 +86,8 @@ public class JudgeController {
 							@Override
 							public void valueChanged(ListSelectionEvent Event) {
 								if (!Event.getValueIsAdjusting()) {
+									@SuppressWarnings("unchecked")
 									Entry seclectedEntry = ((JList<Entry>) Event.getSource()) .getSelectedValue();
-									//System.out.println(((JList<Entry>) Event.getSource()) .getSelectedValue().getClass());
 									ElistView .addPreview(seclectedEntry);
 									}
 								}
