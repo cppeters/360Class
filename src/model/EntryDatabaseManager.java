@@ -23,7 +23,8 @@ public class EntryDatabaseManager extends DatabaseManager<Entry> {
     }
 
     /**
-     * Writes the the CSV file */
+     * Writes the the CSV file
+     * @exception Exception*/
     public void writeCsvFile() throws Exception {
         super.writeCsvFile(DATABASE_TYPE);
     }

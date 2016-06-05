@@ -17,13 +17,20 @@ import model.Contest;
 
 
 public class NewContestFormImp implements NewContestForm {
-	
+
+	/** Panel used for contests*/
 	private final JPanel myPanel;
+	/** Place to enter in name of contest*/
 	private JTextField myNameField;
+	/** Place to enter in description for contest*/
 	private JTextField myDescriptionField;
+	/** Place to enter in start date*/
 	private JTextField myStartDateField;
+	/** Place to enter in end date*/
 	private JTextField myEndDateField;
+	/** Button used to add a new contest*/
 	private JButton mySubmitButton;
+	/** Shows error*/
 	private JLabel myErrorMsgLabel;
 
 	/** Creates the new contest form */

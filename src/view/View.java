@@ -110,30 +110,38 @@ public class View {
 	}
 	
 	
-	/**Returns a LoginView object so the controller may interact with it.*/
+	/**Returns a LoginView object so the controller may interact with it.
+	 * @return the login view*/
 	public LoginView getLoginView() {
 		return new LoginViewImp();
 	}
 	
-	/** Returns a ContestantContestListView object so the controller may interact with it. */
+	/** Returns a ContestantContestListView object so the controller may interact with it.
+	 * @return the contest view*/
 	public ContestantContestListView getContestantContestListView() {
 		return new ContestantContestListViewImp();
 	}
 	
-	/** Returns a ContestantContestView object so the controller may interact with it. */
+	/** Returns a ContestantContestView object so the controller may interact with it.
+	 * @return the contestant view*/
 	public ContestantContestView getContestantContestView() {
 		return new ContestantContestViewImp();
 	}
-	
 
+	/** Returns the admin view
+	 * @return the admin view*/
 	public AdminContestListView getAdminContestListView() {
 		return new AdminContestListViewImp();
 	}
-	
+
+	/** Returns the judges view
+	 * @return the view judges will see*/
 	public JudgeContestListView getJugdgeContestListView() {
 		return new JudgeContestListViewImp();
 	}
-	
+
+	/** Return judge view
+	 * @return the judge view when they create an entry*/
 	public JudgeEntryListView getJugdgeEntryListView() {
 		return new JudgeEntryListViewImp();
 	}
@@ -172,7 +180,8 @@ public class View {
 		headRegion.add(eastPanel, BorderLayout.EAST);
 	}
 
-	/** Resize the dimensions for the panel*/
+	/** Resize the dimensions for the panel
+	 * @param theDimension - creates dimension for the view*/
 	public void reSize(Dimension theDimension){
 		myFrame.setResizable(true);
 		myFrame.setSize(theDimension);
