@@ -15,9 +15,11 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
 /**
- * 
+ * The main View class. Responsible for swapping panels in central area and providing
+ * controls for navigating page, as well as a static header that remains the same across pages.
+ * Also has getter methods for retrieving concrete implementations of various top-level pages that
+ * this View can display.
  * @author Tabi
- *
  */
 public class View {
 	
@@ -102,7 +104,6 @@ public class View {
 	/**Displays the given Page in the pageRegion.*/
 	public void showPage(Viewable thePage) {
 		pageRegion.removeAll();
-		//pageRegion.revalidate();
 		pageRegion.add(thePage.getView(), BorderLayout.CENTER);
 		pageRegion.revalidate();
 		pageRegion.repaint();

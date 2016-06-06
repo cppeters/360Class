@@ -26,7 +26,7 @@ public class Main {
     public static void main(String args[]) throws Exception {
 
     	//modelTests(); 
-    	modelContestListTests();
+    	//modelContestListTests();
     	System.out.println("\nStarting controller....");
     	startController();
 

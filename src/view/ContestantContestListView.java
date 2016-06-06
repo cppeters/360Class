@@ -4,6 +4,10 @@ import javax.swing.event.ListSelectionListener;
 
 import model.Contest;
 
+/**
+ * An interface for interacting with a Contestants view of all Contests.
+ * @author Tabi
+ */
 public interface ContestantContestListView extends Viewable {
 	
 	/**Sets the list of Contests to display as contests to which the
