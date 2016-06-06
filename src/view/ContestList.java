@@ -26,8 +26,12 @@ import model.Contest;
  */
 public class ContestList extends JList<Contest> {
 
+	/**The color used for highlighting rows in list on mouseover.*/
 	private static final Color HUSKY_PURPLE = new Color(177, 144, 212);
 
+	/**
+	 * Constructs a new, empty ContestList.
+	 */
 	public ContestList() {
 		this.setCellRenderer(new ContestListCellRenderer());
 		this.addComponentListener(new ComponentAdapter() {

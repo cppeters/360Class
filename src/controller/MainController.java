@@ -13,19 +13,26 @@ import view.LoginView;
 import view.View;
 
 /**
- * 
+ * Controls login/logout functionality and instantiates controllers
+ * depending on the type of user that logs in.
  * @author Tabi
- *
  */
 public class MainController {
 	
 
-	/*   All the models:   */
+	/**A reference to the UserDatabaseManager that this controller will use
+	 * to look up user information.*/
 	private final UserDatabaseManager myUserDBManager;
+	
+	/**A reference to the ContestDatabaseManager that this controller will use
+	 * to look up contest information.*/
 	private final ContestDatabaseManager myContestDBManager;
+	
+	/**A reference to the EntryDatabaseManager that this controller will use
+	 * to look up entry information.*/
 	private final EntryDatabaseManager myEntryDBManager;
 	
-	
+	/** A reference to the View that this controller controls. */
 	private final View myView;
 	
 	/**
@@ -105,16 +112,13 @@ public class MainController {
 		
 		switch (UserType.checkType(theUser.getType())) {
 		case ADMIN:
-			new AdminController(theUser, myContestDBManager, myView);
-			//need to write to the file to make sure information is updated
+			new AdminController(myContestDBManager, myView);
 			break;
 		case CONTESTANT:
 			new ContestantController(theUser, myContestDBManager, myEntryDBManager, myView);
 			break;
 		case JUDGE:
-			// TODO uncomment the following when controller is ready, and uncomment logout
 			 new JudgeController(theUser, myContestDBManager, myEntryDBManager, myView);
-//			onLogout();
 			break;
 		default:
 			onLogout(); // immediately logout because something went wrong if User didn't have one of those types.

@@ -12,6 +12,10 @@ import javax.swing.event.ListSelectionListener;
 
 import model.Contest;
 
+/**
+ * A concrete implementation of a view for admins to look at all contests.
+ * @author Tabi
+ */
 public class AdminContestListViewImp implements AdminContestListView {
 
 	/** Panel that will be used for the admin view*/
@@ -21,9 +25,11 @@ public class AdminContestListViewImp implements AdminContestListView {
 	/** Creates a new contests when clicked*/
 	private final JButton newContestButton;
 	
+	/**
+	 * Constructs a new AdminContestListViewImp.
+	 */
 	public AdminContestListViewImp() {
 		myPanel = new JPanel();
-		//myList = new JList<>();
 		myList = new ContestList();	
 		
 		newContestButton = new JButton("Create new contest");
@@ -69,34 +75,6 @@ public class AdminContestListViewImp implements AdminContestListView {
 	public NewContestForm createNewContestForm() {
 		return new NewContestFormImp();
 	}
-	
-//	/**
-//	 * Information taken from are from StackOverFlow problem #7306295, solution by user kleopatra
-//	 * Necessary for allowing word wrap in text areas inside of JList.
-//	 * @author Tabi
-//	 */
-//	private class ContestList extends JList<Contest>{
-//		
-//        ComponentListener l = new ComponentAdapter() {
-//
-//            @Override
-//            public void componentResized(ComponentEvent e) {
-//                setFixedCellHeight(10);
-//                setFixedCellHeight(-1);
-//            }
-//
-//        };
-//
-//		public ContestList() {
-//			this.addComponentListener(l);
-//		}
-//
-//        @Override
-//        public boolean getScrollableTracksViewportWidth() {
-//            return true;
-//        }
-//
-//
-//	}
+
 
 }

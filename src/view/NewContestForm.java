@@ -4,6 +4,11 @@ import javax.swing.AbstractAction;
 
 import model.Contest;
 
+/**
+ * An interface for interacting with a form for creating a new contest.
+ * @author Tabi
+ *
+ */
 public interface NewContestForm extends Viewable {
 
 	/** Returns an array containing each of 4 strings from the form text

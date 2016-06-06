@@ -15,9 +15,11 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
 /**
- * 
+ * The main View class. Responsible for swapping panels in central area and providing
+ * controls for navigating page, as well as a static header that remains the same across pages.
+ * Also has getter methods for retrieving concrete implementations of various top-level pages that
+ * this View can display.
  * @author Tabi
- *
  */
 public class View {
 	
@@ -102,7 +104,6 @@ public class View {
 	/**Displays the given Page in the pageRegion.*/
 	public void showPage(Viewable thePage) {
 		pageRegion.removeAll();
-		//pageRegion.revalidate();
 		pageRegion.add(thePage.getView(), BorderLayout.CENTER);
 		pageRegion.revalidate();
 		pageRegion.repaint();
@@ -156,14 +157,13 @@ public class View {
 		JPanel eastPanel = new JPanel();
 		eastPanel.setLayout(new BoxLayout(eastPanel, BoxLayout.Y_AXIS));	
 		
-		//Setup banner
+		// Setup banner
 		JLabel appBanner = new JLabel("Clark County Libraries Contest App");
 		appBanner.setHorizontalAlignment(SwingConstants.CENTER);
 		appBanner.setFont(appBanner.getFont().deriveFont (20.0f));
 		
-		// Create and resize the logo
-		ImageIcon imageIcon = new ImageIcon(new ImageIcon("logo.png").getImage().getScaledInstance(62, 62, Image.SCALE_DEFAULT));
-		JLabel logoLabel = new JLabel(imageIcon);
+		// Setup Logo
+		JLabel logoLabel = new JLabel(setupLogo());
 		westPanel.add(logoLabel);
 		
 		// Setup buttons
@@ -178,6 +178,18 @@ public class View {
 		headRegion.add(appBanner, BorderLayout.CENTER);
 		headRegion.add(westPanel, BorderLayout.WEST);
 		headRegion.add(eastPanel, BorderLayout.EAST);
+	}
+	
+	/**
+	 * Create and resize the logo.
+	 * @author Lan
+	 * @author Tabi
+	 * @return ImageIcon the logo, resized to 62 x 62 pixels.
+	 */
+	private ImageIcon setupLogo() {
+		ImageIcon imageIcon = new ImageIcon(getClass().getResource("icons/logo.png"));
+		imageIcon = new ImageIcon(imageIcon.getImage().getScaledInstance(62, 62, Image.SCALE_DEFAULT));
+		return imageIcon;
 	}
 
 	/** Resize the dimensions for the panel

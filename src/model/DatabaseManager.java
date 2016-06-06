@@ -131,6 +131,7 @@ public abstract class DatabaseManager<T> {
                     myItems.add(theData);
                 }
             }
+            theFileReader.close();
         } catch (Exception e) {
             System.out.println(e.getMessage());
             throw e;
