@@ -163,22 +163,7 @@ public class JudgeEntryListViewImp implements JudgeEntryListView {
 				}
 			});
 		}
-//<<<<<<< HEAD
-//		myJudgeSubmissionButton.addActionListener(new ActionListener() {
-//			public void actionPerformed(ActionEvent event) {
-//				if(my1stRankingPlace.getSelectedItem().equals(none)){
-//					JOptionPane.showMessageDialog(myPanel,"1st place cannot be empty"
-//							+ "", "Warning",JOptionPane.WARNING_MESSAGE);
-//				}else if (my1stRankingPlace.getSelectedItem()
-//						.equals(my2ndRankingPlace.getSelectedItem())
-//						|| my2ndRankingPlace.getSelectedItem()
-//								.equals(my3rdRankingPlace.getSelectedItem())) {
-//					if(!(my2ndRankingPlace.getSelectedItem().equals(none)))
-//					JOptionPane.showMessageDialog(myPanel,"One entry can't have two rankings"
-//							+ "", "Warning",JOptionPane.WARNING_MESSAGE);
-//					else{
-//						myEntryCountandResultlabel.setText(myEntryCountandResultlabel.getText() + " JUDGED");
-//=======
+
 		myJudgeSubmissionButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent event) {
 				if (my1stRankingPlace.getSelectedItem().equals(none)) {
@@ -194,7 +179,6 @@ public class JudgeEntryListViewImp implements JudgeEntryListView {
 						}
 					} else {
 						JOptionPane.showMessageDialog(myPanel, "One entry can't have two rankings", "Warning", JOptionPane.WARNING_MESSAGE);
-//>>>>>>> origin/master
 					}
 				} else if (my2ndRankingPlace.getSelectedItem().equals(none)
 						&& !(my3rdRankingPlace.getSelectedItem().equals(none))

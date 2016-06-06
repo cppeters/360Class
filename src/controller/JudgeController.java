@@ -82,11 +82,13 @@ public class JudgeController {
 		ClistView.addContestListListener(new ListSelectionListener() {
 
 			// Show the entries from the contest
+			@SuppressWarnings("serial")
 			@Override
 			public void valueChanged(ListSelectionEvent Event) {
 				try {
 					if (!Event.getValueIsAdjusting()) {
 						JudgeEntryListView ElistView = myView.getJugdgeEntryListView();
+						@SuppressWarnings("unchecked")
 						Contest selectedContest = ((JList<Contest>) Event.getSource()).getSelectedValue();
 						if (selectedContest != null) {
 							if (myJudge.getContestsJudged().get(selectedContest.getContestNumber()) != null) {
@@ -102,6 +104,7 @@ public class JudgeController {
 								@Override
 								public void valueChanged(ListSelectionEvent Event) {
 									if (!Event.getValueIsAdjusting()) {
+										@SuppressWarnings("unchecked")
 										Entry selectedEntry = ((JList<Entry>) Event.getSource()).getSelectedValue();
 										ElistView.addPreview(selectedEntry);
 									}
