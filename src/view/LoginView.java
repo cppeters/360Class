@@ -2,6 +2,11 @@ package view;
 
 import javax.swing.AbstractAction;
 
+/**
+ * An interface for interacting with the view all users see before logging in.
+ * @author Tabi
+ *
+ */
 public interface LoginView extends Viewable {
 
 	/**Add a listener for when user selects to log in.*/

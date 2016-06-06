@@ -15,7 +15,11 @@ import javax.swing.JTextField;
 
 import model.Contest;
 
-
+/**
+ * Concrete implementation of a Form for an admin to create a new contest.
+ * @author Tabi
+ *
+ */
 public class NewContestFormImp implements NewContestForm {
 
 	/** Panel used for contests*/

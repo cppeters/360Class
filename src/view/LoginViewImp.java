@@ -15,7 +15,9 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
-/** An implementation of LoginView. */
+/** An implementation of LoginView. 
+ * @author Tabi
+ */
 public class LoginViewImp implements LoginView {
 
 	/** Panel for the login*/
@@ -64,22 +66,25 @@ public class LoginViewImp implements LoginView {
 		myPanel.add(new JPanel(new BorderLayout()), c);
 	}
 
-	/** Creates the login panel for the user*/
+	/** Creates the login panel for the user.*/
 	private JPanel createLoginComPanel() {
-		JPanel loginPanel = new JPanel();
-		JPanel cardLogin = new JPanel();
-		JPanel pinLogin = new JPanel();
-		loginPanel.setLayout(new BoxLayout(loginPanel, BoxLayout.Y_AXIS));
-		cardLogin.setLayout(new BorderLayout());
-		pinLogin.setLayout(new BorderLayout());
-		cardLogin.add(new JLabel("Card#: "), BorderLayout.WEST);
-		pinLogin.add(new JLabel("PIN:      "),BorderLayout.WEST);
-		cardLogin.add(myCardNoField);
-		pinLogin.add(myPassField);
-		loginPanel.add(cardLogin, BorderLayout.WEST);
-		loginPanel.add(pinLogin, BorderLayout.WEST);
+		JPanel loginPanel = new JPanel(new GridBagLayout());
+		GridBagConstraints c = new GridBagConstraints();
+		c.fill = GridBagConstraints.HORIZONTAL;
+		
+		JTextField[] fields = new JTextField[]{myCardNoField, myPassField};
+		JLabel[] labels = new JLabel[]{new JLabel("Card No. ", JLabel.RIGHT), new JLabel("PIN ", JLabel.RIGHT)};
+		
+		for (int i = 0; i < fields.length; i++) {
+			c.weightx = 0; c.gridx = 0; c.gridy = i; c.anchor = GridBagConstraints.LINE_END;
+			loginPanel.add(labels[i], c);
+			c.gridx = 1; c.weightx = 1; c.anchor = GridBagConstraints.LINE_START;
+			loginPanel.add(fields[i], c);
+		}		
+		
 		return loginPanel;
 	}
+	
 
 	@Override
 	public JPanel getView() {

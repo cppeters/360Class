@@ -9,22 +9,30 @@ import view.LoginView;
 import view.View;
 
 /**
- * 
+ * Controls login/logout functionality and instantiates controllers
+ * depending on the type of user that logs in.
  * @author Tabi
- *
  */
 public class MainController {
 
 
 	private static final int INIT_JUDGE = -1;
 
-	/*   All the models:   */
+	/**A reference to the UserDatabaseManager that this controller will use
+	 * to look up user information.*/
 	private final UserDatabaseManager myUserDBManager;
+	
+	/**A reference to the ContestDatabaseManager that this controller will use
+	 * to look up contest information.*/
 	private final ContestDatabaseManager myContestDBManager;
+	
+	/**A reference to the EntryDatabaseManager that this controller will use
+	 * to look up entry information.*/
 	private final EntryDatabaseManager myEntryDBManager;
+
 	private final JudgeDatabaseManager myJudgeDBManager;
 	
-	
+	/** A reference to the View that this controller controls. */
 	private final View myView;
 	
 	/**
@@ -92,7 +100,7 @@ public class MainController {
 	 * If somehow theUser doesn't have a type or the controller was not implemented for
 	 * that type, the user is automatically logged out.
 	 *
-	 * @param theUser - Checkes to see which user has logged in*/
+	 * @param theUser - Checks to see which user has logged in*/
 	private void onLogin(User theUser) {
 		System.out.println("Success! Hello, " + theUser.getName() + "!");	
 		
@@ -105,8 +113,7 @@ public class MainController {
 		
 		switch (UserType.checkType(theUser.getType())) {
 		case ADMIN:
-			new AdminController(theUser, myContestDBManager, myView);
-			//need to write to the file to make sure information is updated
+			new AdminController(myContestDBManager, myView);
 			break;
 		case CONTESTANT:
 			new ContestantController(theUser, myContestDBManager, myEntryDBManager, myView);
@@ -123,7 +130,7 @@ public class MainController {
 			 }
 
 			 new JudgeController(aJudge, myContestDBManager, myEntryDBManager, myJudgeDBManager, myView);
-//			onLogout();
+
 			break;
 		default:
 			onLogout(); // immediately logout because something went wrong if User didn't have one of those types.

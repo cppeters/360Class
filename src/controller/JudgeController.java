@@ -10,13 +10,19 @@ import javax.swing.JList;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
-import model.*;
+import model.Contest;
+import model.ContestDatabaseManager;
+import model.Entry;
+import model.EntryDatabaseManager;
+import model.Judge;
+import model.JudgeDatabaseManager;
 import view.JudgeContestListView;
 import view.JudgeEntryListView;
 import view.View;
 import view.Viewable;
 
 public class JudgeController {
+	
 	private final View myView;
 	private final Judge myJudge;
 	private final ContestDatabaseManager myContestDBManager; 
@@ -27,7 +33,6 @@ public class JudgeController {
 	/**List of all views that have been displayed to this user since this controller
 	 * was created.*/
 	private final LinkedList<Viewable> viewHistory;
-
 	
 	public JudgeController(Judge theJudge, ContestDatabaseManager theContestDatabaseManager,
 							EntryDatabaseManager theEntryDatabaseManager,
@@ -50,7 +55,7 @@ public class JudgeController {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (!viewHistory.isEmpty() && viewHistory.getLast() != null) {
-					myView.showPage(viewHistory.pop());
+					myView.showPage(viewHistory.pop());	
 				}
 				if (viewHistory.isEmpty()) {
 					myView.setBackButtonEnabled(false);
@@ -63,7 +68,8 @@ public class JudgeController {
 	}
 
 	/** Updates history
-	* @param theViewable - veiw that has been used*/
+	* @param theViewable - view that has been used
+	*/
 	private void addToHistory(Viewable theViewable) {
 		viewHistory.add(theViewable);
 		myView.setBackButtonEnabled(true);
@@ -122,7 +128,7 @@ public class JudgeController {
 							ClistView.clearSelection();
 						}
 					}
-				}catch (Exception e1) {
+				} catch (Exception e1) {
 					e1.printStackTrace();
 				}
 			}

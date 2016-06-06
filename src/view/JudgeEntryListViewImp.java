@@ -77,13 +77,10 @@ public class JudgeEntryListViewImp implements JudgeEntryListView {
 		panel2.setLayout(new GridLayout(2,1));
 		panel3.setLayout(new GridLayout(2,1));
 		
-		JLabel one = new JLabel("1st place");
 		panel1.add(new JLabel("1st place"));
 		panel1.add(my1stRankingPlace);
-		JLabel two = new JLabel("2nd place");
 		panel2.add(new JLabel("2nd place"));
 		panel2.add(my2ndRankingPlace);
-		JLabel three = new JLabel("3rd place");
 		panel3.add(new JLabel("3rd place"));
 		panel3.add(my3rdRankingPlace);
 	
@@ -103,8 +100,6 @@ public class JudgeEntryListViewImp implements JudgeEntryListView {
 		myPanel.add(judgingPanel);
 	}
 	
-
-
 	@Override
 	public JPanel getView() {
 		return myPanel;
@@ -113,8 +108,8 @@ public class JudgeEntryListViewImp implements JudgeEntryListView {
 	@Override
 	public void addEntryListListener(ListSelectionListener theListener) {
 		myList.addListSelectionListener(theListener);
-		
 	}
+	
 	@Override
 	public void setEntryList(Entry[] theEntry, Contest theContest) {
 		String subString = "Entries from ";
@@ -125,7 +120,6 @@ public class JudgeEntryListViewImp implements JudgeEntryListView {
 		}else {
 			myContestLabel.setText(subString + theContest.getName());
 		}
-
 		if(theEntry.length == 0){
 			myEntryCountandResultlabel.setText("(No Entry)");
 			myEntryCountandResultlabel.setForeground(Color.RED);
@@ -137,16 +131,15 @@ public class JudgeEntryListViewImp implements JudgeEntryListView {
 		}
 		myContestLabel.setForeground( new Color(65, 40, 118));
 		myContestLabel.setFont(myContestLabel.getFont().deriveFont (15.0f));
-
 		myContestEntries = theEntry;
 		setupDropdownSubmissionRanking();
-		
 	}
 
 	/** Creates the drop down option for judging
 	 * @param theEntry - the entries that will be judged*/
+	@SuppressWarnings("unchecked")
 	private void setupDropdownSubmissionRanking() {
-//		String[] entryNameList = new String[theEntry.length];
+		@SuppressWarnings("rawtypes")
 		JComboBox[] dropdownGroup = new JComboBox[]{my1stRankingPlace, 
 				                                    my2ndRankingPlace, 
 				                                    my3rdRankingPlace};
@@ -170,27 +163,49 @@ public class JudgeEntryListViewImp implements JudgeEntryListView {
 				}
 			});
 		}
-		myJudgeSubmissionButton.addActionListener(new ActionListener(){
+//<<<<<<< HEAD
+//		myJudgeSubmissionButton.addActionListener(new ActionListener() {
+//			public void actionPerformed(ActionEvent event) {
+//				if(my1stRankingPlace.getSelectedItem().equals(none)){
+//					JOptionPane.showMessageDialog(myPanel,"1st place cannot be empty"
+//							+ "", "Warning",JOptionPane.WARNING_MESSAGE);
+//				}else if (my1stRankingPlace.getSelectedItem()
+//						.equals(my2ndRankingPlace.getSelectedItem())
+//						|| my2ndRankingPlace.getSelectedItem()
+//								.equals(my3rdRankingPlace.getSelectedItem())) {
+//					if(!(my2ndRankingPlace.getSelectedItem().equals(none)))
+//					JOptionPane.showMessageDialog(myPanel,"One entry can't have two rankings"
+//							+ "", "Warning",JOptionPane.WARNING_MESSAGE);
+//					else{
+//						myEntryCountandResultlabel.setText(myEntryCountandResultlabel.getText() + " JUDGED");
+//=======
+		myJudgeSubmissionButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent event) {
-				if(my1stRankingPlace.getSelectedItem().equals(none)){
-					JOptionPane.showMessageDialog(myPanel,"1st place cannot be empty"
-							+ "", "Warning",JOptionPane.WARNING_MESSAGE);
-				}else if (my1stRankingPlace.getSelectedItem()
-						.equals(my2ndRankingPlace.getSelectedItem())
-						|| my2ndRankingPlace.getSelectedItem()
-								.equals(my3rdRankingPlace.getSelectedItem())) {
-					if(!(my2ndRankingPlace.getSelectedItem().equals(none)))
-					JOptionPane.showMessageDialog(myPanel,"One entry can't have two rankings"
-							+ "", "Warning",JOptionPane.WARNING_MESSAGE);
-					else{
-						myEntryCountandResultlabel.setText(myEntryCountandResultlabel.getText() + " JUDGED");
+				if (my1stRankingPlace.getSelectedItem().equals(none)) {
+					JOptionPane.showMessageDialog(myPanel, "1st place cannot be empty", "Warning", JOptionPane.WARNING_MESSAGE);
+				} else if (my1stRankingPlace.getSelectedItem().equals(my2ndRankingPlace.getSelectedItem())
+						|| my2ndRankingPlace.getSelectedItem().equals(my3rdRankingPlace.getSelectedItem())
+						|| my1stRankingPlace.getSelectedItem().equals(my3rdRankingPlace.getSelectedItem())) {
+					if (my2ndRankingPlace.getSelectedItem().equals(none)) {
+						if (my3rdRankingPlace.getSelectedItem().equals(none)) {
+							myEntryCountandResultlabel.setText( myEntryCountandResultlabel.getText() + " JUDGED");
+						} else {
+							JOptionPane.showMessageDialog(myPanel, "One entry can't have two rankings", "Warning", JOptionPane.WARNING_MESSAGE);
+						}
+					} else {
+						JOptionPane.showMessageDialog(myPanel, "One entry can't have two rankings", "Warning", JOptionPane.WARNING_MESSAGE);
+//>>>>>>> origin/master
 					}
+				} else if (my2ndRankingPlace.getSelectedItem().equals(none)
+						&& !(my3rdRankingPlace.getSelectedItem().equals(none))
+						&& !(my1stRankingPlace.getSelectedItem() .equals(none))) {
+					JOptionPane.showMessageDialog(myPanel, "2nd place cannot be empty while 3rd place is not empty", "Warning", JOptionPane.WARNING_MESSAGE);
 				} else {
-					myEntryCountandResultlabel.setText(myEntryCountandResultlabel.getText() + " JUDGED");
+					myEntryCountandResultlabel.setText( myEntryCountandResultlabel.getText() + " JUDGED");
 				}
 			}
 		});
-	}	
+	}
 
 	@Override
 	public void addPreview(Entry theEntry) {
@@ -201,6 +216,7 @@ public class JudgeEntryListViewImp implements JudgeEntryListView {
 		myPreviewPopup.add(myScrollPane);
 		myPreviewPopup.setVisible(true);
 	}
+
 
 	@Override
 	public void addSubmitButtonListener(AbstractAction theAction) {
@@ -286,4 +302,5 @@ public class JudgeEntryListViewImp implements JudgeEntryListView {
 			}
 		}
 	}
+
 }

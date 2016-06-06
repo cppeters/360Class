@@ -24,7 +24,6 @@ public class AdminController {
 
 	/** Which view to use*/
 	private final View myView;
-	private final User myUser;
 	/** The database for the contests*/
 	private final ContestDatabaseManager myContestDBManager; 
 	
@@ -36,9 +35,8 @@ public class AdminController {
 	 * @param theUser - which user logged in
 	 * @param theConDatMan - the contest database
 	 * @param theView - which view to use*/
-	public AdminController(User theUser, ContestDatabaseManager theConDatMan,  View theView) {
+	public AdminController(ContestDatabaseManager theConDatMan,  View theView) {
 		myView = theView;
-		myUser = theUser;
 		myContestDBManager = theConDatMan; 
 		viewHistory = new LinkedList<>();
 		setupBackFunctionality();

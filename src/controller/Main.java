@@ -1,5 +1,6 @@
 package controller;
 import java.awt.EventQueue;
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,10 +18,11 @@ import model.*;
 public class Main {
 	
 	/*		File Names  	*/
-	private static final String USER_FILE = "User.csv";
-	private static final String CONTEST_FILE = "Contests.csv";
-	private static final String ENTRY_FILE = "Entries.csv";
-    private static final String JUDGE_FILE = "Judge.csv";
+	private static final String DB_DIRECTORY = "database" + File.separator;
+	private static final String USER_FILE = DB_DIRECTORY  + "User.csv";
+	private static final String CONTEST_FILE = DB_DIRECTORY + "Contests.csv";
+	private static final String ENTRY_FILE = DB_DIRECTORY + "Entries.csv";
+	private static final String JUDGE_FILE = DB_DIRECTORY + "Judge.csv";
 	
     public static void main(String args[]) throws Exception {
 

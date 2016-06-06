@@ -10,7 +10,6 @@ import java.awt.event.ComponentEvent;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
-import javax.swing.JRadioButton;
 import javax.swing.JTextArea;
 import javax.swing.ListCellRenderer;
 
@@ -26,6 +25,7 @@ import model.Entry;
  * @author Tabi
  * @author Lan
  */
+@SuppressWarnings("serial")
 public class JudgeEntryList extends JList<Entry> {
 
 	private static final Color HUSKY_PURPLE = new Color(177, 144, 212);
@@ -47,7 +47,6 @@ public class JudgeEntryList extends JList<Entry> {
 		return true;
 	}
 	
-	
 	/**
 	 * Makes a panel that aligns with the list cells if they are in the same
 	 * container, showing the column names.
@@ -61,7 +60,6 @@ public class JudgeEntryList extends JList<Entry> {
 		container.add(new JLabel("Entry Name"));
 		columnTitleRow.add(new JLabel("Card#"));
 		columnTitleRow.add(new JLabel("Path"));
-		
 		container.add(columnTitleRow);
 		return container;
 	}
@@ -96,7 +94,6 @@ public class JudgeEntryList extends JList<Entry> {
 			
 			cardLabel = new JLabel();
 			pathLabel = new JLabel();
-		
 			
 			namePanel.add(nameLab);
 			infoColumns.add(cardLabel);
@@ -117,7 +114,6 @@ public class JudgeEntryList extends JList<Entry> {
 				container.setBackground(Color.WHITE);
 			}
 			
-//			list.setToolTipText();
 			cardLabel.setText("" + value.getCardNumber());
 			pathLabel.setText("" + value.getFilePath());
 			pathLabel.setToolTipText("" + value.getFilePath());
@@ -134,6 +130,5 @@ public class JudgeEntryList extends JList<Entry> {
 
 			return container;
 		}
-		
 	}
 }

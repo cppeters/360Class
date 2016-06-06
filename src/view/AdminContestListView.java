@@ -5,6 +5,10 @@ import javax.swing.event.ListSelectionListener;
 
 import model.Contest;
 
+/**
+ * An interface for interacting with an Admin's view of all Contests.
+ * @author Tabi
+ */
 public interface AdminContestListView extends Viewable {
 
 	/**
