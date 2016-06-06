@@ -14,7 +14,8 @@ import model.Contest;
 import model.ContestDatabaseManager;
 import model.Entry;
 import model.EntryDatabaseManager;
-import model.User;
+import model.Judge;
+import model.JudgeDatabaseManager;
 import view.JudgeContestListView;
 import view.JudgeEntryListView;
 import view.View;
@@ -23,18 +24,25 @@ import view.Viewable;
 public class JudgeController {
 	
 	private final View myView;
+	private final Judge myJudge;
 	private final ContestDatabaseManager myContestDBManager; 
-	private final EntryDatabaseManager myEntryDBManager; 
+	private final EntryDatabaseManager myEntryDBManager;
+	private final JudgeDatabaseManager myJudgeDBManager;
+	private boolean myContestJudged = false;
 	
 	/**List of all views that have been displayed to this user since this controller
 	 * was created.*/
 	private final LinkedList<Viewable> viewHistory;
 	
-	public JudgeController(User theUser, ContestDatabaseManager theContestDatabaseManager, 
-							EntryDatabaseManager theEntryDatabaseManager, View theView) {
+	public JudgeController(Judge theJudge, ContestDatabaseManager theContestDatabaseManager,
+							EntryDatabaseManager theEntryDatabaseManager,
+						    JudgeDatabaseManager theJudgeDatabaseManager,
+						    View theView) {
 		myView = theView;
+		myJudge = theJudge;
 		myContestDBManager = theContestDatabaseManager;
 		myEntryDBManager = theEntryDatabaseManager;
+		myJudgeDBManager = theJudgeDatabaseManager;
 		viewHistory = new LinkedList<>();
 		setupBackFunctionality();
 		setupListView();
@@ -76,26 +84,52 @@ public class JudgeController {
 			// Show the entries from the contest
 			@Override
 			public void valueChanged(ListSelectionEvent Event) {
-				if (!Event.getValueIsAdjusting()) {
-					JudgeEntryListView ElistView = myView.getJugdgeEntryListView();
-					@SuppressWarnings("unchecked")
-					Contest seclectedContest = ((JList<Contest>) Event.getSource()).getSelectedValue();
-					if (seclectedContest != null) {
-						ElistView.setEntryList(getEntries(seclectedContest.getContestNumber()),seclectedContest);
-						ElistView.addEntryListListener(new ListSelectionListener() {
-							@Override
-							public void valueChanged(ListSelectionEvent Event) {
-								if (!Event.getValueIsAdjusting()) {
-									@SuppressWarnings("unchecked")
-									Entry seclectedEntry = ((JList<Entry>) Event.getSource()) .getSelectedValue();
-									ElistView .addPreview(seclectedEntry);
+				try {
+					if (!Event.getValueIsAdjusting()) {
+						JudgeEntryListView ElistView = myView.getJugdgeEntryListView();
+						Contest selectedContest = ((JList<Contest>) Event.getSource()).getSelectedValue();
+						if (selectedContest != null) {
+							if (myJudge.getContestsJudged().get(selectedContest.getContestNumber()) != null) {
+								Entry[] theEntries = getEntries(selectedContest.getContestNumber());
+								ElistView.setJudgedContest(myJudge, selectedContest, theEntries);
+								myContestJudged = true;
+							}
+							else {
+								myContestJudged = false;
+							}
+							ElistView.setEntryList(getEntries(selectedContest.getContestNumber()), selectedContest);
+							ElistView.addEntryListListener(new ListSelectionListener() {
+								@Override
+								public void valueChanged(ListSelectionEvent Event) {
+									if (!Event.getValueIsAdjusting()) {
+										Entry selectedEntry = ((JList<Entry>) Event.getSource()).getSelectedValue();
+										ElistView.addPreview(selectedEntry);
 									}
 								}
 							});
-						myView.showPage(ElistView);
-						addToHistory(ClistView);
-						ClistView.clearSelection();
+							ElistView.addSubmitButtonListener(new AbstractAction() {
+
+								@Override
+								public void actionPerformed(ActionEvent e) {
+									myJudge.setMyContestNumber(selectedContest.getContestNumber());
+									try {
+										if (myContestJudged) {
+											ElistView.updateJudged(myJudge, myJudgeDBManager, selectedContest);
+										} else {
+											ElistView.addJudged(myJudge, myJudgeDBManager, selectedContest);
+										}
+									} catch (Exception e1) {
+										e1.printStackTrace();
+									}
+								}
+							});
+							myView.showPage(ElistView);
+							addToHistory(ClistView);
+							ClistView.clearSelection();
+						}
 					}
+				} catch (Exception e1) {
+					e1.printStackTrace();
 				}
 			}
 		});

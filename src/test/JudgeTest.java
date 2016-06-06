@@ -75,6 +75,14 @@ public class JudgeTest {
 
         // Check if the judged contest was added to myJudgeDB Map
         assertEquals(myJudge, myJudgeDB.getMap().get(myJudge.getCardNumber()));
+
+        // Check if the judged contest was added to myJudgeDB List
+        for (Judge j : myJudgeDB.getAllItems()) {
+            if (j.getCardNumber() == myJudge.getCardNumber() &&
+                    j.getContestNumber() == myJudge.getContestNumber()) {
+                assertEquals(j, myJudge);
+            }
+        }
     }
 
     /**
@@ -85,6 +93,9 @@ public class JudgeTest {
     public void updateContestJudged() throws Exception {
         // Total amount of contests by this Judge
         int total = myJudge.getContestsJudged().size();
+
+        // Make a copy of the Judge for testing
+        Judge theOldJudge = new Judge(myJudge);
 
         // Update a Contest Judged by using setters like it would in GUI then call updateContestJudged()
         myJudge.setMyContestNumber(8);
@@ -104,15 +115,27 @@ public class JudgeTest {
         // Check if the update judged contest was updated to myJudge List*/
         assertEquals(intList, myJudge.getEntryNumbers());
 
-        // Check if the new judged entry numbers were inserted in place of the old
-        assertEquals(myJudge.getEntryNumbers(), myJudge.getContestsJudged().get(myJudge.getContestNumber()));
+        // Check if the new judged entry numbers were inserted in place of the old in Map
+        //assertEquals(myJudge.getEntryNumbers(), myJudge.getContestsJudged().get(myJudge.getContestNumber()));
 
         // Check if theNewJudge was updated in place of theOldJudge in JudgeDB Map
         for (int i : myJudgeDB.getMap().keySet()) {
             if (myJudgeDB.getMap().get(i).getCardNumber() == myJudge.getCardNumber() &&
-                    myJudgeDB.getMap().get(i).getContestNumber() == myJudge.getContestNumber())
+                    myJudgeDB.getMap().get(i).getContestNumber() == myJudge.getContestNumber()) {
                 assertEquals(myJudge, myJudgeDB.getMap().get(i));
+            }
+            // Assert theOldJudge is no longer here
+            assertNotEquals(theOldJudge, myJudgeDB.getMap().get(i));
+        }
+
+        // Check if the judged contest was updated in myJudgeDB List
+        for (Judge j : myJudgeDB.getAllItems()) {
+            if (j.getCardNumber() == myJudge.getCardNumber() &&
+                    j.getContestNumber() == myJudge.getContestNumber()) {
+                assertEquals(j, myJudge);
+            }
+            // Assert theOldJudge is no longer here
+            assertNotEquals(j, theOldJudge);
         }
     }
-
 }

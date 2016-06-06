@@ -67,10 +67,8 @@ public class ContestantController {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				//System.out.println("Clicked back.");
 				if (!viewHistory.isEmpty() && viewHistory.getLast() != null) {
-					myView.showPage(viewHistory.pop());	
-					//System.out.println("Swapped page.");
+					myView.showPage(viewHistory.pop());
 				}
 				
 				if (viewHistory.isEmpty()) {

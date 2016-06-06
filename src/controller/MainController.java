@@ -4,11 +4,7 @@ import java.awt.event.ActionEvent;
 
 import javax.swing.AbstractAction;
 
-import model.ContestDatabaseManager;
-import model.EntryDatabaseManager;
-import model.User;
-import model.UserDatabaseManager;
-import model.UserType;
+import model.*;
 import view.LoginView;
 import view.View;
 
@@ -18,7 +14,9 @@ import view.View;
  * @author Tabi
  */
 public class MainController {
-	
+
+
+	private static final int INIT_JUDGE = -1;
 
 	/**A reference to the UserDatabaseManager that this controller will use
 	 * to look up user information.*/
@@ -31,6 +29,8 @@ public class MainController {
 	/**A reference to the EntryDatabaseManager that this controller will use
 	 * to look up entry information.*/
 	private final EntryDatabaseManager myEntryDBManager;
+
+	private final JudgeDatabaseManager myJudgeDBManager;
 	
 	/** A reference to the View that this controller controls. */
 	private final View myView;
@@ -39,10 +39,11 @@ public class MainController {
 	 * Creates a new controller that starts up and listens to a GUI using the given models.
 	 */
 	public MainController(UserDatabaseManager theUserDBManager, ContestDatabaseManager theContestDBManager,
-							EntryDatabaseManager theEntryDBManager) {
+						  EntryDatabaseManager theEntryDBManager, JudgeDatabaseManager theJudgeDBManager) {
 		myUserDBManager = theUserDBManager;
 		myContestDBManager = theContestDBManager;
 		myEntryDBManager = theEntryDBManager;
+		myJudgeDBManager = theJudgeDBManager;
 		
 		myView = new View();
 		onLoginScreen();
@@ -99,7 +100,7 @@ public class MainController {
 	 * If somehow theUser doesn't have a type or the controller was not implemented for
 	 * that type, the user is automatically logged out.
 	 *
-	 * @param theUser - Checkes to see which user has logged in*/
+	 * @param theUser - Checks to see which user has logged in*/
 	private void onLogin(User theUser) {
 		System.out.println("Success! Hello, " + theUser.getName() + "!");	
 		
@@ -118,7 +119,18 @@ public class MainController {
 			new ContestantController(theUser, myContestDBManager, myEntryDBManager, myView);
 			break;
 		case JUDGE:
-			 new JudgeController(theUser, myContestDBManager, myEntryDBManager, myView);
+			 Judge aJudge = new Judge(theUser.getCardNumber(), theUser.getName(), theUser.getAge(),
+					 theUser.getLoginCredential(), theUser.getType(), INIT_JUDGE, INIT_JUDGE, INIT_JUDGE,
+						INIT_JUDGE);
+			// If this Judge already has Contests Judge copy to newest iteration
+			 for (int i : myJudgeDBManager.getMap().keySet()) {
+				 if (aJudge.getCardNumber() == myJudgeDBManager.getMap().get(i).getCardNumber()) {
+					 aJudge = new Judge(myJudgeDBManager.getMap().get(i));
+				 }
+			 }
+
+			 new JudgeController(aJudge, myContestDBManager, myEntryDBManager, myJudgeDBManager, myView);
+
 			break;
 		default:
 			onLogout(); // immediately logout because something went wrong if User didn't have one of those types.

@@ -57,7 +57,7 @@ public class JudgeEntryList extends JList<Entry> {
 		JPanel columnTitleRow = new JPanel(new GridLayout(1, 2));
 		columnTitleRow.setOpaque(false);
 		JPanel container = new JPanel(new GridLayout(1, 2));
-		container.add(new JLabel("Entry#"));
+		container.add(new JLabel("Entry Name"));
 		columnTitleRow.add(new JLabel("Card#"));
 		columnTitleRow.add(new JLabel("Path"));
 		container.add(columnTitleRow);
