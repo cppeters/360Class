@@ -10,10 +10,21 @@ import javax.swing.event.ListSelectionListener;
 
 import model.Contest;
 
+/**
+ * A concrete implementation of a contests view for Judge.
+ * 
+ * @author tabi
+ * @author Lan
+ */
 public class JudgeContestListViewImp implements JudgeContestListView {
+	/** The Judge panel. */
 	private final JPanel myPanel;
+	/** The List of contests. */
 	private final JList<Contest> myList;
 	
+	/**
+	 * Constructor() of JudgeContestListViewImp.
+	 */
 	public JudgeContestListViewImp() {
 		myPanel = new JPanel();
 		myList = new ContestList();	
