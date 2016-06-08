@@ -21,19 +21,43 @@ import view.JudgeEntryListView;
 import view.View;
 import view.Viewable;
 
+
+/**
+ * An Judge can view contests and pick the winner(s).
+ * 
+ * @author Tabi
+ * @author Lan
+ */
 public class JudgeController {
 	
+	/** Judge View. */
 	private final View myView;
+	/** The Judge. */
 	private final Judge myJudge;
+	/** The Contest database. */
 	private final ContestDatabaseManager myContestDBManager; 
+	/** The Entry database. */
 	private final EntryDatabaseManager myEntryDBManager;
+	/** The Judge database. */
 	private final JudgeDatabaseManager myJudgeDBManager;
+	/** The Judge flag. */
 	private boolean myContestJudged = false;
 	
-	/**List of all views that have been displayed to this user since this controller
-	 * was created.*/
+	/** 
+	 * List of all views that have been displayed to this user since this controller
+	 * was created.
+	 */
 	private final LinkedList<Viewable> viewHistory;
 	
+	/** 
+	 * Constructor() for the JudgeController.
+	 * 
+	 * @param theJudge - The judge logged in.
+	 * @param theContestDatabaseManager - The Contest database.
+	 * @param theEntryDatabaseManager - The Entry database.
+	 * @param theJudgeDatabaseManager - The Judge database.
+	 * @param theView - The view to use.
+	 */
 	public JudgeController(Judge theJudge, ContestDatabaseManager theContestDatabaseManager,
 							EntryDatabaseManager theEntryDatabaseManager,
 						    JudgeDatabaseManager theJudgeDatabaseManager,
@@ -48,6 +72,9 @@ public class JudgeController {
 		setupListView();
 	}
 	
+	/**
+	 * Setup Back button.
+	 */
 	@SuppressWarnings("serial")
 	private void setupBackFunctionality() {
 		myView.addBackButtonListener(new AbstractAction() {
@@ -67,15 +94,19 @@ public class JudgeController {
 		}
 	}
 
-	/** Updates history
-	* @param theViewable - view that has been used
-	*/
+	/** 
+	 * Updates history.
+	 * 
+	 * @param theViewable View that has been used.
+	 */
 	private void addToHistory(Viewable theViewable) {
 		viewHistory.add(theViewable);
 		myView.setBackButtonEnabled(true);
 	}
 
-	/** Creates the view*/
+	/** 
+	 * Creates the view.
+	 */
 	private void setupListView() {
 		final JudgeContestListView ClistView = myView.getJugdgeContestListView();
 		ClistView.setContestList(allContests());
@@ -139,15 +170,22 @@ public class JudgeController {
 		myView.showPage(ClistView);
 	}
 
-	/** Gets all the contest that have been submitted
-	 * @return the contests*/
+	/** 
+	 * Gets all the contest that have been submitted.
+	 * 
+	 * @return the contests.
+	 */
 	private Contest[] allContests() {
 		List<Contest> contests = myContestDBManager.getAllItems();
 		return contests.toArray(new Contest[contests.size()]);
 	}
 
-	/** What entries have been submitted
-	 * @return gets all entries that have been submitted*/
+	/** 
+	 * What entries have been submitted.
+	 * 
+	 * @param theContestNumber 
+	 * @return gets all entries that have been submitted.
+	 */
     private Entry[] getEntries(int theContestNumber) {
         List<Entry> entries = new ArrayList<>();
         for(int index = 0; index < myEntryDBManager.getAllItems().size(); index++){

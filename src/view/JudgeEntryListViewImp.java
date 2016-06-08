@@ -18,34 +18,36 @@ import model.Judge;
 import model.JudgeDatabaseManager;
 
 public class JudgeEntryListViewImp implements JudgeEntryListView {
-	/** Panel for the judge view*/
+	/** Panel for the judge view. */
 	private final JPanel myPanel;
-	/** Label for the contest*/
+	/** Label for the contest. */
 	private final JLabel myContestLabel;
-	/** Label for the result*/
+	/** Label for the result. */
 	private final JLabel myEntryCountandResultlabel;
 
-	/** Holding the list of judged entries*/
+	/** Holding the list of judged entries. */
 	private final JList<Entry> myList;
-	/** List for first place*/
-	JComboBox<String> my1stRankingPlace;
-	/** List for second place*/
-	JComboBox<String> my2ndRankingPlace;
-	/** List for third place*/
-	JComboBox<String> my3rdRankingPlace;
-	/** Button used to submit judged entries*/
-	JButton myJudgeSubmissionButton;
-	/** Pop up preview*/
-
+	/** List for first place. */
+	private JComboBox<String> my1stRankingPlace;
+	/** List for second place. */
+	private JComboBox<String> my2ndRankingPlace;
+	/** List for third place. */
+	private JComboBox<String> my3rdRankingPlace;
+	/** Button used to submit judged entries. */
+	private JButton myJudgeSubmissionButton;
+	
+	/** Pop up preview. */
 	private JFrame myPreviewPopup ;
-	/** Be able to scroll through entries*/
+	/** Be able to scroll through entries. */
 	private JScrollPane myScrollPane;
-	/** The Entrys that are listed. */
+	/** The entries that are listed. */
 	private Entry[] myContestEntries;
 
 
 
-	/** Constructor()*/
+	/** 
+	 * Constructor() for JudgeEntryListViewImp.
+	 */
 	public JudgeEntryListViewImp() {
 		myPanel = new JPanel();
 		myPanel.setLayout(new BoxLayout(myPanel, BoxLayout.Y_AXIS));
@@ -135,8 +137,11 @@ public class JudgeEntryListViewImp implements JudgeEntryListView {
 		setupDropdownSubmissionRanking();
 	}
 
-	/** Creates the drop down option for judging
-	 * @param theEntry - the entries that will be judged*/
+	/** 
+	 * Creates the drop down option for judging.
+	 * 
+	 * @param theEntry - the entries that will be judged.
+	 */
 	@SuppressWarnings("unchecked")
 	private void setupDropdownSubmissionRanking() {
 		@SuppressWarnings("rawtypes")
@@ -208,14 +213,13 @@ public class JudgeEntryListViewImp implements JudgeEntryListView {
 	}
 
 	/**
-	 * @author Casey
-	 *
 	 * Add the contest entries to the Judge profile and Judge Database.
-	 *
-	 * @param theJudge The Judge for this Contest
-	 * @param theJudgeDB The Judge Database
-	 * @param theContest The Contest to be Judged
-	 * @throws Exception
+	 * 
+	 * @author Casey
+	 * @param theJudge The Judge for this Contest.
+	 * @param theJudgeDB The Judge Database.
+	 * @param theContest The Contest to be Judged.
+	 * @throws Exception.
      */
 	@Override
 	public void addJudged(Judge theJudge, JudgeDatabaseManager theJudgeDB, Contest theContest) throws Exception {
@@ -224,6 +228,14 @@ public class JudgeEntryListViewImp implements JudgeEntryListView {
 		myJudgeSubmissionButton.setEnabled(false);
 	}
 
+	/**
+	 * Update the judged contest.
+	 * 
+	 * @author Casey
+	 * @param theJudge The Judge for this Contest.
+	 * @param theJudgeDB The Judge Database.
+	 * @param theContest The Contest to be Judged.
+     */
 	public void updateJudged(Judge theJudge, JudgeDatabaseManager theJudgeDB, Contest theContest) throws Exception {
 		setSelectedValues(theJudge);
 		theJudge.updateContestJudged(theJudgeDB);
@@ -231,11 +243,12 @@ public class JudgeEntryListViewImp implements JudgeEntryListView {
 
 
 	/**
+	 * Setup the Judged Contest.
+	 * 
 	 * @author Casey
-	 *
-	 * @param theJudge Sets the Judge values from previous judged Contest
-	 * @param theContest The Contest to be Judged
-	 * @param theEntries List of Entries for this contest
+	 * @param theJudge Sets the Judge values from previous judged Contest.
+	 * @param theContest The Contest to be Judged.
+	 * @param theEntries List of Entries for this contest.
      */
 	public void setJudgedContest(Judge theJudge, Contest theContest, Entry[] theEntries) throws Exception {
 		myJudgeSubmissionButton.setText("Update");
@@ -263,9 +276,10 @@ public class JudgeEntryListViewImp implements JudgeEntryListView {
 	}
 
 	/**
-	 * @author Casey
-	 *
 	 * Set the values for myJudge
+	 * 
+	 * @author Casey
+	 * @param theJudge The judge.
 	 */
 	private void setSelectedValues(Judge theJudge) {
 		// Set -1 for "None"
