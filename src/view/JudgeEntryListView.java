@@ -8,6 +8,13 @@ import model.Entry;
 import model.Judge;
 import model.JudgeDatabaseManager;
 
+/**
+ * Interface of a entries view for Judge.
+ * 
+ * @author Casey
+ * @author Lan
+ *
+ */
 public interface JudgeEntryListView extends Viewable {
 
 	/**Adds a listener for the list of entries.*/
