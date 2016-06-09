@@ -18,6 +18,9 @@ public class JudgeDatabaseManager extends DatabaseManager <Judge>{
 	private EntryDatabaseManager myEntryDB;
 
 	/** Constructor()
+	 *
+	 * Precondition: The File name should be a valid string for a file path. theEntryDatabase must not be null.
+	 *
 	 * @param theFileName - path for the file
 	 * @param theEntryDatabase - The entries database
 	 * @exception Exception*/

@@ -58,8 +58,6 @@ public class JudgeEntryList extends JList<Entry> {
 		columnTitleRow.setOpaque(false);
 		JPanel container = new JPanel(new GridLayout(1, 2));
 		container.add(new JLabel("Entry Name"));
-		columnTitleRow.add(new JLabel("Card#"));
-		columnTitleRow.add(new JLabel("Path"));
 		container.add(columnTitleRow);
 		return container;
 	}
@@ -77,8 +75,6 @@ public class JudgeEntryList extends JList<Entry> {
 		private final JPanel container;
 
 		private final JTextArea nameLab;
-		private final JLabel cardLabel;
-		private final JLabel pathLabel;
 		
 		public EntryListCellRenderer() {
 			JPanel infoColumns = new JPanel(new GridLayout(1, 2));
@@ -92,12 +88,7 @@ public class JudgeEntryList extends JList<Entry> {
 			nameLab.setWrapStyleWord(true);
 			nameLab.setOpaque(false);
 			
-			cardLabel = new JLabel();
-			pathLabel = new JLabel();
-			
 			namePanel.add(nameLab);
-			infoColumns.add(cardLabel);
-			infoColumns.add(pathLabel);
 			
 			container.add(namePanel);
 			container.add(infoColumns);
@@ -113,10 +104,7 @@ public class JudgeEntryList extends JList<Entry> {
 			} else {
 				container.setBackground(Color.WHITE);
 			}
-			
-			cardLabel.setText("" + value.getCardNumber());
-			pathLabel.setText("" + value.getFilePath());
-			pathLabel.setToolTipText("" + value.getFilePath());
+
 			/*
 			 * The following two statements are from StackOverFlow problem
 			 * #7306295, solution by user kleopatra. Necessary for allowing text

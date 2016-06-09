@@ -10,6 +10,9 @@ public class ContestDatabaseManager extends DatabaseManager<Contest>{
     private final static int DATABASE_TYPE = 1;
 
     /** Constructor
+     *
+     * Precondition: The File name should be a valid string for a file path.
+     *
      * @param theFileName - name of the file
      * @throws Exception*/
     public ContestDatabaseManager(String theFileName) throws Exception {
@@ -30,11 +33,14 @@ public class ContestDatabaseManager extends DatabaseManager<Contest>{
 
     /**
      * Creates and adds a Contest to the database, unless there was an existing contest by the same name.
+     *
+     * Precondition: startDate must land before endDate.
+     *
      * @author Liz, Tabi
-     * @param contestName
-     * @param contestDescription
-     * @param startDate
-     * @param endDate
+     * @param contestName Name of the Contest.
+     * @param contestDescription Description of the Contest.
+     * @param startDate Start Date for the Contest.
+     * @param endDate End Date for the Contest.
      * @return true on success; false otherwise.
      */
     public boolean addContest(String contestName, String contestDescription, String startDate,
@@ -53,7 +59,7 @@ public class ContestDatabaseManager extends DatabaseManager<Contest>{
 
     /**
      * @author Tabi
-     * @param contestName
+     * @param contestName Name of the Contest.
      * @return true if there is no existing contest with the given name; false otherwise.
      */
     private boolean contestNameIsUnique(String contestName) {
