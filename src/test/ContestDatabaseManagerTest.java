@@ -5,6 +5,7 @@ import model.ContestDatabaseManager;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 
 import static org.junit.Assert.*;
@@ -17,7 +18,8 @@ public class ContestDatabaseManagerTest {
 
     // Instance fields
     private static final String TEST_CONTEST_FILE = "TestContests.csv";
-    private static final String CONTEST_FILE = "Contests.csv";
+    private static final String DB_DIRECTORY = "database" + File.separator;
+    private static final String CONTEST_FILE = DB_DIRECTORY + "Contests.csv";
     private ContestDatabaseManager myContestDB;
 
     @Before

@@ -35,7 +35,7 @@ public class JudgeEntryListViewImp implements JudgeEntryListView {
 	private JComboBox<String> my3rdRankingPlace;
 	/** Button used to submit judged entries. */
 	private JButton myJudgeSubmissionButton;
-	
+
 	/** Pop up preview. */
 	private JFrame myPreviewPopup ;
 	/** Be able to scroll through entries. */
@@ -43,33 +43,36 @@ public class JudgeEntryListViewImp implements JudgeEntryListView {
 	/** The entries that are listed. */
 	private Entry[] myContestEntries;
 
+	/** A check for submission success */
+	private Boolean mySubmitSuccess;
 
 
-	/** 
+
+	/**
 	 * Constructor() for JudgeEntryListViewImp.
 	 */
 	public JudgeEntryListViewImp() {
 		myPanel = new JPanel();
 		myPanel.setLayout(new BoxLayout(myPanel, BoxLayout.Y_AXIS));
-		myList = new JudgeEntryList();	
+		myList = new JudgeEntryList();
 		myScrollPane = new JScrollPane();
-		
+
 		myPreviewPopup = new JFrame();
 		myContestLabel = new JLabel();
 		myEntryCountandResultlabel = new JLabel();
 		myContestLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 		myEntryCountandResultlabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-		
+
 		myJudgeSubmissionButton = new JButton("Submit");
 		myJudgeSubmissionButton.setEnabled(false);
-		
-		my1stRankingPlace = new JComboBox<String>();
-		my2ndRankingPlace = new JComboBox<String>();
-		my3rdRankingPlace = new JComboBox<String>();
+
+		my1stRankingPlace = new JComboBox<>();
+		my2ndRankingPlace = new JComboBox<>();
+		my3rdRankingPlace = new JComboBox<>();
 		my1stRankingPlace.setToolTipText("1st rank");
 		my1stRankingPlace.setToolTipText("2st rank");
 		my1stRankingPlace.setToolTipText("3st rank");
-		
+
 		JPanel listContainerPanel = new JPanel();
 		JPanel judgingPanel = new JPanel();
 		JPanel panel1 = new JPanel();
@@ -78,22 +81,22 @@ public class JudgeEntryListViewImp implements JudgeEntryListView {
 		panel1.setLayout(new GridLayout(2,1));
 		panel2.setLayout(new GridLayout(2,1));
 		panel3.setLayout(new GridLayout(2,1));
-		
+
 		panel1.add(new JLabel("1st place"));
 		panel1.add(my1stRankingPlace);
 		panel2.add(new JLabel("2nd place"));
 		panel2.add(my2ndRankingPlace);
 		panel3.add(new JLabel("3rd place"));
 		panel3.add(my3rdRankingPlace);
-	
+
 		judgingPanel.setLayout(new GridLayout(1,4));
 		judgingPanel.add(panel1);
 		judgingPanel.add(panel2);
 		judgingPanel.add(panel3);
 		judgingPanel.add(myJudgeSubmissionButton);
-		
-		
-		listContainerPanel.setLayout(new BoxLayout(listContainerPanel, BoxLayout.Y_AXIS));	
+
+
+		listContainerPanel.setLayout(new BoxLayout(listContainerPanel, BoxLayout.Y_AXIS));
 		listContainerPanel.add(JudgeEntryList.getColumnTitleHeader());
 		listContainerPanel.add(new JScrollPane(myList));
 		myPanel.add(myContestLabel);
@@ -101,7 +104,7 @@ public class JudgeEntryListViewImp implements JudgeEntryListView {
 		myPanel.add(listContainerPanel);
 		myPanel.add(judgingPanel);
 	}
-	
+
 	@Override
 	public JPanel getView() {
 		return myPanel;
@@ -111,7 +114,7 @@ public class JudgeEntryListViewImp implements JudgeEntryListView {
 	public void addEntryListListener(ListSelectionListener theListener) {
 		myList.addListSelectionListener(theListener);
 	}
-	
+
 	@Override
 	public void setEntryList(Entry[] theEntry, Contest theContest) {
 		String subString = "Entries from ";
@@ -137,17 +140,16 @@ public class JudgeEntryListViewImp implements JudgeEntryListView {
 		setupDropdownSubmissionRanking();
 	}
 
-	/** 
+	/**
 	 * Creates the drop down option for judging.
-	 * 
-	 * @param theEntry - the entries that will be judged.
+	 *
 	 */
 	@SuppressWarnings("unchecked")
 	private void setupDropdownSubmissionRanking() {
-		@SuppressWarnings("rawtypes")
-		JComboBox[] dropdownGroup = new JComboBox[]{my1stRankingPlace, 
-				                                    my2ndRankingPlace, 
-				                                    my3rdRankingPlace};
+		mySubmitSuccess = false;
+		JComboBox[] dropdownGroup = new JComboBox[]{my1stRankingPlace,
+				my2ndRankingPlace,
+				my3rdRankingPlace};
 		String none = "None";
 		for (int count = 0; count < dropdownGroup.length; count++) {
 			dropdownGroup[count].addItem(none);
@@ -156,14 +158,35 @@ public class JudgeEntryListViewImp implements JudgeEntryListView {
 			}
 
 			dropdownGroup[count].addActionListener(new ActionListener() {
-				 
-			    @Override
+
+				@Override
 				public void actionPerformed(ActionEvent event) {
-					myJudgeSubmissionButton.setEnabled(true);
-					if (my1stRankingPlace.getSelectedItem().equals(my2ndRankingPlace.getSelectedItem())
-							&& my2ndRankingPlace.getSelectedItem().equals(my3rdRankingPlace.getSelectedItem())
-							&& my1stRankingPlace.getSelectedItem() .equals("None")) {
-						myJudgeSubmissionButton.setEnabled(false);
+					// Check if there are any dropdown list errors
+					if (my1stRankingPlace.getSelectedItem().equals(none)) {
+						JOptionPane.showMessageDialog(myPanel, "1st place cannot be empty", "Warning", JOptionPane.WARNING_MESSAGE);
+					} else if (my1stRankingPlace.getSelectedItem().equals(my2ndRankingPlace.getSelectedItem())
+							|| my2ndRankingPlace.getSelectedItem().equals(my3rdRankingPlace.getSelectedItem())
+							|| my1stRankingPlace.getSelectedItem().equals(my3rdRankingPlace.getSelectedItem())) {
+						if (my2ndRankingPlace.getSelectedItem().equals(none)) {
+							if (my3rdRankingPlace.getSelectedItem().equals(none)) {
+								myJudgeSubmissionButton.setEnabled(true);
+								mySubmitSuccess = true;
+							} else {
+								JOptionPane.showMessageDialog(myPanel, "One entry can't have two rankings",
+										"Warning", JOptionPane.WARNING_MESSAGE);
+							}
+						} else {
+							JOptionPane.showMessageDialog(myPanel, "One entry can't have multiple rankings",
+									"Warning", JOptionPane.WARNING_MESSAGE);
+						}
+					} else if (my2ndRankingPlace.getSelectedItem().equals(none)
+							&& !(my3rdRankingPlace.getSelectedItem().equals(none))
+							&& !(my1stRankingPlace.getSelectedItem() .equals(none))) {
+						JOptionPane.showMessageDialog(myPanel, "2nd place cannot be empty while 3rd place is not empty",
+								"Warning", JOptionPane.WARNING_MESSAGE);
+					} else {
+						mySubmitSuccess = true;
+						myJudgeSubmissionButton.setEnabled(true);
 					}
 				}
 			});
@@ -171,29 +194,16 @@ public class JudgeEntryListViewImp implements JudgeEntryListView {
 
 		myJudgeSubmissionButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent event) {
-				if (my1stRankingPlace.getSelectedItem().equals(none)) {
-					JOptionPane.showMessageDialog(myPanel, "1st place cannot be empty", "Warning", JOptionPane.WARNING_MESSAGE);
-				} else if (my1stRankingPlace.getSelectedItem().equals(my2ndRankingPlace.getSelectedItem())
-						|| my2ndRankingPlace.getSelectedItem().equals(my3rdRankingPlace.getSelectedItem())
-						|| my1stRankingPlace.getSelectedItem().equals(my3rdRankingPlace.getSelectedItem())) {
-					if (my2ndRankingPlace.getSelectedItem().equals(none)) {
-						if (my3rdRankingPlace.getSelectedItem().equals(none)) {
-							myEntryCountandResultlabel.setText( myEntryCountandResultlabel.getText() + " JUDGED");
-						} else {
-							JOptionPane.showMessageDialog(myPanel, "One entry can't have two rankings", "Warning", JOptionPane.WARNING_MESSAGE);
-						}
-					} else {
-						JOptionPane.showMessageDialog(myPanel, "One entry can't have two rankings", "Warning", JOptionPane.WARNING_MESSAGE);
-					}
-				} else if (my2ndRankingPlace.getSelectedItem().equals(none)
-						&& !(my3rdRankingPlace.getSelectedItem().equals(none))
-						&& !(my1stRankingPlace.getSelectedItem() .equals(none))) {
-					JOptionPane.showMessageDialog(myPanel, "2nd place cannot be empty while 3rd place is not empty", "Warning", JOptionPane.WARNING_MESSAGE);
-				} else {
-					myEntryCountandResultlabel.setText( myEntryCountandResultlabel.getText() + " JUDGED");
+				if (mySubmitSuccess) {
+					JOptionPane.showMessageDialog(myPanel, "Judged", "Success", JOptionPane.INFORMATION_MESSAGE);
+					myJudgeSubmissionButton.setEnabled(false);
 				}
 			}
 		});
+	}
+
+	public Boolean getSubmitSuccess() {
+		return mySubmitSuccess;
 	}
 
 	@Override
@@ -214,13 +224,14 @@ public class JudgeEntryListViewImp implements JudgeEntryListView {
 
 	/**
 	 * Add the contest entries to the Judge profile and Judge Database.
-	 * 
+	 *
+	 * Preconditions: theJudge, theJudgeDB, theContest must not be null.
+	 *
 	 * @author Casey
 	 * @param theJudge The Judge for this Contest.
 	 * @param theJudgeDB The Judge Database.
 	 * @param theContest The Contest to be Judged.
-	 * @throws Exception.
-     */
+	 */
 	@Override
 	public void addJudged(Judge theJudge, JudgeDatabaseManager theJudgeDB, Contest theContest) throws Exception {
 		setSelectedValues(theJudge);
@@ -230,12 +241,14 @@ public class JudgeEntryListViewImp implements JudgeEntryListView {
 
 	/**
 	 * Update the judged contest.
-	 * 
+	 *
+	 * Preconditions: theJudge, theJudgeDB, theContest must not be null.
+	 *
 	 * @author Casey
 	 * @param theJudge The Judge for this Contest.
 	 * @param theJudgeDB The Judge Database.
 	 * @param theContest The Contest to be Judged.
-     */
+	 */
 	public void updateJudged(Judge theJudge, JudgeDatabaseManager theJudgeDB, Contest theContest) throws Exception {
 		setSelectedValues(theJudge);
 		theJudge.updateContestJudged(theJudgeDB);
@@ -244,12 +257,14 @@ public class JudgeEntryListViewImp implements JudgeEntryListView {
 
 	/**
 	 * Setup the Judged Contest.
-	 * 
+	 *
+	 * Preconditions: theJudge, theContest, theEntries must not be null.
+	 *
 	 * @author Casey
 	 * @param theJudge Sets the Judge values from previous judged Contest.
 	 * @param theContest The Contest to be Judged.
 	 * @param theEntries List of Entries for this contest.
-     */
+	 */
 	public void setJudgedContest(Judge theJudge, Contest theContest, Entry[] theEntries) throws Exception {
 		myJudgeSubmissionButton.setText("Update");
 		myContestEntries = theEntries;
@@ -277,7 +292,9 @@ public class JudgeEntryListViewImp implements JudgeEntryListView {
 
 	/**
 	 * Set the values for myJudge
-	 * 
+	 *
+	 * Precondition: theJudge must not be null.
+	 *
 	 * @author Casey
 	 * @param theJudge The judge.
 	 */

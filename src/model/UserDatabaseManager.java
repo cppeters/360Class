@@ -13,6 +13,9 @@ public class UserDatabaseManager extends DatabaseManager<User>{
 
 
     /** Constructor()
+     *
+     * Precondition: The File name should be a valid string for a file path. theEntryDatabase must not be null.
+     *
      * @param theFileName - file path
      * @param theEntryDatabase - database for the entries*/
     public UserDatabaseManager(String theFileName, EntryDatabaseManager theEntryDatabase) throws Exception {

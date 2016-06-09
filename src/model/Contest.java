@@ -18,6 +18,9 @@ public class Contest {
     private String endDate;
 
     /** Initializes the contest object
+     *
+     * Precondition: startDate must be a date that lands before endDate.
+     *
      * @param contestNumber - unique card number
      * @param name - contest name
      * @param description - what is the contest about

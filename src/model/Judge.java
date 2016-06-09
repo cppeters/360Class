@@ -12,7 +12,7 @@ public class Judge extends User {
     private Map<Integer, List<Integer>> myContests;         //Map<ContestNumber, List of Judged Entries>
 
     /** List of entry numbers*/
-    List<Integer> myEntryNumbers;
+    private List<Integer> myEntryNumbers;
 
     /** The contest numbers*/
     private int myContestNumber;
@@ -45,8 +45,8 @@ public class Judge extends User {
         mySecond = theSecond;
         myThird = theThird;
         myEntryNumbers = new ArrayList<>();
-       // myContests.put(myContestNumber, myEntryNumbers);
-       // addToList();
+        myContests.put(myContestNumber, myEntryNumbers);
+        addToList();
     }
 
     // Copy Constructor
@@ -62,8 +62,8 @@ public class Judge extends User {
         this.mySecond = theOtherJudge.getMySecond();
         this.myThird = theOtherJudge.getMyThird();
         this.myEntryNumbers = new ArrayList<>();
-        //this.myContests.put(myContestNumber, myEntryNumbers);
-      //  addToList();
+        this.myContests.put(myContestNumber, myEntryNumbers);
+        addToList();
     }
 
     /**
@@ -78,7 +78,10 @@ public class Judge extends User {
     }
 
     /**
-     * Adding a contest that has been judged. Must use appropriate entry and contest setters before calling this method.
+     * Adding a contest that has been judged.
+     *
+     * Precondition: myContestNumber, myFirst, mySecond, and myThird must first be updated with their respective setters.
+     *
      * @param theJudgeDB - creating map of entries that have been judged
      * @exception Exception*/
     public void addContestJudged(JudgeDatabaseManager theJudgeDB) throws Exception {
@@ -95,6 +98,9 @@ public class Judge extends User {
 
     /**
      * Updating a contest that already has been judged
+     *
+     * Precondition: myContestNumber, myFirst, mySecond, and myThird must first be updated with their respective setters.
+     *
      * Must use appropriate entry and contest setters before calling this method.
      * @param theJudgeDB the database for the judged entries
      * */
@@ -179,7 +185,7 @@ public class Judge extends User {
     @Override
     public int hashCode(){
         int result = 0;
-        result = (int) this.getCardNumber() / 11;
+        result = this.getCardNumber() / 11;
         return result;
     }
 

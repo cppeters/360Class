@@ -32,7 +32,9 @@ public class AdminController {
 	private final LinkedList<Viewable> viewHistory;
 
 	/** Constructor()
-	 * @param theUser - which user logged in
+	 *
+	 * Precondition: theConDatMan and theView must not be null.
+	 *
 	 * @param theConDatMan - the contest database
 	 * @param theView - which view to use*/
 	public AdminController(ContestDatabaseManager theConDatMan,  View theView) {
@@ -120,6 +122,9 @@ public class AdminController {
 	/**
 	 * To be called when the user submits a new contest form.
 	 * Adds new contest to db and updates list view.
+	 *
+	 * Precondition: theForm and theListView must not be null.
+	 *
 	 * @param theForm - form of the contest
 	 * @param theListView - list of the views seen
 	 */
@@ -138,6 +143,9 @@ public class AdminController {
 	/**
 	 * Confirms that none of the strings are empty; if they are, returns false. Otherwise,
 	 * adds contest to db and returns true.
+	 *
+	 * Precondition: startDate must land before endDate.
+	 *
 	 * @param name - name of the contest
 	 * @param description - describing the contest
 	 * @param startDate - start date for the contest
@@ -154,5 +162,4 @@ public class AdminController {
 		}
 		return added;		
 	}
-	
 }
