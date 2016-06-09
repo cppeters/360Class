@@ -10,6 +10,7 @@ public class Entry {
     private int contest;
     private String entryName;
     private int entryNumber;
+    private boolean myRelease;
 
     /** Constructor()
      *
@@ -26,7 +27,7 @@ public class Entry {
         this.contest = contest;
         this.entryName = entryName;
         this.entryNumber = entry;
-
+        this.myRelease = false;
     }
 
     /** What contest?
@@ -64,10 +65,20 @@ public class Entry {
         return entryNumber;
     }
 
-    @Override
-    public String toString() {
-        return entryNumber + "," + cardNumber + "," + filePath + "," + entryName +
-        		"," + contest;
+    /**
+     * Check whether Entry is released to Library.
+     * @return True if User wants to release; False if not.
+     */
+    public boolean getRelease() {
+        return myRelease;
+    }
+
+    /**
+     * Sets whether entry is release to Library or not.
+     * @param theRelease True if User wants to release; False if not.
+     */
+    public void setRelease(boolean theRelease) {
+        myRelease = theRelease;
     }
 
     @Override
@@ -81,7 +92,8 @@ public class Entry {
                 (this.contest) == theOther.contest) &&
                 (this.filePath.equals(theOther.filePath)) &&
                 (this.entryNumber == theOther.entryNumber) &&
-                (this.toString().equals(theOther.toString())))
+                (this.toString().equals(theOther.toString())) &&
+                (this.myRelease == theOther.myRelease))
             result = true;
         return result;
     }
@@ -93,4 +105,9 @@ public class Entry {
         return result;
     }
 
+    @Override
+    public String toString() {
+        return entryNumber + "," + cardNumber + "," + filePath + "," + entryName +
+                "," + contest + "," + myRelease;
+    }
 }

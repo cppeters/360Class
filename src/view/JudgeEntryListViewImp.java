@@ -195,7 +195,7 @@ public class JudgeEntryListViewImp implements JudgeEntryListView {
 		myJudgeSubmissionButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent event) {
 				if (mySubmitSuccess) {
-					myEntryCountandResultlabel.setText( myEntryCountandResultlabel.getText() + " JUDGED");
+					JOptionPane.showMessageDialog(myPanel, "Judged", "Success", JOptionPane.INFORMATION_MESSAGE);
 					myJudgeSubmissionButton.setEnabled(false);
 				}
 			}

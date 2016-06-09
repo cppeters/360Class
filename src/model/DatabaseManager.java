@@ -28,7 +28,7 @@ public abstract class DatabaseManager<T> {
 
     /** Creating file for the Entry*/
     private static final String ENTRY_FILE_HEADER = 
-    		"EntryNumber,UserCardNumber,FilePath,EntryName,Contest";
+    		"EntryNumber,UserCardNumber,FilePath,EntryName,Contest,Release";
 
     /** Creating file for the User*/
     private static final String USER_FILE_HEADER = 
@@ -123,6 +123,9 @@ public abstract class DatabaseManager<T> {
                         case 2:
                             theData = (T) new Entry(Integer.parseInt(theInfo[0]), Integer.parseInt(theInfo[1]), (theInfo[2]),
                                     Integer.parseInt(theInfo[4]), theInfo[3]);
+                            if (theInfo[5].equals("true")) {
+                                ((Entry)theData).setRelease(true);
+                            }
                             break;
                         // Case 3: User
                         case 3:

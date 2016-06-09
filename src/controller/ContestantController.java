@@ -28,7 +28,7 @@ import view.Viewable;
  */
 public class ContestantController {
 	
-	private static final Dimension IMAGE_SIZE = new Dimension(500, 500);
+	private static final Dimension IMAGE_SIZE = new Dimension(500, 550);
 	private static final Dimension ORIGINAL_SIZE = new Dimension(500, 300);
 	private final User myUser;
 	private final ContestDatabaseManager myContestDBManager;
@@ -231,5 +231,4 @@ public class ContestantController {
 			myView.reSize(IMAGE_SIZE);
 		}
 	}
-	
 }
