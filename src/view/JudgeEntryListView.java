@@ -11,32 +11,33 @@ import model.JudgeDatabaseManager;
 /**
  * Interface of a entries view for Judge.
  * 
- * @author Lan
  * @author Casey
+ * @author Lan
+ *
  */
 public interface JudgeEntryListView extends Viewable {
 
-	/** Adds a listener for the list of entries. */
+	/**Adds a listener for the list of entries.*/
 	public void addEntryListListener(ListSelectionListener theListener);
 
 	/**
-	 * @param theEntry The entry that will be added
-	 * @param theContest The contest that the entry will be added to. */
-	public void setEntryList(Entry[] theEntry, Contest theContest);
+	 * @param theEntry - the entry that will be added
+	 * @param contest - the contest that the entry will be added to*/
+	public void setEntryList(Entry[] theEntry, Contest contest);
 
 	/**
-	 * @param theSeclectedEntry The entry that is selected. */
-	public void addPreview(Entry theSeclectedEntry);
+	 * @param seclectedEntry - the entry that is selected*/
+	public void addPreview(Entry seclectedEntry);
 
 	/** Set the action for then the submit entry button is clicked. */
 	public void addSubmitButtonListener(AbstractAction theAction);
 
-	/** Add the contest judged. */
+	/** Add the contest judged */
 	public void addJudged(Judge theJudge, JudgeDatabaseManager theJudgeDB, Contest theContest) throws Exception;
 
-	/** Add the contest judged. */
+	/** Add the contest judged */
 	public void updateJudged(Judge theJudge, JudgeDatabaseManager theJudgeDB, Contest theContest) throws Exception;
 
-	/** If a Contest has already been judged by theJudge set values. */
+	/** If a Contest has already been judged by theJudge set vaules */
 	void setJudgedContest(Judge theJudge, Contest theContest, Entry[] theEntries) throws Exception;
 }

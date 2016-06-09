@@ -7,12 +7,12 @@ import model.Contest;
 /**
  * Interface of a contests view for Judge.
  * 
- * @author Tabi
+ * @author Lan
  */
 public interface JudgeContestListView extends Viewable {
 
 	/**
-	 * Sets the Contests to display for the Judge.
+	 * Sets the Contests to display for the admin.
 	 * 
 	 * @param theContest setup contest list.
 	 */

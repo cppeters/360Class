@@ -13,7 +13,7 @@ import model.Contest;
 /**
  * A concrete implementation of a contests view for Judge.
  * 
- * @author Tabi
+ * @author tabi
  * @author Lan
  */
 public class JudgeContestListViewImp implements JudgeContestListView {
@@ -57,5 +57,6 @@ public class JudgeContestListViewImp implements JudgeContestListView {
 	@Override
 	public void clearSelection() {
 		myList.clearSelection();
+		
 	}
 }
