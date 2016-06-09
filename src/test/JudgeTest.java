@@ -4,6 +4,7 @@ import model.*;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,29 +12,29 @@ import static org.junit.Assert.*;
 
 /**
  * Created by cppeters on 6/2/2016.
+ * @author Casey
  */
 public class JudgeTest {
+    private static final String DB_DIRECTORY = "database" + File.separator;
+    private static final String USER_FILE = DB_DIRECTORY  + "User.csv";
+    private static final String ENTRY_FILE = DB_DIRECTORY + "Entries.csv";
     private static final String TEST_JUDGE_FILE = "TestJudge.csv";
-    private static final String ENTRY_FILE = "Entries.csv";
-    private static final String USER_FILE = "User.csv";
-    private EntryDatabaseManager myEntryDB;
     private JudgeDatabaseManager myJudgeDB;
-    private UserDatabaseManager myUserDB;
     private Judge myJudge;
 
     @Before
     public void setUp() throws Exception {
 
-        myEntryDB = new EntryDatabaseManager(ENTRY_FILE);
-        myEntryDB.readCsvFile();
+        EntryDatabaseManager theEntryDB = new EntryDatabaseManager(ENTRY_FILE);
+        theEntryDB.readCsvFile();
 
-        myUserDB = new UserDatabaseManager(USER_FILE, myEntryDB);
-        myUserDB.readCsvFile();
+        UserDatabaseManager theUserDB = new UserDatabaseManager(USER_FILE, theEntryDB);
+        theUserDB.readCsvFile();
 
-        myJudgeDB = new JudgeDatabaseManager(TEST_JUDGE_FILE, myEntryDB);
+        myJudgeDB = new JudgeDatabaseManager(TEST_JUDGE_FILE, theEntryDB);
         myJudgeDB.readCsvFile();
         String newJudgeName = "Steve Testman";
-        int theCardNumber = myUserDB.getItemCount() + 1;
+        int theCardNumber = theUserDB.getItemCount() + 1;
         myJudge = new Judge(theCardNumber, newJudgeName, 28, "steve", "JUDGE",
                 8, 7, 8, 9);
     }
@@ -100,5 +101,4 @@ public class JudgeTest {
                 assertEquals(myJudge, myJudgeDB.getMap().get(i));
         }
     }
-
 }

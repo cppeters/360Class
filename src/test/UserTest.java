@@ -5,6 +5,7 @@ package test;
 
 import static org.junit.Assert.*;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 
 import org.junit.Before;
@@ -22,12 +23,11 @@ import model.UserDatabaseManager;
  *
  */
 public class UserTest {
-	private static final String USER_FILE = "User.csv";
-	private static final String CONTEST_FILE = "Contests.csv";
+	private static final String DB_DIRECTORY = "database" + File.separator;
+	private static final String USER_FILE = DB_DIRECTORY  + "User.csv";
+	private static final String CONTEST_FILE = DB_DIRECTORY + "Contests.csv";
 	private static final String ENTRY_FILE = "TestEntries.csv";
-	private ContestDatabaseManager myContestDB;
 	private EntryDatabaseManager myEntryDB;
-	private UserDatabaseManager myUserDB;
 	private User myUser;
 	private Contest myContest;
 	
@@ -36,16 +36,16 @@ public class UserTest {
 	 */
 	@Before
 	public void setUp() throws Exception {
-		myContestDB = new ContestDatabaseManager(CONTEST_FILE);
-		myContestDB.readCsvFile();
-		myContest = myContestDB.getAllItems().get(1);
+		ContestDatabaseManager theContestDB = new ContestDatabaseManager(CONTEST_FILE);
+		theContestDB.readCsvFile();
+		myContest = theContestDB.getAllItems().get(1);
 		
         myEntryDB = new EntryDatabaseManager(ENTRY_FILE);
         myEntryDB.readCsvFile();
         
-        myUserDB = new UserDatabaseManager(USER_FILE, myEntryDB);
-        myUserDB.readCsvFile();
-        myUser = myUserDB.getMap().get(1);
+        UserDatabaseManager theUserDB = new UserDatabaseManager(USER_FILE, myEntryDB);
+		theUserDB.readCsvFile();
+        myUser = theUserDB.getMap().get(1);
 	}
 
 	/**
