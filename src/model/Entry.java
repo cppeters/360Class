@@ -12,6 +12,9 @@ public class Entry {
     private int entryNumber;
 
     /** Constructor()
+     *
+     * Precondition: The filePath should be a valid string for a file path.
+     *
      * @param entry - the entry unique number
      * @param cardNumber - user card number
      * @param filePath - path for the entry being submitted

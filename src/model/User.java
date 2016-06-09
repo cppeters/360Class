@@ -73,11 +73,13 @@ public class User {
     }
 
     /** Adding a new entry that this user has created
+     *
+     * Precondition: entry and entryDatabase must not be null.
+     *
      * @param entry - that entry that will be submitted
      * @param entryDatabase - that database that will need to have the new entry
-     *
-     * @exception Exception*/
-    //When a new entry is added
+     * @exception Exception
+     */
     public void addEntry(Entry entry, EntryDatabaseManager entryDatabase) throws Exception{
 
         //adds the entry to the actual db entry list
@@ -88,9 +90,11 @@ public class User {
     /**
      * @author Casey
      *
-     * @param theOldEntryIdx
-     * @param theNewEntry
-     * @param theEntryDatabase
+     * Preconditions: theNewEntry and theEntryDatabase must not be null.
+     *
+     * @param theOldEntryIdx Index for theOldEntry
+     * @param theNewEntry The new Entry to be set in place of theOldEntry at its index.
+     * @param theEntryDatabase The Entry database.
      * @throws Exception
      */
     public void updateEntry(int theOldEntryIdx, Entry theNewEntry, 

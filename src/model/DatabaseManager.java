@@ -12,7 +12,7 @@ import java.util.Map;
 /**
  * @author liz
  * @author Casey
- * @param <T>
+ * @param <T> Generic Type for Object: Entry, Judge, User, Contest
  *
  */
 public abstract class DatabaseManager<T> {
@@ -49,7 +49,11 @@ public abstract class DatabaseManager<T> {
 
 
     /** Constructor()
-     * @param theFileName - file name*/
+     *
+     * Precondition: The File name should be a valid string for a file path.
+     *
+     * @param theFileName Name of the file to be accessed.
+     */
     public DatabaseManager(String theFileName) throws Exception {
         myItems = new ArrayList<>();
         myMap = new HashMap<>();
@@ -62,27 +66,42 @@ public abstract class DatabaseManager<T> {
         else myFileName = theFileName;
     }
 
+
     /** Returns all the items in the db file
-     * @return myItems*/
+     * @return myItems
+     */
     public List<T> getAllItems() {
         return myItems;
     }
 
+
     /** Gets the count of all the items in the in the db
-     * @return the total number of items*/
+     * @return the total number of items
+     */
     public int getItemCount() {
     	return myItems.size();
     }
 
+
     /** Gets the map
-     * @return the map of the values in the db*/
+     * @return the map of the values in the db.
+     */
     public Map<Integer, T> getMap() {
         return myMap;
     }
 
+
+    /**
+     * Reading in the file to create the list of values.
+     *
+     * Precondition: theEntryDB must not be null.
+     *
+     * @param theType Type of the Database for parsing.
+     * @param theEntryDB The Database Manager for Entries.
+     * @throws Exception
+     */
     @SuppressWarnings("unchecked")
-    /** Reading in the file to create the list of values */
-	public void readCsvFile(int theType, EntryDatabaseManager theEntryDB) throws Exception{
+    public void readCsvFile(int theType, EntryDatabaseManager theEntryDB) throws Exception{
         try {
         	T theData = null;
         	String[] theInfo;
@@ -127,6 +146,7 @@ public abstract class DatabaseManager<T> {
                         default:
                             break;
                     }
+                    // Add to the Map and List
                     myMap.put(Integer.parseInt(theInfo[0]), theData);
                     myItems.add(theData);
                 }

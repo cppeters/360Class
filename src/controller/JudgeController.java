@@ -27,6 +27,7 @@ import view.Viewable;
  *
  * @author Tabi
  * @author Lan
+ * @author Casey (Minor Contributions in setupListView() - submitButton etc)
  */
 public class JudgeController {
 
@@ -53,6 +54,8 @@ public class JudgeController {
 
 	/**
 	 * Constructor() for the JudgeController.
+	 *
+	 * Precondition: All params must not be null.
 	 *
 	 * @param theJudge - The judge logged in.
 	 * @param theContestDatabaseManager - The Contest database.
