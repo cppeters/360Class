@@ -18,11 +18,11 @@ import model.Contest;
  */
 public class AdminContestListViewImp implements AdminContestListView {
 
-	/** Panel that will be used for the admin view*/
+	/** Panel that will be used for the admin view.*/
 	private final JPanel myPanel;
-	/** Holds the list of contest*/
+	/** Holds the list of contest.*/
 	private final JList<Contest> myList;
-	/** Creates a new contests when clicked*/
+	/** Creates a new contest when clicked.*/
 	private final JButton newContestButton;
 	
 	/**

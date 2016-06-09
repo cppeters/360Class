@@ -1,7 +1,6 @@
 package controller;
 
 import java.awt.event.ActionEvent;
-import java.io.FileNotFoundException;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -9,7 +8,6 @@ import javax.swing.AbstractAction;
 
 import model.Contest;
 import model.ContestDatabaseManager;
-import model.User;
 import view.AdminContestListView;
 import view.NewContestForm;
 import view.View;
@@ -22,16 +20,17 @@ import view.Viewable;
  */
 public class AdminController {
 
-	/** Which view to use*/
+	/** The view to which this controller will display the admin's view. */
 	private final View myView;
-	/** The database for the contests*/
+	/** The database from/to which this controller will retrieve/add contest information. */
 	private final ContestDatabaseManager myContestDBManager; 
 	
 	/**List of all views that have been displayed to this user since this controller
 	 * was created.*/
 	private final LinkedList<Viewable> viewHistory;
 
-	/** Constructor()
+	/** 
+	 * Creates a new AdminController.
 	 *
 	 * Precondition: theConDatMan and theView must not be null.
 	 *
@@ -45,7 +44,7 @@ public class AdminController {
 		setupListView();
 	}
 
-	/** Adding the back button functionality*/
+	/** Adds the back button functionality. */
 	private void setupBackFunctionality() {
 		myView.addBackButtonListener(new AbstractAction() {
 
@@ -66,14 +65,14 @@ public class AdminController {
 		}
 	}
 
-	/** Adding the history of the view
+	/** Adds a page to the history of what has been viewed.
 	 * @param theViewable - what has been viewed*/
 	private void addToHistory(Viewable theViewable) {
 		viewHistory.add(theViewable);
 		myView.setBackButtonEnabled(true);
 	}
 
-	/** Setting up the list for the view*/
+	/** Sets up and displays the view of all Contests.*/
 	private void setupListView() {
 		final AdminContestListView listView = myView.getAdminContestListView();
 		listView.setContestList(allContests());
@@ -89,7 +88,7 @@ public class AdminController {
 		myView.showPage(listView);
 	}
 
-	/** What are the contests?
+	/** Creates an array containing all Contests that exist in the DB.
 	 * @return all the contests*/
 	private Contest[] allContests() {
 		List<Contest> contests = myContestDBManager.getAllItems();
@@ -97,8 +96,13 @@ public class AdminController {
 	}
 	
 	/**
-	 * Adding a new view
-	 * @param theListView - the list of views that have been used
+	 * Prepares and displays a new contest submission form. It will be notified
+	 * of the submission to the form so the list it displays can be updated.
+	 * 
+	 * Precondition: theListView must not be null.
+	 * Postcondition: theListView's contest list is updated to include an added Contest.
+	 * 
+	 * @param theListView - any AdminContestListView.
 	 */
 	private void onAddContestView(final AdminContestListView theListView) {
 		final NewContestForm theForm = theListView.createNewContestForm();
@@ -124,6 +128,7 @@ public class AdminController {
 	 * Adds new contest to db and updates list view.
 	 *
 	 * Precondition: theForm and theListView must not be null.
+	 * Postcondition: theListView's contest list is updated to include an added Contest.
 	 *
 	 * @param theForm - form of the contest
 	 * @param theListView - list of the views seen
@@ -131,11 +136,11 @@ public class AdminController {
 	private void onAddingContest(NewContestForm theForm, AdminContestListView theListView) throws Exception {
 		String[] formInfo = theForm.getFormInfo();
 		if (formInfo.length >= 4 && addContest(formInfo[0], formInfo[1], formInfo[2], formInfo[3])) {
-			theForm.setMessage("Contest added!");
+			theForm.setMessage("Contest added!", false);
 			// update view
 			theListView.setContestList(allContests());
 		} else {
-			theForm.setMessage("Please fill all fields.");
+			theForm.setMessage("Please fill all fields and use a unique contest name.", true);
 		}
 	}
 	
@@ -144,7 +149,7 @@ public class AdminController {
 	 * Confirms that none of the strings are empty; if they are, returns false. Otherwise,
 	 * adds contest to db and returns true.
 	 *
-	 * Precondition: startDate must land before endDate.
+	 * Postcondition: a new contest is added to the DB if and only if true is returned.
 	 *
 	 * @param name - name of the contest
 	 * @param description - describing the contest

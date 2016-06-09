@@ -22,20 +22,20 @@ import model.Contest;
  */
 public class NewContestFormImp implements NewContestForm {
 
-	/** Panel used for contests*/
+	/** Main container. */
 	private final JPanel myPanel;
-	/** Place to enter in name of contest*/
+	/** Place to enter in name of contest.*/
 	private JTextField myNameField;
-	/** Place to enter in description for contest*/
+	/** Place to enter in description for contest.*/
 	private JTextField myDescriptionField;
-	/** Place to enter in start date*/
+	/** Place to enter in start date.*/
 	private JTextField myStartDateField;
-	/** Place to enter in end date*/
+	/** Place to enter in end date.*/
 	private JTextField myEndDateField;
-	/** Button used to add a new contest*/
+	/** Button used to add a new contest.*/
 	private JButton mySubmitButton;
-	/** Shows error*/
-	private JLabel myErrorMsgLabel;
+	/** Shows message to screen. */
+	private JLabel myMsgLabel;
 
 	/** Creates the new contest form */
 	public NewContestFormImp() {
@@ -48,12 +48,12 @@ public class NewContestFormImp implements NewContestForm {
 		
 		mySubmitButton = new JButton("Create contest");
 		mySubmitButton.setAlignmentX(JComponent.LEFT_ALIGNMENT);
-		myErrorMsgLabel = new JLabel("");
-		myErrorMsgLabel.setForeground(Color.RED);
+		myMsgLabel = new JLabel("");
+		
 		
 		myPanel.add(makeFieldPanel());
 		myPanel.add(mySubmitButton);
-		myPanel.add(myErrorMsgLabel);
+		myPanel.add(myMsgLabel);
 	}
 	
 	/**
@@ -104,8 +104,13 @@ public class NewContestFormImp implements NewContestForm {
 	}
 
 	@Override
-	public void setMessage(String theString) {
-		myErrorMsgLabel.setText(theString);
+	public void setMessage(String theString, boolean isError) {
+		if(isError) {
+			myMsgLabel.setForeground(Color.RED);
+		} else {
+			myMsgLabel.setForeground(Color.BLACK);
+		}
+		myMsgLabel.setText(theString);
 	}
 
 

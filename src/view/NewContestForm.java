@@ -19,8 +19,11 @@ public interface NewContestForm extends Viewable {
 	/**Add a listener for when the user submits the form.*/
 	public void addSubmitListener(AbstractAction theAction);
 	
-	/**Sets an error message to display.*/
-	public void setMessage(String theString);
+	/**Sets an error message to display.
+	 * @param theString the string to display.
+	 * @param isError whether to display message as an error; 
+	 * 			if true, display as error, if false, display as informative message.*/
+	public void setMessage(String theString, boolean isError);
 	
 	
 	

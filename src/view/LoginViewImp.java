@@ -32,7 +32,7 @@ public class LoginViewImp implements LoginView {
 	/** Error when logging in*/
 	private final JLabel myLoginFailMessage;
 
-	/** Constructor()*/
+	/** Creates a new concrete implementation of LoginView.*/
 	public LoginViewImp() {
 		myPanel = new JPanel(new GridBagLayout());		
 
@@ -66,7 +66,7 @@ public class LoginViewImp implements LoginView {
 		myPanel.add(new JPanel(new BorderLayout()), c);
 	}
 
-	/** Creates the login panel for the user.*/
+	/** Creates the login panel. */
 	private JPanel createLoginComPanel() {
 		JPanel loginPanel = new JPanel(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
