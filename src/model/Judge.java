@@ -12,7 +12,7 @@ public class Judge extends User {
     private Map<Integer, List<Integer>> myContests;         //Map<ContestNumber, List of Judged Entries>
 
     /** List of entry numbers*/
-    List<Integer> myEntryNumbers;
+    private List<Integer> myEntryNumbers;
 
     /** The contest numbers*/
     private int myContestNumber;
@@ -45,8 +45,8 @@ public class Judge extends User {
         mySecond = theSecond;
         myThird = theThird;
         myEntryNumbers = new ArrayList<>();
-       // myContests.put(myContestNumber, myEntryNumbers);
-       // addToList();
+        myContests.put(myContestNumber, myEntryNumbers);
+        addToList();
     }
 
     // Copy Constructor
@@ -62,8 +62,8 @@ public class Judge extends User {
         this.mySecond = theOtherJudge.getMySecond();
         this.myThird = theOtherJudge.getMyThird();
         this.myEntryNumbers = new ArrayList<>();
-        //this.myContests.put(myContestNumber, myEntryNumbers);
-      //  addToList();
+        this.myContests.put(myContestNumber, myEntryNumbers);
+        addToList();
     }
 
     /**

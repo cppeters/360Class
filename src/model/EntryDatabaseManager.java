@@ -39,12 +39,7 @@ public class EntryDatabaseManager extends DatabaseManager<Entry> {
      * @param theNewEntry - the replacement entry
      * @param theOldEntry - the entry that will be replaced*/
     public void updateEntry(Entry theOldEntry, Entry theNewEntry) throws Exception {
-        // Update the Map
-       /* for (int i : super.getMap().keySet()) {
-            if (super.getMap().get(i).equals(theOldEntry)) {
-                super.getMap().replace(i, theNewEntry);
-            }
-        }*/
+
         super.getMap().replace(theOldEntry.getEntryNumber(), theNewEntry);
 
         // Update the List

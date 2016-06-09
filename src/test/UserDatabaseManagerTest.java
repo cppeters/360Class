@@ -2,6 +2,7 @@ package test;
 
 import static org.junit.Assert.*;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import org.junit.Before;
 import org.junit.Test;
@@ -16,8 +17,9 @@ import model.UserDatabaseManager;
 public class UserDatabaseManagerTest {
 
 	// Instances fields
-	private static final String USER_FILE = "User.csv";
-	private static final String ENTRY_FILE = "Entries.csv";
+	private static final String DB_DIRECTORY = "database" + File.separator;
+	private static final String USER_FILE = DB_DIRECTORY  + "User.csv";
+	private static final String ENTRY_FILE = DB_DIRECTORY + "Entries.csv";
 	private EntryDatabaseManager myEntryDB;
 	private UserDatabaseManager myUserDB;
 	
@@ -82,5 +84,4 @@ public class UserDatabaseManagerTest {
 		thePin = "ieie";
 		assertNotNull(myUserDB.checkCredentials(theCardNumber, thePin));
 	}
-
 }
