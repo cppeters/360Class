@@ -39,5 +39,5 @@ public interface ContestantContestView extends Viewable {
 	 * Precondition: theUser, theContest must not be null.	 *
 	 * @throws IOException */
 	void subMade(User theUser, Contest theContest) throws IOException;
-	
+
 }

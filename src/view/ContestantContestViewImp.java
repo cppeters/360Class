@@ -3,6 +3,9 @@ package view;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -21,21 +24,35 @@ import model.User;
  */
 public class ContestantContestViewImp implements ContestantContestView {
 
+	/** GUI Components */
 	private final JPanel myPanel;
 	private final JButton myBrowseButton;
 	private final JButton mySubmitButton;
+	private final JCheckBox myReleaseButton;
 	private final JLabel myContestName;
 	private final JLabel myEntryNamelbl;
 	private final JLabel myImagelbl;
+	private final JLabel myReleaselbl;
 	private final JLabel myBufferName;
 	private final JTextField myEntryFilePath;
 	private final JTextField myEntryText;
 	private final JScrollPane myScrollPane;
+
+	/** File for the Contest */
 	private File myEntryFile;
+
+	/** If this Contest already has an Entry by User. */
 	private Boolean mySubMade;
+
+	/** Image Types required for this Contest. */
 	private ArrayList<String> myImgTypes;
+
+	/** The Icon for Image. */
 	private ImageIcon myIcon;
-	
+
+	/** Check if User is to release Entry to Library. */
+	private boolean myRelease;
+
 	public ContestantContestViewImp() {
 		myEntryFile = null;
 		mySubMade = false;
@@ -48,13 +65,16 @@ public class ContestantContestViewImp implements ContestantContestView {
 		myPanel = new JPanel();
 		myBrowseButton = new JButton("Browse...");
 		mySubmitButton = new JButton("Submit Entry");
+		myReleaseButton = new JCheckBox();
 		myEntryNamelbl = new JLabel("Entry Name :", JLabel.CENTER);
 		myContestName = new JLabel("", JLabel.CENTER);
+		myReleaselbl = new JLabel("I hereby release this Entry for future Library use:");
 		myBufferName = new JLabel();
 		myImagelbl = new JLabel(myIcon, JLabel.CENTER);
 		myEntryFilePath = new JTextField(35);
 		myEntryText = new JTextField(35);
 		myScrollPane = new JScrollPane(myImagelbl);
+		myRelease = false;
 		
 		GUI();
 	}
@@ -70,12 +90,29 @@ public class ContestantContestViewImp implements ContestantContestView {
 		myEntryNamelbl.setPreferredSize(new Dimension(87, 20));
 		myBufferName.setPreferredSize(new Dimension(400, 10));
 
+		myReleaseButton.setMnemonic(KeyEvent.VK_C);
+		myReleaseButton.setSelected(false);
+		myReleaseButton.addItemListener(new ItemListener() {
+			@Override
+			public void itemStateChanged(ItemEvent e) {
+				Object source = e.getItemSelectable();
+				if (e.getStateChange() == ItemEvent.SELECTED) {
+					myRelease = true;
+				}
+				if(e.getStateChange() == ItemEvent.DESELECTED) {
+					myRelease = false;
+				}
+			}
+		});
+
 		myPanel.add(myContestName);
 		myPanel.add(myBufferName);
 		myPanel.add(myEntryNamelbl);
 		myPanel.add(myEntryText);
 		myPanel.add(myBrowseButton);
 		myPanel.add(myEntryFilePath);
+		myPanel.add(myReleaselbl);
+		myPanel.add(myReleaseButton);
 		myPanel.add(myScrollPane, BorderLayout.CENTER);
 		myPanel.add(mySubmitButton, BorderLayout.CENTER);
 	}
@@ -98,7 +135,6 @@ public class ContestantContestViewImp implements ContestantContestView {
 		mySubmitButton.addActionListener(theAction);
 		
 	}
-
 
 	@Override
 	public void setContestName(String theContestName) {
@@ -158,11 +194,12 @@ public class ContestantContestViewImp implements ContestantContestView {
 				if (theChoice == 0) {
 					for (Entry e : theUser.getEntries()){
 						if (e.getContest() == theContest.getContestNumber()){
-							Entry theEntry = new Entry(e.getEntryNumber(), 
+							Entry theEntry = new Entry(e.getEntryNumber(),
 									theUser.getCardNumber(), myEntryFilePath.getText(), 
 									theContest.getContestNumber(), myEntryText.getText());
+							if (myRelease) theEntry.setRelease(true);
 							try {
-								theUser.updateEntry(theUser.getEntries().indexOf(e), theEntry, 
+								theUser.updateEntry(theUser.getEntries().indexOf(e), theEntry,
 										theEntryDatabase);
 							} catch (Exception e1) {
 								e1.printStackTrace();
@@ -178,7 +215,7 @@ public class ContestantContestViewImp implements ContestantContestView {
 				Entry e = new Entry(theEntryDatabase.getItemCount() + 1,
 					theUser.getCardNumber(), myEntryFilePath.getText(), 
 					theContest.getContestNumber(), myEntryText.getText());
-			
+				if (myRelease) e.setRelease(true);
 				try {
 					theUser.addEntry(e, theEntryDatabase);
 				} catch (Exception e1) {
@@ -203,6 +240,7 @@ public class ContestantContestViewImp implements ContestantContestView {
 			{
 				myEntryText.setText(e.getEntryName());
 				myEntryFilePath.setText(e.getFilePath());
+				if (e.getRelease()) myReleaseButton.setSelected(true);
 				try {
 					myImagelbl.setIcon(new ImageIcon(ImageIO.read(new File(myEntryFilePath.getText()))));
 				}
@@ -217,5 +255,5 @@ public class ContestantContestViewImp implements ContestantContestView {
 				myPanel.revalidate();
 			}
 		}		
-	}	
+	}
 }
