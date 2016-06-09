@@ -4,6 +4,7 @@ import model.*;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 
 import static org.junit.Assert.*;
@@ -15,9 +16,10 @@ import static org.junit.Assert.*;
 public class JudgeDatabaseManagerTest {
 
     // Instance fields
+    private static final String DB_DIRECTORY = "database" + File.separator;
+    private static final String USER_FILE = DB_DIRECTORY  + "User.csv";
     private static final String TEST_JUDGE_FILE = "TestJudge.csv";
     private static final String TEST_ENTRY_FILE = "TestEntries.csv";
-    private static final String TEST_USER_FILE = "User.csv";
     private JudgeDatabaseManager myJudgeDB;
     private EntryDatabaseManager myEntryDB;
     private UserDatabaseManager myUserDB;
@@ -32,7 +34,7 @@ public class JudgeDatabaseManagerTest {
         myEntryDB = new EntryDatabaseManager(TEST_ENTRY_FILE);
         myEntryDB.readCsvFile();
 
-        myUserDB = new UserDatabaseManager(TEST_USER_FILE, myEntryDB);
+        myUserDB = new UserDatabaseManager(USER_FILE, myEntryDB);
         myUserDB.readCsvFile();
 
         myJudgeDB = new JudgeDatabaseManager(TEST_JUDGE_FILE, myEntryDB);
