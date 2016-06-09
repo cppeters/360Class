@@ -41,7 +41,6 @@ public class ContestList extends JList<Contest> {
 				setFixedCellHeight(10);
 				setFixedCellHeight(-1);
 			}
-
 		});
 	}
 
@@ -135,8 +134,5 @@ public class ContestList extends JList<Contest> {
 
 			return container;
 		}
-
 	}
-
-
 }

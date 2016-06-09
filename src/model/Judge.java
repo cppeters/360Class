@@ -78,7 +78,10 @@ public class Judge extends User {
     }
 
     /**
-     * Adding a contest that has been judged. Must use appropriate entry and contest setters before calling this method.
+     * Adding a contest that has been judged.
+     *
+     * Precondition: myContestNumber, myFirst, mySecond, and myThird must first be updated with their respective setters.
+     *
      * @param theJudgeDB - creating map of entries that have been judged
      * @exception Exception*/
     public void addContestJudged(JudgeDatabaseManager theJudgeDB) throws Exception {
@@ -95,6 +98,9 @@ public class Judge extends User {
 
     /**
      * Updating a contest that already has been judged
+     *
+     * Precondition: myContestNumber, myFirst, mySecond, and myThird must first be updated with their respective setters.
+     *
      * Must use appropriate entry and contest setters before calling this method.
      * @param theJudgeDB the database for the judged entries
      * */
@@ -179,7 +185,7 @@ public class Judge extends User {
     @Override
     public int hashCode(){
         int result = 0;
-        result = (int) this.getCardNumber() / 11;
+        result = this.getCardNumber() / 11;
         return result;
     }
 

@@ -66,9 +66,9 @@ public class JudgeEntryListViewImp implements JudgeEntryListView {
 		myJudgeSubmissionButton = new JButton("Submit");
 		myJudgeSubmissionButton.setEnabled(false);
 
-		my1stRankingPlace = new JComboBox<String>();
-		my2ndRankingPlace = new JComboBox<String>();
-		my3rdRankingPlace = new JComboBox<String>();
+		my1stRankingPlace = new JComboBox<>();
+		my2ndRankingPlace = new JComboBox<>();
+		my3rdRankingPlace = new JComboBox<>();
 		my1stRankingPlace.setToolTipText("1st rank");
 		my1stRankingPlace.setToolTipText("2st rank");
 		my1stRankingPlace.setToolTipText("3st rank");
@@ -225,6 +225,8 @@ public class JudgeEntryListViewImp implements JudgeEntryListView {
 	/**
 	 * Add the contest entries to the Judge profile and Judge Database.
 	 *
+	 * Preconditions: theJudge, theJudgeDB, theContest must not be null.
+	 *
 	 * @author Casey
 	 * @param theJudge The Judge for this Contest.
 	 * @param theJudgeDB The Judge Database.
@@ -240,6 +242,8 @@ public class JudgeEntryListViewImp implements JudgeEntryListView {
 	/**
 	 * Update the judged contest.
 	 *
+	 * Preconditions: theJudge, theJudgeDB, theContest must not be null.
+	 *
 	 * @author Casey
 	 * @param theJudge The Judge for this Contest.
 	 * @param theJudgeDB The Judge Database.
@@ -253,6 +257,8 @@ public class JudgeEntryListViewImp implements JudgeEntryListView {
 
 	/**
 	 * Setup the Judged Contest.
+	 *
+	 * Preconditions: theJudge, theContest, theEntries must not be null.
 	 *
 	 * @author Casey
 	 * @param theJudge Sets the Judge values from previous judged Contest.
@@ -286,6 +292,8 @@ public class JudgeEntryListViewImp implements JudgeEntryListView {
 
 	/**
 	 * Set the values for myJudge
+	 *
+	 * Precondition: theJudge must not be null.
 	 *
 	 * @author Casey
 	 * @param theJudge The judge.

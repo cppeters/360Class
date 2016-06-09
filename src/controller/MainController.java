@@ -34,10 +34,17 @@ public class MainController {
 	
 	/** A reference to the View that this controller controls. */
 	private final View myView;
-	
+
 	/**
 	 * Creates a new controller that starts up and listens to a GUI using the given models.
-	 */
+	 *
+	 * Precondition: All DBManager params must not be null.
+	 *
+	 * @param theUserDBManager The User database.
+	 * @param theContestDBManager The Contest database.
+	 * @param theEntryDBManager The Entry database.
+	 * @param theJudgeDBManager The Judge database.
+     */
 	public MainController(UserDatabaseManager theUserDBManager, ContestDatabaseManager theContestDBManager,
 						  EntryDatabaseManager theEntryDBManager, JudgeDatabaseManager theJudgeDBManager) {
 		myUserDBManager = theUserDBManager;
@@ -99,6 +106,8 @@ public class MainController {
 	 * we want to send them to their appropriate controller.
 	 * If somehow theUser doesn't have a type or the controller was not implemented for
 	 * that type, the user is automatically logged out.
+	 *
+	 * Precondition: theUser must not be null.
 	 *
 	 * @param theUser - Checks to see which user has logged in*/
 	private void onLogin(User theUser) {

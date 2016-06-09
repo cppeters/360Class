@@ -28,7 +28,7 @@ import view.Viewable;
  */
 public class ContestantController {
 	
-	protected static final Dimension IMAGE_SIZE = new Dimension(500, 500);
+	private static final Dimension IMAGE_SIZE = new Dimension(500, 500);
 	private static final Dimension ORIGINAL_SIZE = new Dimension(500, 300);
 	private final User myUser;
 	private final ContestDatabaseManager myContestDBManager;
@@ -46,10 +46,13 @@ public class ContestantController {
 	 * to a different view that this controller does not control and removing all listeners to
 	 * the view's back button, all references to this class will be gone and it will be garbage
 	 * collected as desired.
-	 * @param theUser
-	 * @param theContestDBManager	
-	 * @param theEntryDBManager		
-	 * @param theView				
+	 *
+	 * Precondition: All params must not be null.
+	 *
+	 * @param theUser The User logged in.
+	 * @param theContestDBManager The Contest database.
+	 * @param theEntryDBManager	The Entry database.
+	 * @param theView The View.
 	 */	
 	public ContestantController(User theUser, ContestDatabaseManager theContestDBManager, EntryDatabaseManager theEntryDBManager, View theView) {
 		myUser = theUser;
@@ -152,8 +155,11 @@ public class ContestantController {
 	/**
 	 * Distributes the contests that the user has submitted to to the submittedTo
 	 * list, and those he hasn't to the notSubmittedTo list.
-	 * @param allSubmittedTo
-	 * @param allNotSubmittedTo
+	 *
+	 * Precondition: allSubmittedTo and allNotSubmittedTo must not be null.
+	 *
+	 * @param allSubmittedTo All of the Contests the user has submitted to.
+	 * @param allNotSubmittedTo All of the Contests the user has not submitted to.
 	 */
 	private void distributeContests(List<Contest> allSubmittedTo, List<Contest> allNotSubmittedTo) {
     	allSubmittedTo.clear();
@@ -181,6 +187,9 @@ public class ContestantController {
 	
 	/**
 	 * @author Casey
+	 *
+	 * Precondition: theContest and cclv must not be null.
+	 *
 	 * @param theContest	The Contest to make/update a submission for.
 	 * @param theSubMade	True if the user has already made a submission to theContest; false otherwise.
 	 * @param cclv			The Contest list, so it can be refreshed when an entry is made/updated
@@ -208,7 +217,7 @@ public class ContestantController {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				Boolean submitSuccess = ccv.submitNewEntry(myUser, myEntryDBManager, theContest);
-				if (submitSuccess == true){
+				if (submitSuccess){
 					refreshLists(cclv);
 					myView.showPage(cclv);
 					myView.reSize(ORIGINAL_SIZE);
