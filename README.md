@@ -1,4 +1,4 @@
-# Library Contest Entry and Management App
+# Library Contest Application
 # University of Washington
 # Software Development and QA - 360 Class
 <br />
