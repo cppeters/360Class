@@ -2,7 +2,7 @@
 # University of Washington
 # Software Development and QA - 360 Class
 <br />
-Contributors:
+Contributors:<br />
 Liz Miller - lizMillerCoder12 <br />
 Tabi Stein - tabiStein <br />
 Casey Peterson - cppeters <br />
